@@ -71,6 +71,7 @@ project "Engine"
 	filter "configurations:Retail"
 		defines "RETAIL"
 		symbols "On"
+		runtime "Release"
 		
 		links
 		{
