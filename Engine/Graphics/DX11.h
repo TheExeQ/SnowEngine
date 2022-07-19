@@ -7,7 +7,7 @@ using namespace Microsoft::WRL;
 class DX11
 {
 public:
-	DX11& Get() const { return *myInstance; };
+	static DX11& Get() { return *myInstance; };
 
 	static ComPtr<ID3D11Device> Device;
 	static ComPtr<ID3D11DeviceContext> Context;
@@ -15,7 +15,9 @@ public:
 	
 private:
 	friend class Engine;
+	friend LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	bool Initialize(HWND hwnd);
+	bool CleanUp();
 	bool RenderFrame();
 	
 	bool CreateDeviceAndSwapChain(HWND hwnd);
@@ -24,6 +26,7 @@ private:
 	bool CreateRasterizer();
 	bool CreateShaders();
 	bool CreateConstantBuffers();
+	bool SetupImGui(HWND hwnd);
 
 	ComPtr<ID3D11RenderTargetView> myRenderTargetView;
 	ComPtr<ID3D11DepthStencilView> myDepthStencilView;
@@ -31,6 +34,6 @@ private:
 	ComPtr<ID3D11DepthStencilState> myDepthStencilState;
 	ComPtr<ID3D11RasterizerState> myRasterizerState;
 
-	DX11* myInstance = nullptr;
+	inline static DX11* myInstance = nullptr;
 };
 

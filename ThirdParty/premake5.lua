@@ -1,4 +1,4 @@
-project "Engine"
+project "ThirdParty"
 	kind "StaticLib"
 	language "C++"
 	
@@ -18,25 +18,12 @@ project "Engine"
 	includedirs
 	{
 		"./",
-		"../ThirdParty/includes/",
 	}
 	
 	libdirs
 	{
-		"../libs/"
+		"./libs/"
 	}
-	
-	filter { "files:**.hlsl" }
-		shadermodel "5.0"
-
-	filter { "files:**-vs.hlsl" }
-		shadertype "Vertex"
-
-	filter { "files:**-ps.hlsl" }
-		shadertype "Pixel"
-		
-	filter { "files:**-gs.hlsl" }
-		shadertype "Geometry"
 
 	filter "system:windows"
 		cppdialect "C++20"
@@ -54,30 +41,12 @@ project "Engine"
 		symbols "On"
 		runtime "Debug"
 		
-		links
-		{
-			"d3d11.lib",
-			"ThirdParty"
-		}
-		
 	filter "configurations:Release"
 		defines "RELEASE"
 		symbols "On"
 		runtime "Release"
 		
-		links
-		{
-			"d3d11.lib",
-			"ThirdParty"
-		}
-		
 	filter "configurations:Retail"
 		defines "RETAIL"
 		symbols "On"
 		runtime "Release"
-		
-		links
-		{
-			"d3d11.lib",
-			"ThirdParty"
-		}

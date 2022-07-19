@@ -13,3 +13,4 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 include "Game/"
 include "Engine/"
+include "ThirdParty/"

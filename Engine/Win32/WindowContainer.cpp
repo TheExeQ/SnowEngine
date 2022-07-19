@@ -1,4 +1,5 @@
 #include "WindowContainer.h"
+#include "Graphics/DX11.h"
 #include <iostream>
 
 int WindowContainer::myWindowWidth = 0;
@@ -20,6 +21,13 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		// Respond to the message:
 		OnResize(hwnd, (UINT)wParam, width, height);
+	}
+	break;
+
+	case WM_CLOSE:
+	case WM_DESTROY:
+	{
+		DX11::Get().CleanUp();
 	}
 	break;
 	}
@@ -95,7 +103,7 @@ bool WindowContainer::ProcessMessages()
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
-	
+
 	if (msg.message == WM_NULL)
 	{
 		if (!IsWindow(myHandle))
@@ -105,7 +113,7 @@ bool WindowContainer::ProcessMessages()
 			return false;
 		}
 	}
-
+	
 	return true;
 }
 
