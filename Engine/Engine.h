@@ -1,6 +1,7 @@
 #pragma once
 #include <windows.h>
 #include "Win32/WindowContainer.h"
+#include "Graphics/DX11.h"
 
 class Engine
 {
@@ -15,5 +16,6 @@ private:
 	bool myIsRunning = true;
 	
 	WindowContainer myWindowContainer;
+	DX11 myDirectX;
 };
 

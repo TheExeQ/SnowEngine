@@ -11,6 +11,14 @@ bool Engine::Initialize(HINSTANCE hInstance, const int& aWidth, const int& aHeig
 		return false;
 	}
 
+	result = myDirectX.Initialize(myWindowContainer.GetWindowHandle());
+	if (!result)
+	{
+		std::cout << "Failed to initialize DirectX" << std::endl;
+		std::cin.get();
+		return false;
+	}
+
 	return true;
 }
 
@@ -18,7 +26,7 @@ void Engine::Update()
 {
 	if (myWindowContainer.ProcessMessages())
 	{
-		// DX RenderFrame
+		myDirectX.RenderFrame();
 	}
 	else
 	{

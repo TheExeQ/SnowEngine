@@ -17,6 +17,7 @@ project "Engine"
 	
 	includedirs
 	{
+		"./",
 		"../ThirdParty/includes/",
 	}
 	
