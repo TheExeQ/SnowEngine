@@ -1,5 +1,5 @@
 #include "WindowContainer.h"
-#include "Graphics/DX11.h"
+#include "ImGui/ImGuiLayer.h"
 #include <iostream>
 
 int WindowContainer::myWindowWidth = 0;
@@ -10,8 +10,14 @@ void OnResize(HWND hwnd, UINT flag, int width, int height)
 	// Handle resizing
 }
 
+// Forward declare message handler from imgui_impl_win32.cpp
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	if (ImGui_ImplWin32_WndProcHandler(hwnd, uMsg, wParam, lParam))
+		return true;
+
 	switch (uMsg)
 	{
 	case WM_SIZE:
@@ -21,29 +27,30 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 		// Respond to the message:
 		OnResize(hwnd, (UINT)wParam, width, height);
+		break;
 	}
-	break;
 
+	case WM_QUIT:
 	case WM_CLOSE:
 	case WM_DESTROY:
 	{
-		DX11::Get().CleanUp();
+		ImGuiLayer::Get().CleanUp();
+		break;
 	}
-	break;
 	}
 	DefWindowProc(hwnd, uMsg, wParam, lParam);
 	return true;
 }
 
-bool WindowContainer::Initialize(HINSTANCE ahInstance, const int& aWidth, const int& aHeight,std::string aWindowTitle, const std::string& aWindowClass)
+bool WindowContainer::Initialize(HINSTANCE ahInstance, const int& aWidth, const int& aHeight, std::string aWindowTitle, const std::string& aWindowClass)
 {
 	myHInstance = ahInstance;
-	
+
 	myWindowTitle = aWindowTitle;
 	myWindowTitleWide = std::wstring(aWindowTitle.begin(), aWindowTitle.end());
 	myWindowClass = aWindowClass;
 	myWindowClassWide = std::wstring(aWindowClass.begin(), aWindowClass.end());
-	
+
 	myWindowWidth = aWidth;
 	myWindowHeight = aHeight;
 
@@ -86,7 +93,7 @@ bool WindowContainer::Initialize(HINSTANCE ahInstance, const int& aWidth, const 
 		PrintCSBackupAPIErrorMessage(error);
 		return false;
 	}
-	
+
 	myHandle = hwnd;
 
 	ShowWindow(hwnd, SW_SHOW);
@@ -97,8 +104,8 @@ bool WindowContainer::Initialize(HINSTANCE ahInstance, const int& aWidth, const 
 bool WindowContainer::ProcessMessages()
 {
 	MSG msg = { };
-	
-	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE) > 0)
+
+	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
@@ -113,8 +120,15 @@ bool WindowContainer::ProcessMessages()
 			return false;
 		}
 	}
-	
-	return true;
+
+	if (myHandle)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 // Display error message text, given an error code.

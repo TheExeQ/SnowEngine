@@ -1,17 +1,18 @@
 #include "DX11.h"
 #include "Win32/WindowContainer.h"
 #include <iostream>
-#include <imgui/imgui_impl_dx11.h>
-#include <imgui/imgui_impl_win32.h>
 
 ComPtr<ID3D11Device> DX11::Device = nullptr;
 ComPtr<ID3D11DeviceContext> DX11::Context = nullptr;
 ComPtr<IDXGISwapChain> DX11::SwapChain = nullptr;
 
-bool DX11::Initialize(HWND hwnd)
+bool DX11::Initialize(HWND hwnd, const int& aWidth, const int& aHeight)
 {
 	if (!myInstance) { myInstance = this; }
 	else { return false; }
+
+	myWindowWidth = static_cast<UINT>(aWidth);
+	myWindowHeight = static_cast<UINT>(aHeight);
 
 	if (!CreateDeviceAndSwapChain(hwnd)) { return false; };
 	if (!CreateRenderTargetView()) { return false; };
@@ -19,19 +20,8 @@ bool DX11::Initialize(HWND hwnd)
 	if (!CreateRasterizer()) { return false; };
 	if (!CreateShaders()) { return false; };
 	if (!CreateConstantBuffers()) { return false; };
-	if (!SetupImGui(hwnd)) { return false; };
 
 	std::cout << "Successfully initialized DirectX!" << std::endl;
-	return true;
-}
-
-bool DX11::CleanUp()
-{
-	// Cleanup
-	ImGui_ImplDX11_Shutdown();
-	ImGui_ImplWin32_Shutdown();
-	ImGui::DestroyContext();
-
 	return true;
 }
 
@@ -39,22 +29,12 @@ bool DX11::CreateDeviceAndSwapChain(HWND hwnd)
 {
 	HRESULT result;
 
-	RECT windowRect;
-
-	if (!GetWindowRect(hwnd, &windowRect))
-	{
-		std::cout << "Failed to get window rect!" << std::endl;
-	}
-
-	int windowWidth = windowRect.right - windowRect.left;
-	int windowHeight = windowRect.bottom - windowRect.top;
-
 	// Settings for SwapChain
 	DXGI_SWAP_CHAIN_DESC swapChainDesc;
 	ZeroMemory(&swapChainDesc, sizeof(swapChainDesc));
 	swapChainDesc.BufferCount = 2;
-	swapChainDesc.BufferDesc.Width = windowWidth;
-	swapChainDesc.BufferDesc.Height = windowHeight;
+	swapChainDesc.BufferDesc.Width = myWindowWidth;
+	swapChainDesc.BufferDesc.Height = myWindowHeight;
 	swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	swapChainDesc.BufferDesc.RefreshRate.Numerator = 0;
 	swapChainDesc.BufferDesc.RefreshRate.Denominator = 0;
@@ -129,8 +109,8 @@ bool DX11::CreateDepthStencil()
 	// Create the depth stencil view
 	D3D11_TEXTURE2D_DESC depthStencilBufferDesc;
 	ZeroMemory(&depthStencilBufferDesc, sizeof(depthStencilBufferDesc));
-	depthStencilBufferDesc.Width = WindowContainer::GetWidth();
-	depthStencilBufferDesc.Height = WindowContainer::GetHeight();
+	depthStencilBufferDesc.Width = myWindowWidth;
+	depthStencilBufferDesc.Height = myWindowHeight;
 	depthStencilBufferDesc.MipLevels = 1;
 	depthStencilBufferDesc.ArraySize = 1;
 	depthStencilBufferDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -144,7 +124,7 @@ bool DX11::CreateDepthStencil()
 	result = Device->CreateTexture2D(&depthStencilBufferDesc, NULL, myDepthStencilBuffer.GetAddressOf());
 	if (FAILED(result))
 	{
-		std::cout << "Failed to create depth stencil view" << std::endl;
+		std::cout << "Failed to create depth stencil texture" << std::endl;
 		return false;
 	}
 
@@ -206,8 +186,8 @@ bool DX11::CreateRasterizer()
 
 	vp.TopLeftX = 0;
 	vp.TopLeftY = 0;
-	vp.Width = WindowContainer::GetWidth();
-	vp.Height = WindowContainer::GetHeight();
+	vp.Width = (FLOAT)myWindowWidth;
+	vp.Height = (FLOAT)myWindowHeight;
 	vp.MinDepth = 0.0f;
 	vp.MaxDepth = 1.0f;
 
@@ -257,44 +237,13 @@ bool DX11::CreateConstantBuffers()
 	return true;
 }
 
-bool DX11::SetupImGui(HWND hwnd)
+
+void DX11::BeginFrame()
 {
-	// Setup Dear ImGui context
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
-	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
-	//io.ConfigViewportsNoAutoMerge = true;
-	//io.ConfigViewportsNoTaskBarIcon = true;
-	//io.ConfigViewportsNoDefaultParent = true;
-	//io.ConfigDockingAlwaysTabBar = true;
-	//io.ConfigDockingTransparentPayload = true;
-	//io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleFonts;     // FIXME-DPI: Experimental. THIS CURRENTLY DOESN'T WORK AS EXPECTED. DON'T USE IN USER APP!
-	//io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleViewports; // FIXME-DPI: Experimental.
-
-	// Setup Dear ImGui style
-	ImGui::StyleColorsDark();
-	//ImGui::StyleColorsLight();
-
-	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
-	ImGuiStyle& style = ImGui::GetStyle();
-	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-	{
-		style.WindowRounding = 0.0f;
-		style.Colors[ImGuiCol_WindowBg].w = 1.0f;
-	}
-
-	// Setup Platform/Renderer backends
-	ImGui_ImplWin32_Init(hwnd);
-	ImGui_ImplDX11_Init(Device.Get(), Context.Get());
-
-	return true;
+	SwapChain->Present(1, NULL);
 }
 
-bool DX11::RenderFrame()
+void DX11::EndFrame()
 {
 	const float bgColor[4] = { 0.8f, 0.8f, 0.8f, 1.0f };
 
@@ -304,25 +253,4 @@ bool DX11::RenderFrame()
 
 	Context->OMSetDepthStencilState(myDepthStencilState.Get(), 1);
 	Context->RSSetState(myRasterizerState.Get());
-
-	// Start the Dear ImGui frame
-	ImGui_ImplDX11_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
-
-	ImGui::ShowDemoWindow();
-
-	// Rendering
-	ImGui::Render();
-	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
-	// Update and Render additional Platform Windows
-	if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-	{
-		ImGui::UpdatePlatformWindows();
-		ImGui::RenderPlatformWindowsDefault();
-	}
-
-	SwapChain->Present(1, NULL);
-	return true;
 }

@@ -2,6 +2,7 @@
 #include <windows.h>
 #include "Win32/WindowContainer.h"
 #include "Graphics/DX11.h"
+#include "ImGui/ImGuiLayer.h"
 
 class Engine
 {
@@ -17,5 +18,6 @@ private:
 	
 	WindowContainer myWindowContainer;
 	DX11 myDirectX;
+	ImGuiLayer myImGuiLayer;
 };
 

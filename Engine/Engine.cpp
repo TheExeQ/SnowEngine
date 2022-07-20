@@ -11,10 +11,20 @@ bool Engine::Initialize(HINSTANCE hInstance, const int& aWidth, const int& aHeig
 		return false;
 	}
 
-	result = myDirectX.Initialize(myWindowContainer.GetWindowHandle());
+	HWND handle = myWindowContainer.GetWindowHandle();
+
+	result = myDirectX.Initialize(handle, aWidth, aHeight);
 	if (!result)
 	{
 		std::cout << "Failed to initialize DirectX" << std::endl;
+		std::cin.get();
+		return false;
+	}
+
+	result = myImGuiLayer.Initialize(handle);
+	if (!result)
+	{
+		std::cout << "Failed to initialize ImGui Layer" << std::endl;
 		std::cin.get();
 		return false;
 	}
@@ -26,7 +36,10 @@ void Engine::Update()
 {
 	if (myWindowContainer.ProcessMessages())
 	{
-		myDirectX.RenderFrame();
+		myDirectX.BeginFrame();
+		myImGuiLayer.Begin();
+		myDirectX.EndFrame();
+		myImGuiLayer.End();
 	}
 	else
 	{

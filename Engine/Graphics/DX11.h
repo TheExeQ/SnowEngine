@@ -15,10 +15,9 @@ public:
 	
 private:
 	friend class Engine;
-	friend LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-	bool Initialize(HWND hwnd);
-	bool CleanUp();
-	bool RenderFrame();
+	bool Initialize(HWND hwnd, const int& aWidth, const int& aHeight);
+	void BeginFrame();
+	void EndFrame();
 	
 	bool CreateDeviceAndSwapChain(HWND hwnd);
 	bool CreateRenderTargetView();
@@ -26,13 +25,15 @@ private:
 	bool CreateRasterizer();
 	bool CreateShaders();
 	bool CreateConstantBuffers();
-	bool SetupImGui(HWND hwnd);
 
 	ComPtr<ID3D11RenderTargetView> myRenderTargetView;
 	ComPtr<ID3D11DepthStencilView> myDepthStencilView;
 	ComPtr<ID3D11Texture2D> myDepthStencilBuffer;
 	ComPtr<ID3D11DepthStencilState> myDepthStencilState;
 	ComPtr<ID3D11RasterizerState> myRasterizerState;
+
+	UINT myWindowWidth = 0;
+	UINT myWindowHeight = 0;
 
 	inline static DX11* myInstance = nullptr;
 };
