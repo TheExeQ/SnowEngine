@@ -6,6 +6,7 @@
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "ConstantBuffer.h"
+#include "Camera.h"
 
 using namespace Microsoft::WRL;
 
@@ -30,6 +31,7 @@ private:
 	bool CreateRasterizer();
 	bool CreateShaders();
 	bool CreateConstantBuffers();
+	bool CreateSquare();
 
 	VertexShader myVertexShader;
 	PixelShader myPixelShader;
@@ -45,6 +47,8 @@ private:
 
 	UINT myWindowWidth = 0;
 	UINT myWindowHeight = 0;
+
+	Camera myMainCamera;
 
 	inline static DX11* myInstance = nullptr;
 };

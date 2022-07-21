@@ -6,6 +6,74 @@ ComPtr<ID3D11Device> DX11::Device = nullptr;
 ComPtr<ID3D11DeviceContext> DX11::Context = nullptr;
 ComPtr<IDXGISwapChain> DX11::SwapChain = nullptr;
 
+bool DX11::CreateSquare()
+{
+	HRESULT hr;
+
+	Vertex vertices[] =
+	{
+		Vertex(-0.5f, -0.5f, -0.5f, 1.f, 0.f, 0.f), //Left Bottom
+		Vertex(-0.5f, 0.5f, -0.5f, 0.f, 1.f, 0.f), //Left Top
+		Vertex(0.5f, 0.5f, -0.5f, 0.f, 0.f, 1.f), //Right Top
+		Vertex(0.5f, -0.5f, -0.5f, 0.0f, 0.f, 0.f), //Right Bottom
+
+		Vertex(-0.5f, -0.5f, 0.5f, 1.f, 1.f, 0.f), //Left Bottom
+		Vertex(-0.5f, 0.5f, 0.5f, 0.f, 1.f, 1.f), //Left Top
+		Vertex(0.5f, 0.5f, 0.5f, 1.f, 0.f, 1.f), //Right Top
+		Vertex(0.5f, -0.5f, 0.5f, 1.f, 1.f, 1.f), //Right Bottom
+	};
+
+	hr = myVertexBuffer.Initialize(Device.Get(), vertices, ARRAYSIZE(vertices));
+	if (FAILED(hr))
+	{
+		std::cout << "Failed to initialize vertex buffer" << std::endl;
+		return false;
+	}
+
+	DWORD indicies[] =
+	{
+		//Front
+		0, 1, 2,
+		0, 2, 3,
+
+		// Back
+		6, 5, 4,
+		7, 6, 4,
+
+		// Left
+		0, 4, 5,
+		0, 5, 1,
+
+		// Right
+		2, 6, 7,
+		2, 7, 3,
+
+		// Top
+		1, 5, 6,
+		1, 6, 2,
+
+		// Bottom
+		4, 0, 3,
+		4, 3, 7,
+	};
+
+	hr = myIndexBuffer.Initialize(Device.Get(), indicies, ARRAYSIZE(indicies));
+	if (FAILED(hr))
+	{
+		std::cout << "Failed to initialize index buffer" << std::endl;
+		return false;
+	}
+
+	myMainCamera.SetProjectionValues(90.f, 16.f / 9.f, 0.1f, 1000.f);
+	myMainCamera.SetPosition(0.f, 0.f, -2.f);
+
+	myConstantBuffer.myData.matrix = DirectX::XMMatrixIdentity();
+	myConstantBuffer.myData.matrix = myConstantBuffer.myData.matrix * myMainCamera.GetViewMatrix() * myMainCamera.GetProjectionMatrix();
+	myConstantBuffer.myData.matrix = DirectX::XMMatrixTranspose(myConstantBuffer.myData.matrix);
+	myConstantBuffer.Update();
+	return true;
+}
+
 bool DX11::Initialize(HWND hwnd, const int& aWidth, const int& aHeight)
 {
 	if (!myInstance) { myInstance = this; }
@@ -24,6 +92,7 @@ bool DX11::Initialize(HWND hwnd, const int& aWidth, const int& aHeight)
 	if (!CreateRasterizer()) { return false; };
 	if (!CreateShaders()) { return false; };
 	if (!CreateConstantBuffers()) { return false; };
+	if (!CreateSquare()) { return false; };
 
 	std::cout << "Successfully initialized DirectX!" << std::endl;
 	return true;
@@ -260,6 +329,12 @@ void DX11::BeginFrame()
 	Context->PSSetShader(myPixelShader.GetShader(), nullptr, 0);
 
 	Context->VSSetConstantBuffers(0, 1, myConstantBuffer.GetAddressOf());
+
+	UINT offset = 0;
+
+	Context->IASetVertexBuffers(0, 1, myVertexBuffer.GetAddressOf(), myVertexBuffer.StridePtr(), &offset);
+	Context->IASetIndexBuffer(myIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+	Context->DrawIndexed(myIndexBuffer.BufferSize(), 0, 0);
 }
 
 void DX11::EndFrame()
