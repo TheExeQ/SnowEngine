@@ -1,7 +1,7 @@
 #pragma once
 #include <windows.h>
 #include "Win32/WindowContainer.h"
-#include "Graphics/DX11.h"
+#include "Renderer/DX11.h"
 #include "ImGui/ImGuiLayer.h"
 
 class Engine

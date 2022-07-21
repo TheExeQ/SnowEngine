@@ -28,6 +28,7 @@ project "Engine"
 	
 	filter { "files:**.hlsl" }
 		shadermodel "5.0"
+		shaderobjectfileoutput "../bin/Shaders/%{file.basename}.cso"
 
 	filter { "files:**-vs.hlsl" }
 		shadertype "Vertex"
