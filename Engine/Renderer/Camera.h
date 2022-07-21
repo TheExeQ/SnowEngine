@@ -1,6 +1,10 @@
 #pragma once
+#include <glm/glm.hpp>
+#include <glm/ext.hpp>
+#include <glm/gtx/euler_angles.hpp>
 #include <DirectXMath.h>
 using namespace DirectX;
+
 
 class Camera
 {
@@ -11,27 +15,27 @@ public:
 	const XMMATRIX& GetViewMatrix() const;
 	const XMMATRIX& GetProjectionMatrix() const;
 
-	const XMVECTOR& GetPositionVector() const;
-	const XMFLOAT3& GetPositionFloat3() const;
-	const XMVECTOR& GetRotationVector() const;
-	const XMFLOAT3& GetRotationFloat3() const;
+	const glm::vec4& GetPositionVector() const;
+	const glm::vec3& GetPositionFloat3() const;
+	const glm::vec4& GetRotationVector() const;
+	const glm::vec3& GetRotationFloat3() const;
 
-	void SetPosition(const XMVECTOR& pos);
+	void SetPosition(const glm::vec4& pos);
 	void SetPosition(float x, float y, float z);
-	void AdjustPosition(const XMVECTOR& pos);
+	void AdjustPosition(const glm::vec4& pos);
 	void AdjustPosition(float x, float y, float z);
-	void SetRotation(const XMVECTOR& rot);
+	void SetRotation(const glm::vec4& rot);
 	void SetRotation(float x, float y, float z);
-	void AdjustRotation(const XMVECTOR& rot);
+	void AdjustRotation(const glm::vec4& rot);
 	void AdjustRotation(float x, float y, float z);
-	void SetLookAtPos(XMFLOAT3 lookAtPos);
+	void SetLookAtPos(glm::vec3 lookAtPos);
 
 private:
 	void UpdateViewMatrix();
-	XMVECTOR posVector;
-	XMVECTOR rotVector;
-	XMFLOAT3 pos;
-	XMFLOAT3 rot;
+	glm::vec4 posVector;
+	glm::vec4 rotVector;
+	glm::vec3 pos;
+	glm::vec3 rot;
 	XMMATRIX viewMatrix;
 	XMMATRIX projectionMatrix;
 
