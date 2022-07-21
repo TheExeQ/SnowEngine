@@ -79,7 +79,7 @@ bool WindowContainer::Initialize(HINSTANCE ahInstance, const int& aWidth, const 
 		WS_OVERLAPPEDWINDOW,            // Window style
 
 		// Position & Size
-		0, 0, myWindowWidth, myWindowHeight,
+		CW_USEDEFAULT, CW_USEDEFAULT, myWindowWidth, myWindowHeight,
 
 		NULL,       // Parent window    
 		NULL,       // Menu

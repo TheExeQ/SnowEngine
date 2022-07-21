@@ -1,6 +1,11 @@
 #pragma once
 #include <d3d11.h>
 #include <wrl/client.h>
+#include "Shaders.h"
+#include "Vertex.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
+#include "ConstantBuffer.h"
 
 using namespace Microsoft::WRL;
 
@@ -25,6 +30,12 @@ private:
 	bool CreateRasterizer();
 	bool CreateShaders();
 	bool CreateConstantBuffers();
+
+	VertexShader myVertexShader;
+	PixelShader myPixelShader;
+	VertexBuffer<Vertex> myVertexBuffer;
+	IndexBuffer myIndexBuffer;
+	ConstantBuffer<VSMatrix> myConstantBuffer;
 
 	ComPtr<ID3D11RenderTargetView> myRenderTargetView;
 	ComPtr<ID3D11DepthStencilView> myDepthStencilView;

@@ -202,52 +202,47 @@ bool DX11::CreateRasterizer()
 
 bool DX11::CreateShaders()
 {
-	// Create the input assembler
-	//D3D11_INPUT_ELEMENT_DESC inputLayoutDesc[] =
-	//{
-	//	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	//	{ "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
-	//};
+	//Create the input assembler
+	D3D11_INPUT_ELEMENT_DESC inputLayoutDesc[] =
+	{
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+	};
 
-	//if (!myVertexShader.Init(L"../bin/Default-vs.cso", inputLayoutDesc, ARRAYSIZE(inputLayoutDesc)))
-	//{
-	//	return false;
-	//};
+	if (!myVertexShader.Init(L"../libs/Default-vs.cso", inputLayoutDesc, ARRAYSIZE(inputLayoutDesc)))
+	{
+		return false;
+	};
 
-	//if (!myPixelShader.Init(L"../bin/Default-ps.cso"))
-	//{
-	//	return false;
-	//};
+	if (!myPixelShader.Init(L"../libs/Default-ps.cso"))
+	{
+		return false;
+	};
 	return true;
 }
 
 bool DX11::CreateConstantBuffers()
 {
-	//HRESULT hr;
-	//// Set transform matrix of the sqaure to constant buffer
-	//hr = myConstantBuffer.Init(myDevice.Get(), myContext.Get());
-	//if (FAILED(hr))
-	//{
-	//	std::cout << "Failed to create constant buffer" << std::endl;
-	//	return false;
-	//}
+	HRESULT hr;
+	// Set transform matrix of the sqaure to constant buffer
+	hr = myConstantBuffer.Init(Device.Get(), Context.Get());
+	if (FAILED(hr))
+	{
+		std::cout << "Failed to create constant buffer" << std::endl;
+		return false;
+	}
 
-	//hr = myConstantBuffer.Update();
-	//if (FAILED(hr))
-	//{
-	//	std::cout << "Failed to update constant buffer" << std::endl;
-	//	return false;
-	//}
+	hr = myConstantBuffer.Update();
+	if (FAILED(hr))
+	{
+		std::cout << "Failed to update constant buffer" << std::endl;
+		return false;
+	}
 	return true;
 }
 
 
 void DX11::BeginFrame()
-{
-	SwapChain->Present(1, NULL);
-}
-
-void DX11::EndFrame()
 {
 	const float bgColor[4] = { 0.8f, 0.8f, 0.8f, 1.0f };
 
@@ -257,4 +252,17 @@ void DX11::EndFrame()
 
 	Context->OMSetDepthStencilState(myDepthStencilState.Get(), 1);
 	Context->RSSetState(myRasterizerState.Get());
+
+	Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	Context->IASetInputLayout(myVertexShader.GetInputLayout());
+
+	Context->VSSetShader(myVertexShader.GetShader(), nullptr, 0);
+	Context->PSSetShader(myPixelShader.GetShader(), nullptr, 0);
+
+	Context->VSSetConstantBuffers(0, 1, myConstantBuffer.GetAddressOf());
+}
+
+void DX11::EndFrame()
+{
+	SwapChain->Present(1, NULL);
 }

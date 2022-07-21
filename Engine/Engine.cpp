@@ -38,8 +38,8 @@ void Engine::Update()
 	{
 		myDirectX.BeginFrame();
 		myImGuiLayer.Begin();
-		myDirectX.EndFrame();
 		myImGuiLayer.End();
+		myDirectX.EndFrame();
 	}
 	else
 	{

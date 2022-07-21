@@ -43,3 +43,6 @@ libs/
 *.user
 *.filters
 *.vcxproj
+
+#ImGui Config
+imgui.ini
