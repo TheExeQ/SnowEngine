@@ -11,8 +11,12 @@ bool DX11::Initialize(HWND hwnd, const int& aWidth, const int& aHeight)
 	if (!myInstance) { myInstance = this; }
 	else { return false; }
 
-	myWindowWidth = static_cast<UINT>(aWidth);
-	myWindowHeight = static_cast<UINT>(aHeight);
+	RECT windowRect;
+
+	GetClientRect(hwnd, &windowRect);
+
+	myWindowWidth = windowRect.right - windowRect.left;
+	myWindowHeight = windowRect.bottom - windowRect.top;
 
 	if (!CreateDeviceAndSwapChain(hwnd)) { return false; };
 	if (!CreateRenderTargetView()) { return false; };
