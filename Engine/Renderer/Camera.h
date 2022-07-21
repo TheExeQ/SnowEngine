@@ -41,4 +41,6 @@ private:
 
 	const XMVECTOR DEFAULT_FORWARD_VECTOR = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
 	const XMVECTOR DEFAULT_UP_VECTOR = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+	const glm::vec4 DEFAULT_FORWARD_VECTOR_GLM = glm::vec4(0.0f, 0.0f, 1.0f, 0.0f);
+	const glm::vec4 DEFAULT_UP_VECTOR_GLM = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
 };

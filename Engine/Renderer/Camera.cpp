@@ -140,6 +140,7 @@ void Camera::UpdateViewMatrix() //Updates view matrix and also updates the movem
 {
 	XMVECTOR posVec = { posVector.x, posVector.y, posVector.z, posVector.y };
 	
+	//DXMATH VERSION
 	//Calculate camera rotation matrix
 	XMMATRIX camRotationMatrix = XMMatrixRotationRollPitchYaw(this->rot.x, this->rot.y, this->rot.z);
 	//Calculate unit vector of cam target based off camera forward value transformed by cam rotation matrix
@@ -152,18 +153,18 @@ void Camera::UpdateViewMatrix() //Updates view matrix and also updates the movem
 	this->viewMatrix = XMMatrixLookAtLH(posVec, camTarget, upDir);
 
 
-	////GLM VERSION
-	////Calculate camera rotation matrix
-	//glm::mat4 camRotationMatrix = glm::eulerAngleXYZ(this->rot.x, this->rot.y, this->rot.z);
-	////Calculate unit vector of cam target based off camera forward value transformed by cam rotation matrix
-	//glm::vec4 camTarget = DEFAULT_FORWARD_VECTOR * camRotationMatrix;
-	////Adjust cam target to be offset by the camera's current position
-	//camTarget += posVector;
-	////Calculate up direction based on current rotation
-	//glm::vec4 upDir = DEFAULT_UP_VECTOR * camRotationMatrix;
+	//GLM VERSION
+	//Calculate camera rotation matrix
+	glm::mat4 camRotationMatrix2 = glm::eulerAngleXYZ(this->rot.x, this->rot.y, this->rot.z);
+	//Calculate unit vector of cam target based off camera forward value transformed by cam rotation matrix
+	glm::vec4 camTarget2 = DEFAULT_FORWARD_VECTOR_GLM * camRotationMatrix2;
+	//Adjust cam target to be offset by the camera's current position
+	camTarget2 += posVector;
+	//Calculate up direction based on current rotation
+	glm::vec4 upDir2 = DEFAULT_UP_VECTOR_GLM * camRotationMatrix2;
 
-	//glm::vec3 camTarg = glm::vec3(camTarget.x, camTarget.y, camTarget.z);
-	//glm::vec3 up = glm::vec3(upDir.x, upDir.y, upDir.z);
+	glm::vec3 camTarg = glm::vec3(camTarget2.x, camTarget2.y, camTarget2.z);
+	glm::vec3 up = glm::vec3(upDir2.x, upDir2.y, upDir2.z);
 
 	////Rebuild view matrix
 	//this->viewMatrix = glm::lookAtLH(pos, camTarg, up);
