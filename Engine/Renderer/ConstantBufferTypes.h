@@ -1,7 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
 
-struct VSMatrix
+struct FrameBuffer
 {
-	glm::mat4 matrix;
+	glm::mat4 ViewProjectionMatrix;
 };

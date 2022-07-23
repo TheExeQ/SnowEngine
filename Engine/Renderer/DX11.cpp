@@ -6,7 +6,7 @@ ComPtr<ID3D11Device> DX11::Device = nullptr;
 ComPtr<ID3D11DeviceContext> DX11::Context = nullptr;
 ComPtr<IDXGISwapChain> DX11::SwapChain = nullptr;
 
-bool DX11::CreateSquare()
+bool DX11::CreateCube()
 {
 	HRESULT hr;
 
@@ -67,10 +67,10 @@ bool DX11::CreateSquare()
 	myMainCamera.SetProjectionValues(90.f, 16.f / 9.f, 0.1f, 1000.f);
 	myMainCamera.SetPosition(0.f, 0.f, -2.f);
 
-	myConstantBuffer.myData.matrix = glm::mat4(1.f);
-	myConstantBuffer.myData.matrix = myMainCamera.GetProjectionMatrix() * myMainCamera.GetViewMatrix() * myConstantBuffer.myData.matrix;
-	myConstantBuffer.myData.matrix = glm::transpose(myConstantBuffer.myData.matrix);
-	myConstantBuffer.Update();
+	myFrameBuffer.myData.ViewProjectionMatrix = glm::mat4(1.f);
+	myFrameBuffer.myData.ViewProjectionMatrix = myMainCamera.GetProjectionMatrix() * myMainCamera.GetViewMatrix() * myFrameBuffer.myData.ViewProjectionMatrix;
+	myFrameBuffer.myData.ViewProjectionMatrix = glm::transpose(myFrameBuffer.myData.ViewProjectionMatrix);
+	myFrameBuffer.Update();
 	return true;
 }
 
@@ -92,7 +92,7 @@ bool DX11::Initialize(HWND hwnd, const int& aWidth, const int& aHeight)
 	if (!CreateRasterizer()) { return false; };
 	if (!CreateShaders()) { return false; };
 	if (!CreateConstantBuffers()) { return false; };
-	if (!CreateSquare()) { return false; };
+	if (!CreateCube()) { return false; };
 
 	std::cout << "Successfully initialized DirectX!" << std::endl;
 	return true;
@@ -294,14 +294,14 @@ bool DX11::CreateConstantBuffers()
 {
 	HRESULT hr;
 	// Set transform matrix of the sqaure to constant buffer
-	hr = myConstantBuffer.Init(Device.Get(), Context.Get());
+	hr = myFrameBuffer.Init(Device.Get(), Context.Get());
 	if (FAILED(hr))
 	{
 		std::cout << "Failed to create constant buffer" << std::endl;
 		return false;
 	}
 
-	hr = myConstantBuffer.Update();
+	hr = myFrameBuffer.Update();
 	if (FAILED(hr))
 	{
 		std::cout << "Failed to update constant buffer" << std::endl;
@@ -313,6 +313,12 @@ bool DX11::CreateConstantBuffers()
 
 void DX11::BeginFrame()
 {
+	static auto obj = glm::mat4(1.f);
+	obj = glm::rotate(obj, glm::radians(0.5f), { 0.f, 1.f, 0.f });
+	myFrameBuffer.myData.ViewProjectionMatrix = myMainCamera.GetProjectionMatrix() * myMainCamera.GetViewMatrix() * obj;
+	myFrameBuffer.myData.ViewProjectionMatrix = glm::transpose(myFrameBuffer.myData.ViewProjectionMatrix);
+	myFrameBuffer.Update();
+
 	const float bgColor[4] = { 0.8f, 0.8f, 0.8f, 1.0f };
 
 	Context->OMSetRenderTargets(1, myRenderTargetView.GetAddressOf(), myDepthStencilView.Get());
@@ -328,7 +334,7 @@ void DX11::BeginFrame()
 	Context->VSSetShader(myVertexShader.GetShader(), nullptr, 0);
 	Context->PSSetShader(myPixelShader.GetShader(), nullptr, 0);
 
-	Context->VSSetConstantBuffers(0, 1, myConstantBuffer.GetAddressOf());
+	Context->VSSetConstantBuffers(0, 1, myFrameBuffer.GetAddressOf());
 
 	UINT offset = 0;
 

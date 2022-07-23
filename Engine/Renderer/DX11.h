@@ -31,13 +31,13 @@ private:
 	bool CreateRasterizer();
 	bool CreateShaders();
 	bool CreateConstantBuffers();
-	bool CreateSquare();
+	bool CreateCube();
 
 	VertexShader myVertexShader;
 	PixelShader myPixelShader;
 	VertexBuffer<Vertex> myVertexBuffer;
 	IndexBuffer myIndexBuffer;
-	ConstantBuffer<VSMatrix> myConstantBuffer;
+	ConstantBuffer<FrameBuffer> myFrameBuffer;
 
 	ComPtr<ID3D11RenderTargetView> myRenderTargetView;
 	ComPtr<ID3D11DepthStencilView> myDepthStencilView;
