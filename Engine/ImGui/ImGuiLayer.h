@@ -10,19 +10,13 @@ public:
 	ImGuiLayer() = default;
 	~ImGuiLayer() = default;
 
-	static ImGuiLayer& Get() { return *myInstance; };
-	
 private:
 	friend class Engine;
-	friend LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
 	bool Initialize(HWND hwnd);
-	bool CleanUp();
+	void CleanUp();
 
 	void Begin();
 	void End();
-
-	bool myHasCleanedUp = false;
-
-	inline static ImGuiLayer* myInstance = nullptr;
 };
 

@@ -8,7 +8,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_ int nCmdShow)
 {
 	Engine engine;
-	
+
 	if (engine.Initialize(hInstance, 1280, 720))
 	{
 		while (engine.IsRunning())
@@ -16,6 +16,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			engine.Begin();
 			engine.End();
 		}
+		engine.CleanUp();
 	}
 	return 0;
 }

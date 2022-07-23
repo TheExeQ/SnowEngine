@@ -21,8 +21,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		while (engine.IsRunning())
 		{
 			engine.Begin();
+
+			// Remove later only for debug now
+			bool show = true;
+			ImGui::ShowDemoWindow(&show);
+
 			engine.End();
 		}
+		engine.CleanUp();
 	}
 	return 0;
 }

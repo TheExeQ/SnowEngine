@@ -3,9 +3,6 @@
 
 bool ImGuiLayer::Initialize(HWND hwnd)
 {
-	if (!myInstance) { myInstance = this; }
-	else { return false; }
-
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -41,40 +38,24 @@ bool ImGuiLayer::Initialize(HWND hwnd)
 	return true;
 }
 
-bool ImGuiLayer::CleanUp()
+void ImGuiLayer::CleanUp()
 {
-	if (!myHasCleanedUp)
-	{
-		// Cleanup
-		ImGui_ImplDX11_Shutdown();
-		ImGui_ImplWin32_Shutdown();
-		ImGui::DestroyContext();
-
-		myHasCleanedUp = true;
-		return true;
-	}
-	else 
-	{ 
-		return false; 
-	}
+	// Cleanup
+	ImGui_ImplDX11_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
 }
 
 void ImGuiLayer::Begin()
 {
-	if (myHasCleanedUp) { return; }
 	// Start the Dear ImGui frame
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
-
-	// Remove later only for debug now
-	bool show = true;
-	ImGui::ShowDemoWindow(&show);
 }
 
 void ImGuiLayer::End()
 {
-	if (myHasCleanedUp) { return; }
 	// Rendering
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());

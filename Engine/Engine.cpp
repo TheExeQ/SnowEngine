@@ -3,6 +3,17 @@
 
 bool Engine::Initialize(HINSTANCE hInstance, const int& aWidth, const int& aHeight, std::string aWindowTitle, const std::string& aWindowClass)
 {
+	if (!myInstance)
+	{
+		myInstance = this;
+	}
+	else
+	{
+		std::cout << "Engine already initialized" << std::endl;
+		std::cin.get();
+		return false;
+	}
+
 	auto result = myWindowContainer.Initialize(hInstance, aWidth, aHeight, aWindowTitle, aWindowClass);
 	if (!result)
 	{
@@ -34,19 +45,24 @@ bool Engine::Initialize(HINSTANCE hInstance, const int& aWidth, const int& aHeig
 
 void Engine::Begin()
 {
-	if (myWindowContainer.ProcessMessages())
+	if (myIsRunning)
 	{
+		myWindowContainer.ProcessMessages();
 		myDirectX.BeginFrame();
 		myImGuiLayer.Begin();
-	}
-	else
-	{
-		myIsRunning = false;
 	}
 }
 
 void Engine::End()
 {
-	myImGuiLayer.End();
-	myDirectX.EndFrame();
+	if (myIsRunning)
+	{
+		myImGuiLayer.End();
+		myDirectX.EndFrame();
+	}
+}
+
+void Engine::CleanUp()
+{
+	myImGuiLayer.CleanUp();
 }

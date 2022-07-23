@@ -1,5 +1,5 @@
 #include "WindowContainer.h"
-#include "ImGui/ImGuiLayer.h"
+#include "Engine.h"
 #include <iostream>
 
 int WindowContainer::myWindowWidth = 0;
@@ -34,7 +34,7 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_CLOSE:
 	case WM_DESTROY:
 	{
-		ImGuiLayer::Get().CleanUp();
+		Engine::Get().myIsRunning = false;
 		break;
 	}
 	}
@@ -101,7 +101,7 @@ bool WindowContainer::Initialize(HINSTANCE ahInstance, const int& aWidth, const 
 	return true;
 }
 
-bool WindowContainer::ProcessMessages()
+void WindowContainer::ProcessMessages()
 {
 	MSG msg = { };
 
@@ -117,17 +117,7 @@ bool WindowContainer::ProcessMessages()
 		{
 			myHandle = NULL;
 			UnregisterClass(myWindowClassWide.c_str(), myHInstance);
-			return false;
 		}
-	}
-
-	if (myHandle)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
 	}
 }
 

@@ -11,7 +11,7 @@ public:
 	~WindowContainer() = default;
 	bool Initialize(HINSTANCE ahInstance, const int& aWidth, const int& aHeight, 
 		std::string aWindowTitle, const std::string& aWindowClass);
-	bool ProcessMessages();
+	void ProcessMessages();
 	HWND GetWindowHandle() const { return myHandle; };
 	static int GetWidth() { return myWindowWidth; };
 	static int GetHeight() { return myWindowHeight; };

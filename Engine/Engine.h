@@ -11,14 +11,24 @@ public:
 		std::string aWindowTitle = "Snow Engine", const std::string& aWindowClass = "Snow Engine");
 	void Begin();
 	void End();
+	void CleanUp();
 	
 	bool IsRunning() const { return myIsRunning; };
 
+	static Engine& Get() { return *myInstance; };
+
 private:
-	bool myIsRunning = true;
+
+	friend class DX11;
+	friend class WindowContainer;
+	friend LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	
 	WindowContainer myWindowContainer;
 	DX11 myDirectX;
 	ImGuiLayer myImGuiLayer;
+
+	bool myIsRunning = true;
+
+	inline static Engine* myInstance = nullptr;
 };
 
