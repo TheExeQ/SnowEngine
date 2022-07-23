@@ -12,5 +12,6 @@ workspace "SnowEngine"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 include "Editor/"
+include "Runtime/"
 include "Engine/"
 include "ThirdParty/"
