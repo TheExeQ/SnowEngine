@@ -1,5 +1,5 @@
 workspace "SnowEngine"
-	startproject "Game"
+	startproject "Editor"
 	architecture "x64"
 
 	configurations
@@ -11,6 +11,6 @@ workspace "SnowEngine"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
-include "Game/"
+include "Editor/"
 include "Engine/"
 include "ThirdParty/"

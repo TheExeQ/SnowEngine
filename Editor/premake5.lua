@@ -1,4 +1,4 @@
-project "Game"
+project "Editor"
 	kind "WindowedApp"
 	language "C++"
 	
