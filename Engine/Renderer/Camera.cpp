@@ -1,7 +1,5 @@
 #include "Camera.h"
 
-#define GLM_FORCE_LEFT_HANDED
-
 Camera::Camera()
 {
 	this->pos = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -14,16 +12,15 @@ Camera::Camera()
 void Camera::SetProjectionValues(float fovDegrees, float aspectRatio, float nearZ, float farZ)
 {
 	float fovRadians = (fovDegrees / 360.0f) * glm::two_pi<float>();
-	//this->projectionMatrix = glm::perspective(fovRadians, aspectRatio, nearZ, farZ);
-	this->projectionMatrix = XMMatrixPerspectiveFovLH(fovRadians, aspectRatio, nearZ, farZ);
+	this->projectionMatrix = glm::perspective(fovRadians, aspectRatio, nearZ, farZ);
 }
 
-const  XMMATRIX& Camera::GetViewMatrix() const
+const glm::mat4& Camera::GetViewMatrix() const
 {
 	return this->viewMatrix;
 }
 
-const  XMMATRIX& Camera::GetProjectionMatrix() const
+const glm::mat4& Camera::GetProjectionMatrix() const
 {
 	return this->projectionMatrix;
 }
@@ -138,34 +135,18 @@ void Camera::SetLookAtPos(glm::vec3 lookAtPos)
 
 void Camera::UpdateViewMatrix() //Updates view matrix and also updates the movement vectors
 {
-	XMVECTOR posVec = { posVector.x, posVector.y, posVector.z, posVector.y };
-	
-	//DXMATH VERSION
-	//Calculate camera rotation matrix
-	XMMATRIX camRotationMatrix = XMMatrixRotationRollPitchYaw(this->rot.x, this->rot.y, this->rot.z);
-	//Calculate unit vector of cam target based off camera forward value transformed by cam rotation matrix
-	XMVECTOR camTarget = XMVector3TransformCoord(this->DEFAULT_FORWARD_VECTOR, camRotationMatrix);
-	//Adjust cam target to be offset by the camera's current position
-	camTarget += posVec;
-	//Calculate up direction based on current rotation
-	XMVECTOR upDir = XMVector3TransformCoord(this->DEFAULT_UP_VECTOR, camRotationMatrix);
-	//Rebuild view matrix
-	this->viewMatrix = XMMatrixLookAtLH(posVec, camTarget, upDir);
-
-
-	//GLM VERSION
 	//Calculate camera rotation matrix
 	glm::mat4 camRotationMatrix2 = glm::eulerAngleXYZ(this->rot.x, this->rot.y, this->rot.z);
 	//Calculate unit vector of cam target based off camera forward value transformed by cam rotation matrix
-	glm::vec4 camTarget2 = DEFAULT_FORWARD_VECTOR_GLM * camRotationMatrix2;
+	glm::vec4 camTarget2 = camRotationMatrix2 * DEFAULT_FORWARD_VECTOR_GLM;
 	//Adjust cam target to be offset by the camera's current position
 	camTarget2 += posVector;
 	//Calculate up direction based on current rotation
-	glm::vec4 upDir2 = DEFAULT_UP_VECTOR_GLM * camRotationMatrix2;
+	glm::vec4 upDir2 = camRotationMatrix2 * DEFAULT_UP_VECTOR_GLM;
 
 	glm::vec3 camTarg = glm::vec3(camTarget2.x, camTarget2.y, camTarget2.z);
 	glm::vec3 up = glm::vec3(upDir2.x, upDir2.y, upDir2.z);
 
-	////Rebuild view matrix
-	//this->viewMatrix = glm::lookAtLH(pos, camTarg, up);
+	//Rebuild view matrix
+	this->viewMatrix = glm::lookAtLH(pos, camTarg, up);
 }

@@ -67,12 +67,9 @@ bool DX11::CreateSquare()
 	myMainCamera.SetProjectionValues(90.f, 16.f / 9.f, 0.1f, 1000.f);
 	myMainCamera.SetPosition(0.f, 0.f, -2.f);
 
-	myConstantBuffer.myData.matrix = DirectX::XMMatrixIdentity();
-	myConstantBuffer.myData.matrix = myConstantBuffer.myData.matrix * myMainCamera.GetViewMatrix() * myMainCamera.GetProjectionMatrix();
-	myConstantBuffer.myData.matrix = DirectX::XMMatrixTranspose(myConstantBuffer.myData.matrix);
-
-	//myConstantBuffer.myData.matrix = glm::mat4(1.f);
-	//myConstantBuffer.myData.matrix = myConstantBuffer.myData.matrix * myMainCamera.GetViewMatrix() * myMainCamera.GetProjectionMatrix();
+	myConstantBuffer.myData.matrix = glm::mat4(1.f);
+	myConstantBuffer.myData.matrix = myMainCamera.GetProjectionMatrix() * myMainCamera.GetViewMatrix() * myConstantBuffer.myData.matrix;
+	myConstantBuffer.myData.matrix = glm::transpose(myConstantBuffer.myData.matrix);
 	myConstantBuffer.Update();
 	return true;
 }

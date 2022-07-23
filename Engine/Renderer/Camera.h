@@ -1,10 +1,10 @@
 #pragma once
+
+#define GLM_FORCE_LEFT_HANDED
+
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <glm/gtx/euler_angles.hpp>
-#include <DirectXMath.h>
-using namespace DirectX;
-
 
 class Camera
 {
@@ -12,8 +12,8 @@ public:
 	Camera();
 	void SetProjectionValues(float fovDegrees, float aspectRatio, float nearZ, float farZ);
 
-	const XMMATRIX& GetViewMatrix() const;
-	const XMMATRIX& GetProjectionMatrix() const;
+	const glm::mat4& GetViewMatrix() const;
+	const glm::mat4& GetProjectionMatrix() const;
 
 	const glm::vec4& GetPositionVector() const;
 	const glm::vec3& GetPositionFloat3() const;
@@ -36,11 +36,9 @@ private:
 	glm::vec4 rotVector;
 	glm::vec3 pos;
 	glm::vec3 rot;
-	XMMATRIX viewMatrix;
-	XMMATRIX projectionMatrix;
-
-	const XMVECTOR DEFAULT_FORWARD_VECTOR = XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
-	const XMVECTOR DEFAULT_UP_VECTOR = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+	glm::mat4 viewMatrix;
+	glm::mat4 projectionMatrix;
+	
 	const glm::vec4 DEFAULT_FORWARD_VECTOR_GLM = glm::vec4(0.0f, 0.0f, 1.0f, 0.0f);
 	const glm::vec4 DEFAULT_UP_VECTOR_GLM = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
 };

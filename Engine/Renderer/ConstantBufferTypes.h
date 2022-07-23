@@ -1,8 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
-#include <DirectXMath.h>
 
 struct VSMatrix
 {
-	DirectX::XMMATRIX matrix;
+	glm::mat4 matrix;
 };
