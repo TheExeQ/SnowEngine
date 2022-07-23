@@ -20,7 +20,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	{
 		while (engine.IsRunning())
 		{
-			engine.Update();
+			engine.Begin();
+			engine.End();
 		}
 	}
 	return 0;

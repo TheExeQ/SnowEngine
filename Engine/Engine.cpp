@@ -32,17 +32,21 @@ bool Engine::Initialize(HINSTANCE hInstance, const int& aWidth, const int& aHeig
 	return true;
 }
 
-void Engine::Update()
+void Engine::Begin()
 {
 	if (myWindowContainer.ProcessMessages())
 	{
 		myDirectX.BeginFrame();
 		myImGuiLayer.Begin();
-		myImGuiLayer.End();
-		myDirectX.EndFrame();
 	}
 	else
 	{
 		myIsRunning = false;
 	}
+}
+
+void Engine::End()
+{
+	myImGuiLayer.End();
+	myDirectX.EndFrame();
 }

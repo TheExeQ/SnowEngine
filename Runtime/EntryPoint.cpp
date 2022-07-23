@@ -7,20 +7,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_ LPWSTR lpCmdLine,
 	_In_ int nCmdShow)
 {
-#ifdef DEBUG
-	AllocConsole();
-	freopen("CONIN$", "r", stdin);
-	freopen("CONOUT$", "w", stdout);
-	freopen("CONOUT$", "w", stderr);
-#endif
-
 	Engine engine;
 	
 	if (engine.Initialize(hInstance, 1280, 720))
 	{
 		while (engine.IsRunning())
 		{
-			engine.Update();
+			engine.Begin();
+			engine.End();
 		}
 	}
 	return 0;
