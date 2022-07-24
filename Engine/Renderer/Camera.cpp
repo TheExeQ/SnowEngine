@@ -2,6 +2,7 @@
 
 Camera::Camera()
 {
+	SetProjectionValues(90.f, 16 / 9, 0.1f, 1000.f);
 	this->pos = glm::vec3(0.0f, 0.0f, 0.0f);
 	this->posVector = glm::vec4(pos, 0.f);
 	this->rot = glm::vec3(0.0f, 0.0f, 0.0f);

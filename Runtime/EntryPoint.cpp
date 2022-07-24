@@ -1,6 +1,4 @@
 #include <Engine.h>
-#include <cstdio>
-#include <iostream>
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,

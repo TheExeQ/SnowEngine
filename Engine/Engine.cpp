@@ -24,10 +24,10 @@ bool Engine::Initialize(HINSTANCE hInstance, const int& aWidth, const int& aHeig
 
 	HWND handle = myWindowContainer.GetWindowHandle();
 
-	result = myDirectX.Initialize(handle, aWidth, aHeight);
+	result = myRenderer.Initialize(handle, aWidth, aHeight);
 	if (!result)
 	{
-		std::cout << "Failed to initialize DirectX" << std::endl;
+		std::cout << "Failed to initialize Renderer" << std::endl;
 		std::cin.get();
 		return false;
 	}
@@ -48,7 +48,7 @@ void Engine::Begin()
 	if (myIsRunning)
 	{
 		myWindowContainer.ProcessMessages();
-		myDirectX.BeginFrame();
+		myRenderer.BeginFrame();
 		myImGuiLayer.Begin();
 	}
 }
@@ -58,7 +58,7 @@ void Engine::End()
 	if (myIsRunning)
 	{
 		myImGuiLayer.End();
-		myDirectX.EndFrame();
+		myRenderer.EndFrame();
 	}
 }
 

@@ -1,8 +1,9 @@
 #pragma once
 #include <windows.h>
 #include "Win32/WindowContainer.h"
-#include "Renderer/DX11.h"
+#include "Renderer/Renderer.h"
 #include "ImGui/ImGuiLayer.h"
+#include "Scene/Scene.h"
 
 class Engine
 {
@@ -13,19 +14,23 @@ public:
 	void End();
 	void CleanUp();
 	
+	void EnableVSync() { myRenderer.myVSyncEnabled = true; };
+	void DisableVSync() { myRenderer.myVSyncEnabled = false; };
+
 	bool IsRunning() const { return myIsRunning; };
 
 	static Engine& Get() { return *myInstance; };
 
 private:
-
 	friend class DX11;
 	friend class WindowContainer;
 	friend LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 	
 	WindowContainer myWindowContainer;
-	DX11 myDirectX;
+	Renderer myRenderer;
 	ImGuiLayer myImGuiLayer;
+	
+	Scene CurrentScene;
 
 	bool myIsRunning = true;
 
