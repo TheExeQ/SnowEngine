@@ -1,4 +1,5 @@
 #pragma once
+#include "entt/entt.hpp"
 
 class Renderer;
 class Entity;
@@ -24,6 +25,9 @@ public:
 
 private:
 	friend class Renderer;
+	friend class Entity;
 
 	void RenderScene() const; // Return entitys to render
+
+	entt::registry myRegistry;
 };
