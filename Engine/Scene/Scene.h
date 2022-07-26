@@ -3,6 +3,7 @@
 
 class Renderer;
 class Entity;
+class Camera;
 
 class Scene
 {
@@ -27,7 +28,7 @@ private:
 	friend class Renderer;
 	friend class Entity;
 
-	void RenderScene() const; // Return entitys to render
+	void RenderScene(const Camera& aCamera) const; // Return entitys to render
 
 	entt::registry myRegistry;
 };

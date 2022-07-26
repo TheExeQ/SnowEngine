@@ -21,7 +21,7 @@ Entity Scene::CreateEntity()
 
 void Scene::DestroyEntity(Entity aEntity)
 {
-	
+	myRegistry.destroy(aEntity.GetHandle());
 }
 
 void Scene::OnRuntimeStart()
@@ -59,7 +59,7 @@ void Scene::OnUpdateEditor()
 
 }
 
-void Scene::RenderScene() const
+void Scene::RenderScene(const Camera& aCamera) const
 {
 	
 }

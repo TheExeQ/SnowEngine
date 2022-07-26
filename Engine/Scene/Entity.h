@@ -1,38 +1,38 @@
 #pragma once
 #include "entt/entt.hpp"
-
-class Scene;
+#include "Components.h"
+#include "Scene/Scene.h"
 
 class Entity
 {
 public:
 	Entity(entt::entity aEntityHandle, Scene* aScene);
 
-	inline entt::entity get_handle() { return myEntityHandle;
+	inline entt::entity GetHandle() { return myEntityHandle;
 	}
 
 	template<typename T, typename... Args>
 	T& AddComponent(Args&&... args)
 	{
-		return myScene->registry.emplace<T>(myEntityHandle, std::forward<Args>(args)...);
+		return myScene->myRegistry.emplace<T>(myEntityHandle, std::forward<Args>(args)...);
 	}
 
 	template<typename T>
 	T& GetComponent()
 	{
-		return myScene->registry.get<T>(myEntityHandle);
+		return myScene->myRegistry.get<T>(myEntityHandle);
 	}
 
 	template<typename T>
 	void RemoveComponent()
 	{
-		return myScene->registry.remove<T>(myEntityHandle);
+		return myScene->myRegistry.remove<T>(myEntityHandle);
 	}
 
 	template<typename T>
 	bool HasComponent()
 	{
-		return myScene->registry.all_of<T>(myEntityHandle);
+		return myScene->myRegistry.all_of<T>(myEntityHandle);
 	}
 
 private:

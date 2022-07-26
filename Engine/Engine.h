@@ -19,6 +19,8 @@ public:
 
 	bool IsRunning() const { return myIsRunning; };
 
+	Scene& GetCurrentScene() { return CurrentScene; }
+
 	static Engine& Get() { return *myInstance; };
 
 private:

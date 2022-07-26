@@ -15,7 +15,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 #endif
 
 	Engine engine;
-	
+
 	if (engine.Initialize(hInstance, 1280, 720))
 	{
 		while (engine.IsRunning())
