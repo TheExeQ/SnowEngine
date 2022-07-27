@@ -7,6 +7,8 @@
 #include "ConstantBuffer.h"
 #include "Camera.h"
 
+#include "Mesh.h"
+
 class Renderer
 {
 private:
@@ -18,12 +20,12 @@ private:
 
 	bool CreateShaders();
 	bool CreateConstantBuffers();
-	bool CreateCube();
+	bool InitScene();
 	
 	VertexShader myVertexShader;
 	PixelShader myPixelShader;
-	VertexBuffer<Vertex> myVertexBuffer;
-	IndexBuffer myIndexBuffer;
+	
+	Mesh myCube;
 	ConstantBuffer<FrameBuffer> myFrameBuffer;
 
 	Camera myMainCamera;

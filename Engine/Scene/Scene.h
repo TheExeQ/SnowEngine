@@ -1,5 +1,8 @@
 #pragma once
 #include "entt/entt.hpp"
+#include "Components.h"
+#include <vector>
+#include <utility>
 
 class Renderer;
 class Entity;
@@ -28,7 +31,7 @@ private:
 	friend class Renderer;
 	friend class Entity;
 
-	void RenderScene(const Camera& aCamera) const; // Return entitys to render
+	std::vector<std::pair<const TransformComponent*, const StaticMeshComponent*>> RenderScene(const Camera& aCamera) const; // Return entitys to render
 
 	entt::registry myRegistry;
 };

@@ -1,6 +1,5 @@
 #include "Scene.h"
 #include "Entity.h"
-#include "Components.h"
 
 Scene::Scene()
 {
@@ -59,7 +58,16 @@ void Scene::OnUpdateEditor()
 
 }
 
-void Scene::RenderScene(const Camera& aCamera) const
+std::vector<std::pair<const TransformComponent*, const StaticMeshComponent*>> Scene::RenderScene(const Camera& aCamera) const
 {
-	
+	std::vector<std::pair<const TransformComponent*, const StaticMeshComponent*>> entitiesToRender;
+	myRegistry.each([&](entt::entity entity)
+		{
+			auto [transform, staticMesh] = myRegistry.try_get<TransformComponent, StaticMeshComponent>(entity);
+			if (transform && staticMesh)
+			{
+				entitiesToRender.push_back(std::pair<const TransformComponent*, const StaticMeshComponent*>(transform, staticMesh));
+			}
+		});
+	return entitiesToRender;
 }

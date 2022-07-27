@@ -1,71 +1,33 @@
 #include "Renderer.h"
+#include "MeshFactory.h"
+#include "Engine.h"
 #include <iostream>
+
+#include "Scene/Entity.h"
 
 bool Renderer::Initialize(HWND hwnd, const int& aWidth, const int& aHeight)
 {
 	if (!myGraphicsAPI.Initialize(hwnd, aWidth, aHeight)) { return false; }
 	if (!CreateShaders()) { return false; }
 	if (!CreateConstantBuffers()) { return false; }
-	if (!CreateCube()) { return false; }
+	if (!InitScene()) { return false; }
 	return true;
 }
 
-bool Renderer::CreateCube()
+bool Renderer::InitScene()
 {
-	HRESULT hr;
+	auto cube = Engine::Get().GetCurrentScene().CreateEntity();
+	auto pyramid = Engine::Get().GetCurrentScene().CreateEntity();
 
-	Vertex vertices[] =
-	{
-		Vertex(-0.5f, -0.5f, -0.5f, 1.f, 0.f, 0.f), //Left Bottom
-		Vertex(-0.5f, 0.5f, -0.5f, 0.f, 1.f, 0.f), //Left Top
-		Vertex(0.5f, 0.5f, -0.5f, 0.f, 0.f, 1.f), //Right Top
-		Vertex(0.5f, -0.5f, -0.5f, 0.0f, 0.f, 0.f), //Right Bottom
-		Vertex(-0.5f, -0.5f, 0.5f, 1.f, 1.f, 0.f), //Left Bottom
-		Vertex(-0.5f, 0.5f, 0.5f, 0.f, 1.f, 1.f), //Left Top
-		Vertex(0.5f, 0.5f, 0.5f, 1.f, 0.f, 1.f), //Right Top
-		Vertex(0.5f, -0.5f, 0.5f, 1.f, 1.f, 1.f), //Right Bottom
-	};
+	cube.GetComponent<TransformComponent>().position = { -1.0f, 0.0f, 0.0f };
+	cube.GetComponent<TransformComponent>().rotation = {45.f, 45.0f, 0.0f };
+	cube.AddComponent<StaticMeshComponent>().mesh = MeshFactory::CreateCube();
 
-	hr = myVertexBuffer.Initialize(DX11::Device.Get(), vertices, ARRAYSIZE(vertices));
-	if (FAILED(hr))
-	{
-		std::cout << "Failed to initialize vertex buffer" << std::endl;
-		return false;
-	}
+	pyramid.GetComponent<TransformComponent>().position = { 1.0f, 0.0f, 0.0f };
+	pyramid.GetComponent<TransformComponent>().rotation = { 0.0f, 0.0f, 0.0f };
+	pyramid.AddComponent<StaticMeshComponent>().mesh = MeshFactory::CreatePyramid();
 
-	DWORD indicies[] =
-	{
-		//Front
-		0, 1, 2,
-		0, 2, 3,
-
-		// Back
-		6, 5, 4,
-		7, 6, 4,
-
-		// Left
-		0, 4, 5,
-		0, 5, 1,
-
-		// Right
-		2, 6, 7,
-		2, 7, 3,
-
-		// Top
-		1, 5, 6,
-		1, 6, 2,
-
-		// Bottom
-		4, 0, 3,
-		4, 3, 7,
-	};
-
-	hr = myIndexBuffer.Initialize(DX11::Device.Get(), indicies, ARRAYSIZE(indicies));
-	if (FAILED(hr))
-	{
-		std::cout << "Failed to initialize index buffer" << std::endl;
-		return false;
-	}
+	myCube = MeshFactory::CreateCube();
 
 	myMainCamera.SetProjectionValues(90.f, 16.f / 9.f, 0.1f, 1000.f);
 	myMainCamera.SetPosition(0.f, 0.f, -2.f);
@@ -120,11 +82,7 @@ bool Renderer::CreateConstantBuffers()
 
 void Renderer::BeginFrame()
 {
-	static auto obj = glm::mat4(1.f);
-	obj = glm::rotate(obj, glm::radians(0.5f), { 0.f, 1.f, 0.f });
-	myFrameBuffer.myData.ViewProjectionMatrix = myMainCamera.GetProjectionMatrix() * myMainCamera.GetViewMatrix() * obj;
-	myFrameBuffer.myData.ViewProjectionMatrix = glm::transpose(myFrameBuffer.myData.ViewProjectionMatrix);
-	myFrameBuffer.Update();
+	auto objectsToRender = Engine::Get().GetCurrentScene().RenderScene(myMainCamera);
 
 	const float bgColor[4] = { 0.8f, 0.8f, 0.8f, 1.0f };
 
@@ -135,19 +93,33 @@ void Renderer::BeginFrame()
 	DX11::Context->OMSetDepthStencilState(DX11::Get().myDepthStencilState.Get(), 1);
 	DX11::Context->RSSetState(DX11::Get().myRasterizerState.Get());
 
-	DX11::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	DX11::Context->IASetInputLayout(myVertexShader.GetInputLayout());
+	for (const auto& object : objectsToRender)
+	{
+		auto objMatrix = glm::mat4(1.f);
+		objMatrix = glm::translate(objMatrix, object.first->position);
+		objMatrix = glm::rotate(objMatrix, glm::radians(object.first->rotation.x), { 1.f, 0.f, 0.f });
+		objMatrix = glm::rotate(objMatrix, glm::radians(object.first->rotation.y), { 0.f, 1.f, 0.f });
+		objMatrix = glm::rotate(objMatrix, glm::radians(object.first->rotation.z), { 0.f, 0.f, 1.f });
+		objMatrix = glm::scale(objMatrix, object.first->scale);
 
-	DX11::Context->VSSetShader(myVertexShader.GetShader(), nullptr, 0);
-	DX11::Context->PSSetShader(myPixelShader.GetShader(), nullptr, 0);
+		myFrameBuffer.myData.ViewProjectionMatrix = myMainCamera.GetProjectionMatrix() * myMainCamera.GetViewMatrix() * objMatrix;
+		myFrameBuffer.myData.ViewProjectionMatrix = glm::transpose(myFrameBuffer.myData.ViewProjectionMatrix);
+		myFrameBuffer.Update();
 
-	DX11::Context->VSSetConstantBuffers(0, 1, myFrameBuffer.GetAddressOf());
+		DX11::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		DX11::Context->IASetInputLayout(myVertexShader.GetInputLayout());
 
-	UINT offset = 0;
+		DX11::Context->VSSetShader(myVertexShader.GetShader(), nullptr, 0);
+		DX11::Context->PSSetShader(myPixelShader.GetShader(), nullptr, 0);
 
-	DX11::Context->IASetVertexBuffers(0, 1, myVertexBuffer.GetAddressOf(), myVertexBuffer.StridePtr(), &offset);
-	DX11::Context->IASetIndexBuffer(myIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-	DX11::Context->DrawIndexed(myIndexBuffer.BufferSize(), 0, 0);
+		DX11::Context->VSSetConstantBuffers(0, 1, myFrameBuffer.GetAddressOf());
+
+		UINT offset = 0;
+
+		DX11::Context->IASetVertexBuffers(0, 1, object.second->mesh.myVertexBuffer.GetAddressOf(), object.second->mesh.myVertexBuffer.StridePtr(), &offset);
+		DX11::Context->IASetIndexBuffer(object.second->mesh.myIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+		DX11::Context->DrawIndexed(object.second->mesh.myIndexBuffer.BufferSize(), 0, 0);
+	}
 }
 
 void Renderer::EndFrame()

@@ -17,22 +17,22 @@ public:
 		return myBuffer.Get();
 	}
 
-	inline ID3D11Buffer* const* GetAddressOf()
+	inline ID3D11Buffer* const* GetAddressOf() const
 	{
 		return myBuffer.GetAddressOf();
 	}
 
-	inline UINT BufferSize()
+	inline UINT BufferSize() const
 	{
 		return myBufferSize;
 	}
 
-	inline const UINT Stride()
+	inline UINT Stride() const
 	{
 		return *myStride.get();
 	}
 
-	inline const UINT* StridePtr()
+	inline const UINT* StridePtr() const
 	{
 		return myStride.get();
 	}
