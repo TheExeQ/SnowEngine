@@ -26,6 +26,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 			bool show = true;
 			ImGui::ShowDemoWindow(&show);
 
+			std::cout << "FPS: " << Time::GetFPS() << std::endl;
+
 			engine.End();
 		}
 		engine.CleanUp();

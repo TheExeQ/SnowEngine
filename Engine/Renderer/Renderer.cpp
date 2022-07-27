@@ -14,28 +14,26 @@ bool Renderer::Initialize(HWND hwnd, const int& aWidth, const int& aHeight)
 	return true;
 }
 
+// This function is only for testing temporarily
 bool Renderer::InitScene()
 {
 	auto cube = Engine::Get().GetCurrentScene().CreateEntity();
-	auto pyramid = Engine::Get().GetCurrentScene().CreateEntity();
-
 	cube.GetComponent<TransformComponent>().position = { -1.0f, 0.0f, 0.0f };
-	cube.GetComponent<TransformComponent>().rotation = {45.f, 45.0f, 0.0f };
+	cube.GetComponent<TransformComponent>().rotation = { 0.f, 0.0f, 0.0f };
 	cube.AddComponent<StaticMeshComponent>().mesh = MeshFactory::CreateCube();
 
+	auto cube2 = Engine::Get().GetCurrentScene().CreateEntity();
+	cube2.GetComponent<TransformComponent>().position = { -3.0f, 0.0f, 0.0f };
+	cube2.GetComponent<TransformComponent>().rotation = { 0.f, 0.0f, 0.0f };
+	cube2.AddComponent<StaticMeshComponent>().mesh = MeshFactory::CreateCube();
+
+	auto pyramid = Engine::Get().GetCurrentScene().CreateEntity();
 	pyramid.GetComponent<TransformComponent>().position = { 1.0f, 0.0f, 0.0f };
 	pyramid.GetComponent<TransformComponent>().rotation = { 0.0f, 0.0f, 0.0f };
 	pyramid.AddComponent<StaticMeshComponent>().mesh = MeshFactory::CreatePyramid();
 
-	myCube = MeshFactory::CreateCube();
-
 	myMainCamera.SetProjectionValues(90.f, 16.f / 9.f, 0.1f, 1000.f);
 	myMainCamera.SetPosition(0.f, 0.f, -2.f);
-
-	myFrameBuffer.myData.ViewProjectionMatrix = glm::mat4(1.f);
-	myFrameBuffer.myData.ViewProjectionMatrix = myMainCamera.GetProjectionMatrix() * myMainCamera.GetViewMatrix() * myFrameBuffer.myData.ViewProjectionMatrix;
-	myFrameBuffer.myData.ViewProjectionMatrix = glm::transpose(myFrameBuffer.myData.ViewProjectionMatrix);
-	myFrameBuffer.Update();
 	return true;
 }
 

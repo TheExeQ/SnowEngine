@@ -12,32 +12,32 @@ public:
 
 	VertexBuffer<T>& operator=(const VertexBuffer<T>& rhs);
 
-	inline ID3D11Buffer* Get()
+	ID3D11Buffer* Get()
 	{
 		return myBuffer.Get();
 	}
 
-	inline ID3D11Buffer* const* GetAddressOf() const
+	ID3D11Buffer* const* GetAddressOf() const
 	{
 		return myBuffer.GetAddressOf();
 	}
 
-	inline UINT BufferSize() const
+	UINT BufferSize() const
 	{
 		return myBufferSize;
 	}
 
-	inline UINT Stride() const
+	UINT Stride() const
 	{
 		return *myStride.get();
 	}
 
-	inline const UINT* StridePtr() const
+	const UINT* StridePtr() const
 	{
 		return myStride.get();
 	}
 
-	inline HRESULT Initialize(ID3D11Device* aDevice, T* data, UINT numVertices)
+	HRESULT Initialize(ID3D11Device* aDevice, T* data, UINT numVertices)
 	{
 		if (myBuffer.Get())
 		{

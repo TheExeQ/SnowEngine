@@ -25,7 +25,6 @@ private:
 	VertexShader myVertexShader;
 	PixelShader myPixelShader;
 	
-	Mesh myCube;
 	ConstantBuffer<FrameBuffer> myFrameBuffer;
 
 	Camera myMainCamera;

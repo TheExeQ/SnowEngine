@@ -3,6 +3,7 @@
 #include "Win32/WindowContainer.h"
 #include "Renderer/Renderer.h"
 #include "ImGui/ImGuiLayer.h"
+#include "Time/Time.h"
 #include "Scene/Scene.h"
 
 class Engine
@@ -31,6 +32,7 @@ private:
 	WindowContainer myWindowContainer;
 	Renderer myRenderer;
 	ImGuiLayer myImGuiLayer;
+	Time myTime;
 	
 	Scene CurrentScene;
 

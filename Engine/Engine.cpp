@@ -47,6 +47,7 @@ void Engine::Begin()
 {
 	if (myIsRunning)
 	{
+		myTime.Update();
 		myWindowContainer.ProcessMessages();
 		myRenderer.BeginFrame();
 		myImGuiLayer.Begin();
