@@ -7,7 +7,7 @@
 #include "ConstantBuffer.h"
 #include "Camera.h"
 
-#include "Mesh.h"
+#include "Scene/Entity.h"
 
 class Renderer
 {
@@ -21,11 +21,16 @@ private:
 	bool CreateShaders();
 	bool CreateConstantBuffers();
 	bool InitScene();
+	void UpdateScene();
 	
 	VertexShader myVertexShader;
 	PixelShader myPixelShader;
 	
 	ConstantBuffer<FrameBuffer> myFrameBuffer;
+
+	Entity cube;
+	Entity cube2;
+	Entity pyramid;
 
 	Camera myMainCamera;
 

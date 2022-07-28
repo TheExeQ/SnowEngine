@@ -6,6 +6,7 @@
 class Entity
 {
 public:
+	Entity() {};
 	Entity(entt::entity aEntityHandle, Scene* aScene);
 
 	inline entt::entity GetHandle() { return myEntityHandle;

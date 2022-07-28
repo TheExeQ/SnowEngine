@@ -3,8 +3,6 @@
 #include "Engine.h"
 #include <iostream>
 
-#include "Scene/Entity.h"
-
 bool Renderer::Initialize(HWND hwnd, const int& aWidth, const int& aHeight)
 {
 	if (!myGraphicsAPI.Initialize(hwnd, aWidth, aHeight)) { return false; }
@@ -17,24 +15,47 @@ bool Renderer::Initialize(HWND hwnd, const int& aWidth, const int& aHeight)
 // This function is only for testing temporarily
 bool Renderer::InitScene()
 {
-	auto cube = Engine::Get().GetCurrentScene().CreateEntity();
-	cube.GetComponent<TransformComponent>().position = { -1.0f, 0.0f, 0.0f };
+	cube = Engine::Get().GetCurrentScene().CreateEntity();
+	cube.GetComponent<TransformComponent>().position = { 2.0f, 0.0f, 0.0f };
 	cube.GetComponent<TransformComponent>().rotation = { 0.f, 0.0f, 0.0f };
 	cube.AddComponent<StaticMeshComponent>().mesh = MeshFactory::CreateCube();
 
-	auto cube2 = Engine::Get().GetCurrentScene().CreateEntity();
-	cube2.GetComponent<TransformComponent>().position = { -3.0f, 0.0f, 0.0f };
+	cube2 = Engine::Get().GetCurrentScene().CreateEntity();
+	cube2.GetComponent<TransformComponent>().position = { -2.0f, 0.0f, 0.0f };
 	cube2.GetComponent<TransformComponent>().rotation = { 0.f, 0.0f, 0.0f };
 	cube2.AddComponent<StaticMeshComponent>().mesh = MeshFactory::CreateCube();
 
-	auto pyramid = Engine::Get().GetCurrentScene().CreateEntity();
-	pyramid.GetComponent<TransformComponent>().position = { 1.0f, 0.0f, 0.0f };
+	pyramid = Engine::Get().GetCurrentScene().CreateEntity();
+	pyramid.GetComponent<TransformComponent>().position = { 0.0f, 0.0f, 0.0f };
 	pyramid.GetComponent<TransformComponent>().rotation = { 0.0f, 0.0f, 0.0f };
 	pyramid.AddComponent<StaticMeshComponent>().mesh = MeshFactory::CreatePyramid();
 
 	myMainCamera.SetProjectionValues(90.f, 16.f / 9.f, 0.1f, 1000.f);
 	myMainCamera.SetPosition(0.f, 0.f, -2.f);
 	return true;
+}
+
+void Renderer::UpdateScene()
+{
+	cube.GetComponent<TransformComponent>().rotation.z += 0.5f;
+	
+	cube2.GetComponent<TransformComponent>().rotation.x += 0.5f;
+	cube2.GetComponent<TransformComponent>().rotation.y += 0.5f;
+	
+	static bool up = true;
+	static int direction = 1;
+	if (pyramid.GetComponent<TransformComponent>().position.y > 1.0f && up)
+	{
+		direction = -1;
+		up = false;
+	}
+	if (pyramid.GetComponent<TransformComponent>().position.y < 0.0f && !up)
+	{
+		direction = 1;
+		up = true;
+	}
+	pyramid.GetComponent<TransformComponent>().position.y += 0.5f * direction * Time::GetDeltaTime();
+	pyramid.GetComponent<TransformComponent>().rotation.y += 0.5f;
 }
 
 bool Renderer::CreateShaders()
@@ -80,6 +101,8 @@ bool Renderer::CreateConstantBuffers()
 
 void Renderer::BeginFrame()
 {
+	UpdateScene();
+
 	auto objectsToRender = Engine::Get().GetCurrentScene().RenderScene(myMainCamera);
 
 	const float bgColor[4] = { 0.8f, 0.8f, 0.8f, 1.0f };
