@@ -25,7 +25,7 @@ bool Renderer::InitScene()
 	chest.GetComponent<TransformComponent>().rotation = { 0.f, -45.0f, 0.0f };
 	chest.GetComponent<TransformComponent>().scale = { 0.01f, 0.01f, 0.01f };
 	chest.AddComponent<StaticMeshComponent>().model.Initialize("../Assets/Models/SM/Particle_Chest.fbx");
-	chest.GetComponent<StaticMeshComponent>().texture.LoadTexture("../Assets/Textures/T_Particle_Chest_C.png");
+	chest.GetComponent<StaticMeshComponent>().material.SetAlbedo("../Assets/Textures/T_Particle_Chest_C.png");
 
 	pyramid = Engine::Get().GetCurrentScene().CreateEntity();
 	pyramid.GetComponent<TransformComponent>().position = { 0.0f, 0.0f, 0.0f };
@@ -117,7 +117,7 @@ void Renderer::BeginFrame()
 		myFrameBuffer.myData.ViewProjectionMatrix = glm::transpose(myFrameBuffer.myData.ViewProjectionMatrix);
 		myFrameBuffer.ApplyChanges();
 
-		DX11::Context->PSSetShaderResources(0, 1, object.second->texture.myTextureView.GetAddressOf());
+		DX11::Context->PSSetShaderResources(0, 1, object.second->material.myAlbedo.myTextureView.GetAddressOf());
 		for (auto mesh : object.second->model.myMeshes)
 		{
 			DX11::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

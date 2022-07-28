@@ -8,7 +8,7 @@ using namespace Microsoft::WRL;
 class Texture
 {
 public:
-	Texture() { LoadTexture(&Colors::MissingTextureColor, 1, 1); };
+	Texture() {};
 	void LoadTexture(const Color* colorData, UINT width, UINT height);
 	void LoadTexture(const char* aFileName);
 	
