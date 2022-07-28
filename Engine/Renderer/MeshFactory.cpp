@@ -7,16 +7,16 @@ Mesh MeshFactory::CreateCube()
 	std::vector<Vertex> vertices =
 	{
 		// Front
-		Vertex(-0.5f, -0.5f, -0.5f, 1.f, 0.f, 0.f), //Left Bottom
-		Vertex(-0.5f, 0.5f, -0.5f, 0.f, 1.f, 0.f), //Left Top
-		Vertex(0.5f, 0.5f, -0.5f, 0.f, 0.f, 1.f), //Right Top
-		Vertex(0.5f, -0.5f, -0.5f, 0.0f, 0.f, 0.f), //Right Bottom
+		Vertex(-0.5f, -0.5f, -0.5f, 0.f, 0.f), //Left Bottom
+		Vertex(-0.5f, 0.5f, -0.5f, 0.f, 0.f), //Left Top
+		Vertex(0.5f, 0.5f, -0.5f, 0.f, 0.f), //Right Top
+		Vertex(0.5f, -0.5f, -0.5f, 0.f, 0.f), //Right Bottom
 		
 		// Back
-		Vertex(-0.5f, -0.5f, 0.5f, 1.f, 1.f, 0.f), //Left Bottom
-		Vertex(-0.5f, 0.5f, 0.5f, 0.f, 1.f, 1.f), //Left Top
-		Vertex(0.5f, 0.5f, 0.5f, 1.f, 0.f, 1.f), //Right Top
-		Vertex(0.5f, -0.5f, 0.5f, 1.f, 1.f, 1.f), //Right Bottom
+		Vertex(-0.5f, -0.5f, 0.5f, 0.f, 0.f), //Left Bottom
+		Vertex(-0.5f, 0.5f, 0.5f, 0.f, 0.f), //Left Top
+		Vertex(0.5f, 0.5f, 0.5f, 0.f, 0.f), //Right Top
+		Vertex(0.5f, -0.5f, 0.5f, 0.f, 0.f), //Right Bottom
 	};
 
 	std::vector<DWORD> indicies =
@@ -53,15 +53,15 @@ Mesh MeshFactory::CreatePyramid()
 {
 	std::vector<Vertex> vertices =
 	{
-		Vertex(0.f, 0.5f, 0.f, 0.f, 0.f, 0.f), //Top
+		Vertex(0.f, 0.5f, 0.f, 0.f, 0.f), //Top
 		
 		// Front
-		Vertex(-0.5f, -0.5f, -0.5f, 1.f, 0.f, 0.f), //Left Bottom
-		Vertex(0.5f, -0.5f, -0.5f, 0.0f, 0.f, 0.f), //Right Bottom
+		Vertex(-0.5f, -0.5f, -0.5f, 0.f, 0.f), //Left Bottom
+		Vertex(0.5f, -0.5f, -0.5f, 0.f, 0.f), //Right Bottom
 		
 		// Back
-		Vertex(-0.5f, -0.5f, 0.5f, 1.f, 1.f, 0.f), //Left Bottom
-		Vertex(0.5f, -0.5f, 0.5f, 1.f, 1.f, 1.f), //Right Bottom
+		Vertex(-0.5f, -0.5f, 0.5f, 0.f, 0.f), //Left Bottom
+		Vertex(0.5f, -0.5f, 0.5f, 0.f, 0.f), //Right Bottom
 	};
 
 	std::vector<DWORD> indicies =

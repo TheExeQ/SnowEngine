@@ -1,18 +1,23 @@
 #pragma once
+#include <glm/glm.hpp>
 
 struct Vertex
 {
 	Vertex() {};
-	Vertex(float x, float y, float z, float r, float g, float b)
+	Vertex(glm::vec3 aPosition, glm::vec2 aTexCoords)
 	{
-		this->x = x;
-		this->y = y;
-		this->z = z;
+		position = aPosition;
+		texCoords = aTexCoords;
+	};
+	Vertex(float x, float y, float z, float u, float v)
+	{
+		this->position.x = x;
+		this->position.y = y;
+		this->position.z = z;
 
-		this->r = r;
-		this->g = g;
-		this->b = b;
+		this->texCoords.x = u;
+		this->texCoords.y = v;
 	}
-	float x = 0.f, y = 0.f, z = 0.f;
-	float r = 1.f, g = 1.f, b = 1.f;
+	glm::vec3 position = { 0.f, 0.f, 0.f };
+	glm::vec2 texCoords = { 0.f, 0.f };
 };

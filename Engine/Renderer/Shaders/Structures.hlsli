@@ -3,19 +3,19 @@
 struct VSInput
 {
     float3 pos : POSITION;
-    float3 color : COLOR;
+    float2 texCoords : TEXCOORDS;
 };
 
 struct VSOutput
 {
     float4 pos : SV_POSITION;
-    float3 color : COLOR;
+    float2 texCoords : TEXCOORDS;
 };
 
 struct PSInput
 {
     float4 pos : SV_POSITION;
-    float3 color : COLOR;
+    float2 texCoords : TEXCOORDS;
 };
 
 struct PSOutput

@@ -25,6 +25,7 @@ bool Renderer::InitScene()
 	chest.GetComponent<TransformComponent>().rotation = { 0.f, -45.0f, 0.0f };
 	chest.GetComponent<TransformComponent>().scale = { 0.01f, 0.01f, 0.01f };
 	chest.AddComponent<StaticMeshComponent>().model.Initialize("../Assets/Models/SM/Particle_Chest.fbx");
+	chest.GetComponent<StaticMeshComponent>().texture.LoadTexture("../Assets/Textures/T_Particle_Chest_C.png");
 
 	pyramid = Engine::Get().GetCurrentScene().CreateEntity();
 	pyramid.GetComponent<TransformComponent>().position = { 0.0f, 0.0f, 0.0f };
@@ -36,26 +37,13 @@ bool Renderer::InitScene()
 	return true;
 }
 
+// This function is only for testing temporarily
 void Renderer::UpdateScene()
 {
 	cube.GetComponent<TransformComponent>().rotation.z += 0.5f;
 
-	//chest.GetComponent<TransformComponent>().rotation.x += 0.5f;
-	//chest.GetComponent<TransformComponent>().rotation.y += 0.5f;
+	chest.GetComponent<TransformComponent>().rotation.y += 0.5f;
 
-	static bool up = true;
-	static int direction = 1;
-	if (pyramid.GetComponent<TransformComponent>().position.y > 1.0f && up)
-	{
-		direction = -1;
-		up = false;
-	}
-	if (pyramid.GetComponent<TransformComponent>().position.y < 0.0f && !up)
-	{
-		direction = 1;
-		up = true;
-	}
-	pyramid.GetComponent<TransformComponent>().position.y += 0.5f * direction * Time::GetDeltaTime();
 	pyramid.GetComponent<TransformComponent>().rotation.y += 0.5f;
 }
 
@@ -65,7 +53,7 @@ bool Renderer::CreateShaders()
 	D3D11_INPUT_ELEMENT_DESC inputLayoutDesc[] =
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+		{ "TEXCOORDS", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 	};
 
 	if (!myVertexShader.Init(L"../bin/Shaders/Default-vs.cso", inputLayoutDesc, ARRAYSIZE(inputLayoutDesc)))
@@ -104,8 +92,6 @@ void Renderer::BeginFrame()
 {
 	UpdateScene();
 
-	auto objectsToRender = Engine::Get().GetCurrentScene().RenderScene(myMainCamera);
-
 	const float bgColor[4] = { 0.8f, 0.8f, 0.8f, 1.0f };
 
 	DX11::Context->OMSetRenderTargets(1, DX11::Get().myRenderTargetView.GetAddressOf(), DX11::Get().myDepthStencilView.Get());
@@ -114,6 +100,9 @@ void Renderer::BeginFrame()
 
 	DX11::Context->OMSetDepthStencilState(DX11::Get().myDepthStencilState.Get(), 1);
 	DX11::Context->RSSetState(DX11::Get().myRasterizerState.Get());
+	DX11::Context->PSSetSamplers(0, 1, DX11::Get().mySamplerState.GetAddressOf());
+
+	auto objectsToRender = Engine::Get().GetCurrentScene().RenderScene(myMainCamera);
 
 	for (const auto& object : objectsToRender)
 	{
@@ -128,6 +117,7 @@ void Renderer::BeginFrame()
 		myFrameBuffer.myData.ViewProjectionMatrix = glm::transpose(myFrameBuffer.myData.ViewProjectionMatrix);
 		myFrameBuffer.ApplyChanges();
 
+		DX11::Context->PSSetShaderResources(0, 1, object.second->texture.myTextureView.GetAddressOf());
 		for (auto mesh : object.second->model.myMeshes)
 		{
 			DX11::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

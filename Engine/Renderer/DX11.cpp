@@ -22,6 +22,7 @@ bool DX11::Initialize(HWND hwnd, const int& aWidth, const int& aHeight)
 	if (!CreateRenderTargetView()) { return false; };
 	if (!CreateDepthStencil()) { return false; };
 	if (!CreateRasterizer()) { return false; };
+	if (!CreateSamplerState()) { return false; };
 
 	std::cout << "Successfully initialized DirectX!" << std::endl;
 	return true;
@@ -195,5 +196,28 @@ bool DX11::CreateRasterizer()
 
 	Context->RSSetViewports(1, &vp);
 
+	return true;
+}
+
+bool DX11::CreateSamplerState()
+{
+	HRESULT hr;
+	
+	D3D11_SAMPLER_DESC sampDesc;
+	ZeroMemory(&sampDesc, sizeof(D3D11_SAMPLER_DESC));
+	sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	sampDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+	sampDesc.MinLOD = 0;
+	sampDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	hr = Device->CreateSamplerState(&sampDesc, mySamplerState.GetAddressOf());
+	if (FAILED(hr))
+	{
+		std::cout << "Failed to create sampler state." << std::endl;
+		return false;
+	}
 	return true;
 }

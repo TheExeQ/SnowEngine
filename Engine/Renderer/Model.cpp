@@ -62,16 +62,10 @@ Mesh Model::ProcessMesh(aiMesh* aMesh)
 	for (UINT i = 0; i < aMesh->mNumVertices; i++)
 	{
 		Vertex vertex;
-		vertex.x = aMesh->mVertices[i].x;
-		vertex.y = aMesh->mVertices[i].y;
-		vertex.z = aMesh->mVertices[i].z;
-
-		vertex.r = Random::GetRandomFloat(0.f, 1.f);
-		vertex.g = Random::GetRandomFloat(0.f, 1.f);
-		vertex.b = Random::GetRandomFloat(0.f, 1.f);
+		vertex.position = glm::vec3(aMesh->mVertices[i].x, aMesh->mVertices[i].y, aMesh->mVertices[i].z);
+		vertex.texCoords = glm::vec2(aMesh->mTextureCoords[0][i].x, aMesh->mTextureCoords[0][i].y);
 
 		//vertex.normal = XMFLOAT3(aMesh->mNormals[i].x, aMesh->mNormals[i].y, aMesh->mNormals[i].z);
-		//vertex.texCoord = XMFLOAT2(aMesh->mTextureCoords[0][i].x, aMesh->mTextureCoords[0][i].y);
 		vertices.push_back(vertex);
 	}
 

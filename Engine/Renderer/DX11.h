@@ -21,12 +21,14 @@ private:
 	bool CreateRenderTargetView();
 	bool CreateDepthStencil();
 	bool CreateRasterizer();
+	bool CreateSamplerState();
 
 	ComPtr<ID3D11RenderTargetView> myRenderTargetView;
 	ComPtr<ID3D11DepthStencilView> myDepthStencilView;
 	ComPtr<ID3D11Texture2D> myDepthStencilBuffer;
 	ComPtr<ID3D11DepthStencilState> myDepthStencilState;
 	ComPtr<ID3D11RasterizerState> myRasterizerState;
+	ComPtr<ID3D11SamplerState> mySamplerState;
 
 	UINT myWindowWidth = 0;
 	UINT myWindowHeight = 0;
