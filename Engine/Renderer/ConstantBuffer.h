@@ -12,7 +12,7 @@ public:
 	ConstantBuffer() = default;
 	~ConstantBuffer() = default;
 	HRESULT Init(ID3D11Device* aDevice, ID3D11DeviceContext* aContext);
-	HRESULT Update();
+	HRESULT ApplyChanges();
 
 	ID3D11Buffer* Get() const;
 	ID3D11Buffer* const* GetAddressOf() const;
@@ -50,7 +50,7 @@ HRESULT ConstantBuffer<T>::Init(ID3D11Device* aDevice, ID3D11DeviceContext* aCon
 }
 
 template<typename T>
-HRESULT ConstantBuffer<T>::Update()
+HRESULT ConstantBuffer<T>::ApplyChanges()
 {
 	// Update constant buffer
 	D3D11_MAPPED_SUBRESOURCE mappedResource;

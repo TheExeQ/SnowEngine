@@ -58,7 +58,7 @@ project "Engine"
 		links
 		{
 			"d3d11.lib",
-			"ThirdParty"
+			"ThirdParty",
 		}
 		
 	filter "configurations:Release"

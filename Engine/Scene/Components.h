@@ -1,6 +1,6 @@
 #pragma once
 #include "Renderer/Camera.h"
-#include "Renderer/Mesh.h"
+#include "Renderer/Model.h"
 
 #include <glm/glm.hpp>
 
@@ -18,5 +18,5 @@ struct CameraComponent
 
 struct StaticMeshComponent
 {
-	Mesh mesh;
+	Model model;
 };

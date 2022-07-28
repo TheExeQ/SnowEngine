@@ -18,17 +18,18 @@ bool Renderer::InitScene()
 	cube = Engine::Get().GetCurrentScene().CreateEntity();
 	cube.GetComponent<TransformComponent>().position = { 2.0f, 0.0f, 0.0f };
 	cube.GetComponent<TransformComponent>().rotation = { 0.f, 0.0f, 0.0f };
-	cube.AddComponent<StaticMeshComponent>().mesh = MeshFactory::CreateCube();
+	cube.AddComponent<StaticMeshComponent>().model.Initialize(MeshFactory::CreateCube());
 
-	cube2 = Engine::Get().GetCurrentScene().CreateEntity();
-	cube2.GetComponent<TransformComponent>().position = { -2.0f, 0.0f, 0.0f };
-	cube2.GetComponent<TransformComponent>().rotation = { 0.f, 0.0f, 0.0f };
-	cube2.AddComponent<StaticMeshComponent>().mesh = MeshFactory::CreateCube();
+	chest = Engine::Get().GetCurrentScene().CreateEntity();
+	chest.GetComponent<TransformComponent>().position = { -2.0f, -0.5f, 0.0f };
+	chest.GetComponent<TransformComponent>().rotation = { 0.f, -45.0f, 0.0f };
+	chest.GetComponent<TransformComponent>().scale = { 0.01f, 0.01f, 0.01f };
+	chest.AddComponent<StaticMeshComponent>().model.Initialize("../Assets/Models/SM/Particle_Chest.fbx");
 
 	pyramid = Engine::Get().GetCurrentScene().CreateEntity();
 	pyramid.GetComponent<TransformComponent>().position = { 0.0f, 0.0f, 0.0f };
 	pyramid.GetComponent<TransformComponent>().rotation = { 0.0f, 0.0f, 0.0f };
-	pyramid.AddComponent<StaticMeshComponent>().mesh = MeshFactory::CreatePyramid();
+	pyramid.AddComponent<StaticMeshComponent>().model.Initialize(MeshFactory::CreatePyramid());
 
 	myMainCamera.SetProjectionValues(90.f, 16.f / 9.f, 0.1f, 1000.f);
 	myMainCamera.SetPosition(0.f, 0.f, -2.f);
@@ -38,10 +39,10 @@ bool Renderer::InitScene()
 void Renderer::UpdateScene()
 {
 	cube.GetComponent<TransformComponent>().rotation.z += 0.5f;
-	
-	cube2.GetComponent<TransformComponent>().rotation.x += 0.5f;
-	cube2.GetComponent<TransformComponent>().rotation.y += 0.5f;
-	
+
+	//chest.GetComponent<TransformComponent>().rotation.x += 0.5f;
+	//chest.GetComponent<TransformComponent>().rotation.y += 0.5f;
+
 	static bool up = true;
 	static int direction = 1;
 	if (pyramid.GetComponent<TransformComponent>().position.y > 1.0f && up)
@@ -90,7 +91,7 @@ bool Renderer::CreateConstantBuffers()
 		return false;
 	}
 
-	hr = myFrameBuffer.Update();
+	hr = myFrameBuffer.ApplyChanges();
 	if (FAILED(hr))
 	{
 		std::cout << "Failed to update constant buffer" << std::endl;
@@ -125,21 +126,24 @@ void Renderer::BeginFrame()
 
 		myFrameBuffer.myData.ViewProjectionMatrix = myMainCamera.GetProjectionMatrix() * myMainCamera.GetViewMatrix() * objMatrix;
 		myFrameBuffer.myData.ViewProjectionMatrix = glm::transpose(myFrameBuffer.myData.ViewProjectionMatrix);
-		myFrameBuffer.Update();
+		myFrameBuffer.ApplyChanges();
 
-		DX11::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		DX11::Context->IASetInputLayout(myVertexShader.GetInputLayout());
+		for (auto mesh : object.second->model.myMeshes)
+		{
+			DX11::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+			DX11::Context->IASetInputLayout(myVertexShader.GetInputLayout());
 
-		DX11::Context->VSSetShader(myVertexShader.GetShader(), nullptr, 0);
-		DX11::Context->PSSetShader(myPixelShader.GetShader(), nullptr, 0);
+			DX11::Context->VSSetShader(myVertexShader.GetShader(), nullptr, 0);
+			DX11::Context->PSSetShader(myPixelShader.GetShader(), nullptr, 0);
 
-		DX11::Context->VSSetConstantBuffers(0, 1, myFrameBuffer.GetAddressOf());
+			DX11::Context->VSSetConstantBuffers(0, 1, myFrameBuffer.GetAddressOf());
 
-		UINT offset = 0;
+			UINT offset = 0;
 
-		DX11::Context->IASetVertexBuffers(0, 1, object.second->mesh.myVertexBuffer.GetAddressOf(), object.second->mesh.myVertexBuffer.StridePtr(), &offset);
-		DX11::Context->IASetIndexBuffer(object.second->mesh.myIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-		DX11::Context->DrawIndexed(object.second->mesh.myIndexBuffer.BufferSize(), 0, 0);
+			DX11::Context->IASetVertexBuffers(0, 1, mesh.myVertexBuffer.GetAddressOf(), mesh.myVertexBuffer.StridePtr(), &offset);
+			DX11::Context->IASetIndexBuffer(mesh.myIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+			DX11::Context->DrawIndexed(mesh.myIndexBuffer.BufferSize(), 0, 0);
+		}
 	}
 }
 

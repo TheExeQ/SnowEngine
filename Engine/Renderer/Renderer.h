@@ -29,7 +29,7 @@ private:
 	ConstantBuffer<FrameBuffer> myFrameBuffer;
 
 	Entity cube;
-	Entity cube2;
+	Entity chest;
 	Entity pyramid;
 
 	Camera myMainCamera;
