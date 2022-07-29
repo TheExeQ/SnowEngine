@@ -13,6 +13,7 @@ public:
 
 private:
 	friend class Renderer;
+	friend class SceneHierarchyPanel;
 	Texture myAlbedo;
 	Texture myRoughnessMap;
 	Texture myMetalnessMap;

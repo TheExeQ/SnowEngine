@@ -8,6 +8,7 @@
 void Texture::LoadTexture(const char* aFileName)
 {
 	LoadTextureFromFile(aFileName);
+	myFilePath = aFileName;
 }
 
 void Texture::LoadTexture(const Color* colorData, UINT width, UINT height)

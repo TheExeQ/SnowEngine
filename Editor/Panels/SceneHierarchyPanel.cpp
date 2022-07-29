@@ -243,23 +243,36 @@ void SceneHierarchyPanel::DrawComponents(Entity entity)
 
 	DrawComponent<StaticMeshComponent>("Static Mesh", entity, [](auto component)
 		{
-			auto& filepath = component->model.myFilePath;
+
+			// TODO: Change so this doesn't take ref to filepath, instead a copy and update componfilepath on button reload click.
+
+			auto& meshFilepath = component->model.myFilePath;
 
 			char buffer[256];
 			memset(buffer, 0, sizeof(buffer));
-			std::strncpy(buffer, filepath.c_str(), sizeof(buffer));
+			std::strncpy(buffer, meshFilepath.c_str(), sizeof(buffer));
 			if (ImGui::InputText("##StaticMesh", buffer, sizeof(buffer)))
 			{
-				filepath = std::string(buffer);
+				meshFilepath = std::string(buffer);
+			}
+
+			auto& albedoFilepath = component->material.myAlbedo.myFilePath;
+
+			memset(buffer, 0, sizeof(buffer));
+			std::strncpy(buffer, albedoFilepath.c_str(), sizeof(buffer));
+			if (ImGui::InputText("##AlbedoTexture", buffer, sizeof(buffer)))
+			{
+				albedoFilepath = std::string(buffer);
 			}
 
 			float lineWidth = GImGui->Font->FontSize + GImGui->Style.FramePadding.x * 20.0f;
 			float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
 			ImVec2 buttonSize = { lineWidth, lineHeight };
 
-			if (ImGui::Button("Reload Mesh", buttonSize))
+			if (ImGui::Button("Reload", buttonSize))
 			{
-				component->model.Initialize(filepath.c_str());
+				component->model.Initialize(meshFilepath.c_str());
+				component->material.myAlbedo.LoadTexture(albedoFilepath.c_str());
 			}
 		});
 }

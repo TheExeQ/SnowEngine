@@ -1,6 +1,7 @@
 #pragma once
 #include <d3d11.h>
 #include <wrl/client.h>
+#include <string>
 #include "Renderer/Color.h"
 
 using namespace Microsoft::WRL;
@@ -14,8 +15,10 @@ public:
 	
 private:
 	friend class Renderer;
+	friend class SceneHierarchyPanel;
 	bool LoadTextureFromFile(const char* filename);
 
+	std::string myFilePath = "";
 	ComPtr<ID3D11Resource> myTexture = nullptr;
 	ComPtr<ID3D11ShaderResourceView> myTextureView = nullptr;
 	float myWidth = 0.0f;

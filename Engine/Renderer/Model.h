@@ -11,7 +11,6 @@ class Model
 public:
 	bool Initialize(const char* aFilepath);
 	void Initialize(Mesh aMesh);
-	void SetTexture(ID3D11ShaderResourceView* aTexture);
 
 private:
 	friend class Renderer;

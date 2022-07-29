@@ -4,7 +4,6 @@
 
 bool Model::Initialize(const char* filepath)
 {
-	myMeshes.clear();
 	if (!LoadModel(filepath))
 	{
 		return false;
@@ -19,11 +18,6 @@ void Model::Initialize(Mesh aMesh)
 	myMeshes.push_back(aMesh);
 }
 
-void Model::SetTexture(ID3D11ShaderResourceView* aTexture)
-{
-
-}
-
 bool Model::LoadModel(const char* aFilepath)
 {
 	Assimp::Importer importer;
@@ -32,9 +26,11 @@ bool Model::LoadModel(const char* aFilepath)
 
 	if (!scene)
 	{
-		std::cout << "Failed to load model." << std::endl;
+		std::cout << "Failed to load model: " << aFilepath << std::endl;
 		return false;
 	}
+
+	myMeshes.clear();
 
 	ProcessNode(scene->mRootNode, scene);
 	return true;
