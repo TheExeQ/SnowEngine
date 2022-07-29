@@ -18,7 +18,7 @@ project "Editor"
 	includedirs
 	{
 		"../Engine/",
-		"../ThirdParty/includes/",
+		"../ThirdParty/includes/"
 	}
 	
 	libdirs

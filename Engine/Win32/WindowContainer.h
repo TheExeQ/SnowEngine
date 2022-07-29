@@ -9,14 +9,16 @@ class WindowContainer
 public:
 	WindowContainer() = default;
 	~WindowContainer() = default;
-	bool Initialize(HINSTANCE ahInstance, const int& aWidth, const int& aHeight, 
-		std::string aWindowTitle, const std::string& aWindowClass);
-	void ProcessMessages();
 	HWND GetWindowHandle() const { return myHandle; };
 	static int GetWidth() { return myWindowWidth; };
 	static int GetHeight() { return myWindowHeight; };
 
 private:
+	friend class Engine;
+	bool Initialize(HINSTANCE ahInstance, const int& aWidth, const int& aHeight, 
+		std::string aWindowTitle, const std::string& aWindowClass);
+	void ProcessMessages();
+
 	HWND myHandle;
 	HINSTANCE myHInstance;
 	std::string myWindowTitle;

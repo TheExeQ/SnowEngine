@@ -5,6 +5,11 @@
 
 #include <glm/glm.hpp>
 
+struct TagComponent
+{
+	std::string name;
+};
+
 struct TransformComponent
 {
 	glm::vec3 position = {0.f, 0.f, 0.f};

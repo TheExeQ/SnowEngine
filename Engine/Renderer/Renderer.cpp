@@ -1,5 +1,4 @@
 #include "Renderer.h"
-#include "MeshFactory.h"
 #include "Engine.h"
 #include <iostream>
 
@@ -15,36 +14,9 @@ bool Renderer::Initialize(HWND hwnd, const int& aWidth, const int& aHeight)
 // This function is only for testing temporarily
 bool Renderer::InitScene()
 {
-	cube = Engine::Get().GetCurrentScene().CreateEntity();
-	cube.GetComponent<TransformComponent>().position = { 2.0f, 0.0f, 0.0f };
-	cube.GetComponent<TransformComponent>().rotation = { 0.f, 0.0f, 0.0f };
-	cube.AddComponent<StaticMeshComponent>().model.Initialize(MeshFactory::CreateCube());
-
-	chest = Engine::Get().GetCurrentScene().CreateEntity();
-	chest.GetComponent<TransformComponent>().position = { -2.0f, -0.5f, 0.0f };
-	chest.GetComponent<TransformComponent>().rotation = { 0.f, -45.0f, 0.0f };
-	chest.GetComponent<TransformComponent>().scale = { 0.01f, 0.01f, 0.01f };
-	chest.AddComponent<StaticMeshComponent>().model.Initialize("../Assets/Models/SM/Particle_Chest.fbx");
-	chest.GetComponent<StaticMeshComponent>().material.SetAlbedo("../Assets/Textures/T_Particle_Chest_C.png");
-
-	pyramid = Engine::Get().GetCurrentScene().CreateEntity();
-	pyramid.GetComponent<TransformComponent>().position = { 0.0f, 0.0f, 0.0f };
-	pyramid.GetComponent<TransformComponent>().rotation = { 0.0f, 0.0f, 0.0f };
-	pyramid.AddComponent<StaticMeshComponent>().model.Initialize(MeshFactory::CreatePyramid());
-
 	myMainCamera.SetProjectionValues(90.f, 16.f / 9.f, 0.1f, 1000.f);
 	myMainCamera.SetPosition(0.f, 0.f, -2.f);
 	return true;
-}
-
-// This function is only for testing temporarily
-void Renderer::UpdateScene()
-{
-	cube.GetComponent<TransformComponent>().rotation.z += 0.5f;
-
-	chest.GetComponent<TransformComponent>().rotation.y += 0.5f;
-
-	pyramid.GetComponent<TransformComponent>().rotation.y += 0.5f;
 }
 
 bool Renderer::CreateShaders()
@@ -90,8 +62,6 @@ bool Renderer::CreateConstantBuffers()
 
 void Renderer::BeginFrame()
 {
-	UpdateScene();
-
 	const float bgColor[4] = { 0.8f, 0.8f, 0.8f, 1.0f };
 
 	DX11::Context->OMSetRenderTargets(1, DX11::Get().myRenderTargetView.GetAddressOf(), DX11::Get().myDepthStencilView.Get());
@@ -102,7 +72,7 @@ void Renderer::BeginFrame()
 	DX11::Context->RSSetState(DX11::Get().myRasterizerState.Get());
 	DX11::Context->PSSetSamplers(0, 1, DX11::Get().mySamplerState.GetAddressOf());
 
-	auto objectsToRender = Engine::Get().GetCurrentScene().RenderScene(myMainCamera);
+	auto objectsToRender = Engine::GetActiveScene()->RenderScene(myMainCamera);
 
 	for (const auto& object : objectsToRender)
 	{

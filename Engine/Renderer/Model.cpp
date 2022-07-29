@@ -1,5 +1,5 @@
 #include "Model.h"
-#include "Random/Random.h"
+#include "Core/Random.h"
 #include <iostream>
 
 bool Model::Initialize(const char* filepath)

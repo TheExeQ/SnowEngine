@@ -1,8 +1,11 @@
 #include "ImGuiLayer.h"
-#include "Renderer/DX11.h"
+#include "Engine.h"
+#include "Core/DX11.h"
 
-bool ImGuiLayer::Initialize(HWND hwnd)
+void ImGuiLayer::OnAttach()
 {
+	HWND hwnd = Engine::GetWindow()->GetWindowHandle();
+
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -35,15 +38,17 @@ bool ImGuiLayer::Initialize(HWND hwnd)
 	ImGui_ImplWin32_Init(hwnd);
 	ImGui_ImplDX11_Init(DX11::Device.Get(), DX11::Context.Get());
 
-	return true;
+	myLayerActive = true;
 }
 
-void ImGuiLayer::CleanUp()
+void ImGuiLayer::OnDetach()
 {
 	// Cleanup
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
+
+	myLayerActive = false;
 }
 
 void ImGuiLayer::Begin()

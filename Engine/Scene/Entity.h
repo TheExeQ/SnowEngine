@@ -33,7 +33,19 @@ public:
 	template<typename T>
 	bool HasComponent()
 	{
-		return myScene->myRegistry.all_of<T>(myEntityHandle);
+		return (myScene->myRegistry.valid(myEntityHandle)) ? myScene->myRegistry.all_of<T>(myEntityHandle) : false;
+	}
+
+	operator uint32_t() const { return (uint32_t)myEntityHandle; }
+
+	bool operator==(const Entity& other) const
+	{
+		return myEntityHandle == other.myEntityHandle && myScene == other.myScene;
+	}
+
+	bool operator!=(const Entity& other) const
+	{
+		return !(*this == other);
 	}
 
 private:

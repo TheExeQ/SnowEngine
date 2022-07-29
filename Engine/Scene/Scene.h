@@ -14,7 +14,7 @@ public:
 	Scene();
 	~Scene();
 
-	Entity CreateEntity();
+	Entity CreateEntity(const char* aName);
 	void DestroyEntity(Entity aEntity);
 
 	void OnRuntimeStart();
@@ -30,6 +30,7 @@ public:
 private:
 	friend class Renderer;
 	friend class Entity;
+	friend class SceneHierarchyPanel;
 
 	std::vector<std::pair<const TransformComponent*, const StaticMeshComponent*>> RenderScene(const Camera& aCamera) const; // Return entitys to render
 

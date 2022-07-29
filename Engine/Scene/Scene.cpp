@@ -11,9 +11,10 @@ Scene::~Scene()
 
 }
 
-Entity Scene::CreateEntity()
+Entity Scene::CreateEntity(const char* aName)
 {
 	Entity entity(myRegistry.create(), this);
+	entity.AddComponent<TagComponent>().name = aName;
 	entity.AddComponent<TransformComponent>();
 	return entity;
 }

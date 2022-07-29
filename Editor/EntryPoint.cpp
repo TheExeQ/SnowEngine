@@ -2,6 +2,8 @@
 #include <cstdio>
 #include <iostream>
 
+#include "EditorLayer.h"
+
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
 	_In_ LPWSTR lpCmdLine,
@@ -15,19 +17,20 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 #endif
 
 	Engine engine;
-
+	EditorLayer editor;
+	
 	if (engine.Initialize(hInstance, 1280, 720))
 	{
+		// Initialization
+		engine.PushLayer(&editor);
+
+		// Update Loop
 		while (engine.IsRunning())
 		{
-			engine.Begin();
-
-			// Remove later only for debug now
-			bool show = true;
-			ImGui::ShowDemoWindow(&show);
-
-			engine.End();
+			engine.Update();
 		}
+
+		// CleanUp
 		engine.CleanUp();
 	}
 	return 0;

@@ -32,38 +32,53 @@ bool Engine::Initialize(HINSTANCE hInstance, const int& aWidth, const int& aHeig
 		return false;
 	}
 
-	result = myImGuiLayer.Initialize(handle);
-	if (!result)
-	{
-		std::cout << "Failed to initialize ImGui Layer" << std::endl;
-		std::cin.get();
-		return false;
-	}
+	myImGuiLayer.OnAttach();
 
 	return true;
 }
 
-void Engine::Begin()
+void Engine::Update()
 {
 	if (myIsRunning)
 	{
 		myTime.Update();
 		myWindowContainer.ProcessMessages();
-		myRenderer.BeginFrame();
-		myImGuiLayer.Begin();
-	}
-}
+		if (!myIsRunning) { myImGuiLayer.myLayerActive = false; };
 
-void Engine::End()
-{
-	if (myIsRunning)
-	{
-		myImGuiLayer.End();
+		for (auto* layer : myLayerStack)
+		{
+			layer->OnUpdate();
+		}
+
+		myRenderer.BeginFrame();
+		if (myImGuiLayer.IsLayerActive())
+		{
+			myImGuiLayer.Begin();
+
+			for (auto* layer : myLayerStack)
+			{
+				layer->OnImGuiRender();
+			}
+
+			myImGuiLayer.End();
+		}
 		myRenderer.EndFrame();
 	}
 }
 
 void Engine::CleanUp()
 {
-	myImGuiLayer.CleanUp();
+	myImGuiLayer.OnDetach();
+}
+
+void Engine::PushLayer(Layer* aLayer)
+{
+	myLayerStack.PushLayer(aLayer);
+	aLayer->OnAttach();
+}
+
+void Engine::PushOverlay(Layer* aLayer)
+{
+	myLayerStack.PushOverlay(aLayer);
+	aLayer->OnAttach();
 }

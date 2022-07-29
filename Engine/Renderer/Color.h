@@ -36,6 +36,6 @@ private:
 
 namespace Colors
 {
-	const Color UnhandledTextureColor(255.f, 255.f, 255.f);
+	const Color UnhandledTextureColor(0.f, 0.f, 0.f);
 	const Color MissingTextureColor(255.f, 0.f, 255.f);
 }

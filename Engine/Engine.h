@@ -2,8 +2,9 @@
 #include <windows.h>
 #include "Win32/WindowContainer.h"
 #include "Renderer/Renderer.h"
-#include "ImGui/ImGuiLayer.h"
-#include "Time/Time.h"
+#include "imgui/ImGuiLayer.h"
+#include "Core/LayerStack.h"
+#include "Core/Time.h"
 #include "Scene/Scene.h"
 
 class Engine
@@ -11,18 +12,21 @@ class Engine
 public:
 	bool Initialize(HINSTANCE hInstance, const int& aWidth, const int& aHeight, 
 		std::string aWindowTitle = "Snow Engine", const std::string& aWindowClass = "Snow Engine");
-	void Begin();
-	void End();
+	void Update();
 	void CleanUp();
 	
+	void PushLayer(Layer* aLayer);
+	void PushOverlay(Layer* aLayer);
+
 	void EnableVSync() { myRenderer.myVSyncEnabled = true; };
 	void DisableVSync() { myRenderer.myVSyncEnabled = false; };
 
 	bool IsRunning() const { return myIsRunning; };
 
-	Scene& GetCurrentScene() { return CurrentScene; }
-
 	static Engine& Get() { return *myInstance; };
+	
+	static WindowContainer* GetWindow() { return &Get().myWindowContainer; };
+	static Scene* GetActiveScene() { return &Get().myActiveScene; }
 
 private:
 	friend class DX11;
@@ -31,10 +35,11 @@ private:
 	
 	WindowContainer myWindowContainer;
 	Renderer myRenderer;
+	LayerStack myLayerStack;
 	ImGuiLayer myImGuiLayer;
 	Time myTime;
 	
-	Scene CurrentScene;
+	Scene myActiveScene;
 
 	bool myIsRunning = true;
 

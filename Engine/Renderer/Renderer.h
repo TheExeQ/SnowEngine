@@ -1,13 +1,11 @@
 #pragma once
-#include "DX11.h"
+#include "Core/DX11.h"
 #include "Shaders.h"
 #include "Vertex.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "ConstantBuffer.h"
 #include "Camera.h"
-
-#include "Scene/Entity.h"
 
 class Renderer
 {
@@ -21,16 +19,11 @@ private:
 	bool CreateShaders();
 	bool CreateConstantBuffers();
 	bool InitScene();
-	void UpdateScene();
 	
 	VertexShader myVertexShader;
 	PixelShader myPixelShader;
 	
 	ConstantBuffer<FrameBuffer> myFrameBuffer;
-
-	Entity cube;
-	Entity chest;
-	Entity pyramid;
 
 	Camera myMainCamera;
 

@@ -1,5 +1,5 @@
 #include "Mesh.h"
-#include "Renderer/DX11.h"
+#include "Core/DX11.h"
 #include <iostream>
 
 Mesh::Mesh(std::vector<Vertex>& aVertices, std::vector<DWORD>& aIndices)

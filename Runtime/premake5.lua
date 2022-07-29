@@ -18,7 +18,7 @@ project "Runtime"
 	includedirs
 	{
 		"../Engine/",
-		"../ThirdParty/includes/",
+		"../ThirdParty/includes/"
 	}
 	
 	libdirs

@@ -11,8 +11,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	{
 		while (engine.IsRunning())
 		{
-			engine.Begin();
-			engine.End();
+			engine.Update();
 		}
 		engine.CleanUp();
 	}

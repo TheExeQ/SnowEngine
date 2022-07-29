@@ -2,7 +2,7 @@
 #include "Shaders.h"
 #include <d3dcompiler.h>
 #include <iostream>
-#include "DX11.h"
+#include "Core/DX11.h"
 
 bool VertexShader::Init(std::wstring aFilePath, D3D11_INPUT_ELEMENT_DESC* aDesc, UINT aDescSize)
 {
