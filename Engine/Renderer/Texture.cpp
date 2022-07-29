@@ -24,14 +24,17 @@ void Texture::LoadTexture(const Color* colorData, UINT width, UINT height)
 	{
 		std::cout << "Failed to initialize texture from color data." << std::endl;
 	}
+
 	myTexture = static_cast<ID3D11Texture2D*>(pTexture);
 	CD3D11_SHADER_RESOURCE_VIEW_DESC srvDesc(D3D11_SRV_DIMENSION_TEXTURE2D, textureDesc.Format);
-	
+
 	hr = DX11::Device->CreateShaderResourceView(myTexture.Get(), &srvDesc, myTextureView.GetAddressOf());
 	if (FAILED(hr))
 	{
 		std::cout << "Failed to create shader resource view from texture generated from color data." << std::endl;
 	}
+	
+	pTexture->Release();
 }
 
 bool Texture::LoadTextureFromFile(const char* filename)

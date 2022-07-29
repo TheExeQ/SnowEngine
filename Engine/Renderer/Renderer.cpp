@@ -7,15 +7,10 @@ bool Renderer::Initialize(HWND hwnd, const int& aWidth, const int& aHeight)
 	if (!myGraphicsAPI.Initialize(hwnd, aWidth, aHeight)) { return false; }
 	if (!CreateShaders()) { return false; }
 	if (!CreateConstantBuffers()) { return false; }
-	if (!InitScene()) { return false; }
-	return true;
-}
 
-// This function is only for testing temporarily
-bool Renderer::InitScene()
-{
 	myMainCamera.SetProjectionValues(90.f, 16.f / 9.f, 0.1f, 1000.f);
 	myMainCamera.SetPosition(0.f, 0.f, -2.f);
+
 	return true;
 }
 

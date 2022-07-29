@@ -16,7 +16,7 @@ project "ThirdParty"
 		"./**.h",
 		"./**.hpp",
 		"./**.cpp",
-		"./**.inl"
+		"./**.inl",
 	}
 	
 	includedirs

@@ -55,10 +55,12 @@ void Engine::Update()
 		{
 			myImGuiLayer.Begin();
 
+#ifndef RETAIL
 			for (auto* layer : myLayerStack)
 			{
 				layer->OnImGuiRender();
 			}
+#endif // !RETAIL
 
 			myImGuiLayer.End();
 		}

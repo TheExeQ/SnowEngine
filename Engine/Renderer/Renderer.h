@@ -18,7 +18,6 @@ private:
 
 	bool CreateShaders();
 	bool CreateConstantBuffers();
-	bool InitScene();
 	
 	VertexShader myVertexShader;
 	PixelShader myPixelShader;

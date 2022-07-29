@@ -12,11 +12,12 @@ project "Editor"
 		"./**.hpp",
 		"./**.cpp",
 		"./**.hlsli",
-		"./**.hlsl"
+		"./**.hlsl",
 	}
 	
 	includedirs
 	{
+		"./",
 		"../Engine/",
 		"../ThirdParty/includes/"
 	}
