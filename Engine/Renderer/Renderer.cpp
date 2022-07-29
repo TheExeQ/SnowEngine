@@ -78,9 +78,9 @@ void Renderer::BeginFrame()
 	{
 		auto objMatrix = glm::mat4(1.f);
 		objMatrix = glm::translate(objMatrix, object.first->position);
-		objMatrix = glm::rotate(objMatrix, glm::radians(object.first->rotation.x), { 1.f, 0.f, 0.f });
-		objMatrix = glm::rotate(objMatrix, glm::radians(object.first->rotation.y), { 0.f, 1.f, 0.f });
-		objMatrix = glm::rotate(objMatrix, glm::radians(object.first->rotation.z), { 0.f, 0.f, 1.f });
+		objMatrix = glm::rotate(objMatrix, object.first->rotation.x, { 1.f, 0.f, 0.f });
+		objMatrix = glm::rotate(objMatrix, object.first->rotation.y, { 0.f, 1.f, 0.f });
+		objMatrix = glm::rotate(objMatrix, object.first->rotation.z, { 0.f, 0.f, 1.f });
 		objMatrix = glm::scale(objMatrix, object.first->scale);
 
 		myFrameBuffer.myData.ViewProjectionMatrix = myMainCamera.GetProjectionMatrix() * myMainCamera.GetViewMatrix() * objMatrix;

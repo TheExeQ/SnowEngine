@@ -9,6 +9,7 @@ bool Model::Initialize(const char* filepath)
 	{
 		return false;
 	}
+	myFilePath = filepath;
 	return true;
 }
 

@@ -13,21 +13,24 @@ public:
 	}
 
 	template<typename T, typename... Args>
-	T& AddComponent(Args&&... args)
+	T* AddComponent(Args&&... args)
 	{
-		return myScene->myRegistry.emplace<T>(myEntityHandle, std::forward<Args>(args)...);
+		if (auto comp = GetComponent<T>()) { return comp; }
+		return &myScene->myRegistry.emplace<T>(myEntityHandle, std::forward<Args>(args)...);
 	}
 
 	template<typename T>
-	T& GetComponent()
+	T* GetComponent()
 	{
-		return myScene->myRegistry.get<T>(myEntityHandle);
+		if (!HasComponent<T>()) { return nullptr; }
+		return &myScene->myRegistry.get<T>(myEntityHandle);
 	}
 
 	template<typename T>
 	void RemoveComponent()
 	{
-		return myScene->myRegistry.remove<T>(myEntityHandle);
+		if (!HasComponent<T>()) { return; }
+		myScene->myRegistry.remove<T>(myEntityHandle);
 	}
 
 	template<typename T>
