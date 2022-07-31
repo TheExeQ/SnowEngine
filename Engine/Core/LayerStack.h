@@ -5,34 +5,37 @@
 #include <vector>
 #include <assert.h>
 
-class LayerStack
+namespace Snow
 {
-public:
-	LayerStack();
-	~LayerStack();
-
-	void PushLayer(Layer* layer);
-	void PushOverlay(Layer* overlay);
-	void PopLayer(Layer* layer);
-	void PopOverlay(Layer* overlay);
-
-	Layer* operator[](size_t index)
+	class LayerStack
 	{
-		assert(index >= 0 && index < myLayers.size());
-		return myLayers[index];
-	}
+	public:
+		LayerStack();
+		~LayerStack();
 
-	const Layer* operator[](size_t index) const
-	{
-		assert(index >= 0 && index < myLayers.size());
-		return myLayers[index];
-	}
+		void PushLayer(Layer* layer);
+		void PushOverlay(Layer* overlay);
+		void PopLayer(Layer* layer);
+		void PopOverlay(Layer* overlay);
 
-	size_t Size() const { return myLayers.size(); }
+		Layer* operator[](size_t index)
+		{
+			assert(index >= 0 && index < myLayers.size());
+			return myLayers[index];
+		}
 
-	std::vector<Layer*>::iterator begin() { return myLayers.begin(); }
-	std::vector<Layer*>::iterator end() { return myLayers.end(); }
-private:
-	std::vector<Layer*> myLayers;
-	unsigned int myLayerInsertIndex = 0;
-};
+		const Layer* operator[](size_t index) const
+		{
+			assert(index >= 0 && index < myLayers.size());
+			return myLayers[index];
+		}
+
+		size_t Size() const { return myLayers.size(); }
+
+		std::vector<Layer*>::iterator begin() { return myLayers.begin(); }
+		std::vector<Layer*>::iterator end() { return myLayers.end(); }
+	private:
+		std::vector<Layer*> myLayers;
+		unsigned int myLayerInsertIndex = 0;
+	};
+}

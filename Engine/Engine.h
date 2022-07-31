@@ -7,42 +7,44 @@
 #include "Core/Time.h"
 #include "Scene/Scene.h"
 
-class Engine
+namespace Snow
 {
-public:
-	bool Initialize(HINSTANCE hInstance, const int& aWidth, const int& aHeight, 
-		std::string aWindowTitle = "Snow Engine", const std::string& aWindowClass = "Snow Engine");
-	void Update();
-	void CleanUp();
-	
-	void PushLayer(Layer* aLayer);
-	void PushOverlay(Layer* aLayer);
+	class Engine
+	{
+	public:
+		bool Initialize(HINSTANCE hInstance, const int& aWidth, const int& aHeight,
+			std::string aWindowTitle = "Snow Engine", const std::string& aWindowClass = "Snow Engine");
+		void Update();
+		void CleanUp();
 
-	void EnableVSync() { myRenderer.myVSyncEnabled = true; };
-	void DisableVSync() { myRenderer.myVSyncEnabled = false; };
+		void PushLayer(Layer* aLayer);
+		void PushOverlay(Layer* aLayer);
 
-	bool IsRunning() const { return myIsRunning; };
+		void EnableVSync() { myRenderer.myVSyncEnabled = true; };
+		void DisableVSync() { myRenderer.myVSyncEnabled = false; };
 
-	static Engine& Get() { return *myInstance; };
-	
-	static WindowContainer* GetWindow() { return &Get().myWindowContainer; };
-	static Scene* GetActiveScene() { return &Get().myActiveScene; }
+		bool IsRunning() const { return myIsRunning; };
 
-private:
-	friend class DX11;
-	friend class WindowContainer;
-	friend LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-	
-	WindowContainer myWindowContainer;
-	Renderer myRenderer;
-	LayerStack myLayerStack;
-	ImGuiLayer myImGuiLayer;
-	Time myTime;
-	
-	Scene myActiveScene;
+		static Engine& Get() { return *myInstance; };
 
-	bool myIsRunning = true;
+		static WindowContainer* GetWindowContainer() { return &Get().myWindowContainer; };
+		static Scene* GetActiveScene() { return &Get().myActiveScene; }
 
-	inline static Engine* myInstance = nullptr;
-};
+	private:
+		friend class DX11;
+		friend class WindowContainer;
+		friend LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
+		WindowContainer myWindowContainer;
+		Renderer myRenderer;
+		LayerStack myLayerStack;
+		ImGuiLayer myImGuiLayer;
+		Time myTime;
+
+		Scene myActiveScene;
+
+		bool myIsRunning = true;
+
+		inline static Engine* myInstance = nullptr;
+	};
+}

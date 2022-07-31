@@ -5,23 +5,25 @@
 #include <imgui/imgui_impl_dx11.h>
 #include <imgui/imgui_impl_win32.h>
 
-class ImGuiLayer : public Layer
+namespace Snow
 {
-public:
-	ImGuiLayer() : Layer("ImGui Layer") {};
-	~ImGuiLayer() = default;
+	class ImGuiLayer : public Layer
+	{
+	public:
+		ImGuiLayer() : Layer("ImGui Layer") {};
+		~ImGuiLayer() = default;
 
-	bool IsLayerActive() { return myLayerActive; };
-	
-private:
-	friend class Engine;
+		bool IsLayerActive() { return myLayerActive; };
 
-	virtual void OnAttach() override;
-	virtual void OnDetach() override;
+	private:
+		friend class Engine;
 
-	void Begin();
-	void End();
-	
-	bool myLayerActive = false;
-};
+		virtual void OnAttach() override;
+		virtual void OnDetach() override;
 
+		void Begin();
+		void End();
+
+		bool myLayerActive = false;
+	};
+}

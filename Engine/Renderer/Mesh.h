@@ -3,17 +3,19 @@
 #include "Vertex.h"
 #include "IndexBuffer.h"
 
-class Mesh
+namespace Snow
 {
-public:
-	Mesh() {};
-	Mesh(std::vector<Vertex>& aVertices, std::vector<DWORD>& aIndices);
-	Mesh(const Mesh& aMesh);
-	
-private:
-	friend class Renderer;
-	
-	VertexBuffer<Vertex> myVertexBuffer;
-	IndexBuffer myIndexBuffer;
-};
+	class Mesh
+	{
+	public:
+		Mesh() {};
+		Mesh(std::vector<Vertex>& aVertices, std::vector<DWORD>& aIndices);
+		Mesh(const Mesh& aMesh);
 
+	private:
+		friend class Renderer;
+
+		VertexBuffer<Vertex> myVertexBuffer;
+		IndexBuffer myIndexBuffer;
+	};
+}

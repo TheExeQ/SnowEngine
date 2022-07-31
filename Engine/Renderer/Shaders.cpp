@@ -4,76 +4,79 @@
 #include <iostream>
 #include "Core/DX11.h"
 
-bool VertexShader::Init(std::wstring aFilePath, D3D11_INPUT_ELEMENT_DESC* aDesc, UINT aDescSize)
+namespace Snow
 {
-	// Read file to buffer
-	HRESULT hr = D3DReadFileToBlob(aFilePath.c_str(), &myShaderBuffer);
-	if (FAILED(hr))
+	bool VertexShader::Init(std::wstring aFilePath, D3D11_INPUT_ELEMENT_DESC* aDesc, UINT aDescSize)
 	{
-		std::cout << "Failed to read file" << std::endl;
-		return false;
-	}
-	
-	// Create vertex shader
-	hr = DX11::Device->CreateVertexShader(myShaderBuffer->GetBufferPointer(), myShaderBuffer->GetBufferSize(), nullptr, &myShader);
-	if (FAILED(hr))
-	{
-		std::cout << "Failed to create vertex shader" << std::endl;
-		return false;
-	}
+		// Read file to buffer
+		HRESULT hr = D3DReadFileToBlob(aFilePath.c_str(), &myShaderBuffer);
+		if (FAILED(hr))
+		{
+			std::cout << "Failed to read file" << std::endl;
+			return false;
+		}
 
-	// Create input layout
-	hr = DX11::Device->CreateInputLayout(aDesc, aDescSize, myShaderBuffer->GetBufferPointer(), myShaderBuffer->GetBufferSize(), myInputLayout.GetAddressOf());
-	if (FAILED(hr))
-	{
-		std::cout << "Failed to create input layout" << std::endl;
-		return false;
-	}
+		// Create vertex shader
+		hr = DX11::Device->CreateVertexShader(myShaderBuffer->GetBufferPointer(), myShaderBuffer->GetBufferSize(), nullptr, &myShader);
+		if (FAILED(hr))
+		{
+			std::cout << "Failed to create vertex shader" << std::endl;
+			return false;
+		}
 
-	return true;
-}
+		// Create input layout
+		hr = DX11::Device->CreateInputLayout(aDesc, aDescSize, myShaderBuffer->GetBufferPointer(), myShaderBuffer->GetBufferSize(), myInputLayout.GetAddressOf());
+		if (FAILED(hr))
+		{
+			std::cout << "Failed to create input layout" << std::endl;
+			return false;
+		}
 
-ID3D11VertexShader* VertexShader::GetShader()
-{
-	return myShader.Get();
-}
-
-ID3D11InputLayout* VertexShader::GetInputLayout()
-{
-	return myInputLayout.Get();
-}
-
-ID3DBlob* VertexShader::GetBuffer()
-{
-	return myShaderBuffer.Get();
-}
-
-bool PixelShader::Init(std::wstring aFilePath)
-{
-	// Read file to buffer
-	HRESULT hr = D3DReadFileToBlob(aFilePath.c_str(), &myShaderBuffer);
-	if (FAILED(hr))
-	{
-		std::cout << "Failed to read file" << std::endl;
-		return false;
+		return true;
 	}
 
-	// Create pixel shader
-	hr = DX11::Device->CreatePixelShader(myShaderBuffer->GetBufferPointer(), myShaderBuffer->GetBufferSize(), nullptr, &myShader);
-	if (FAILED(hr))
+	ID3D11VertexShader* VertexShader::GetShader()
 	{
-		std::cout << "Failed to create pixel shader" << std::endl;
-		return false;
+		return myShader.Get();
 	}
-	return true;
-}
 
-ID3D11PixelShader* PixelShader::GetShader()
-{
-	return myShader.Get();
-}
+	ID3D11InputLayout* VertexShader::GetInputLayout()
+	{
+		return myInputLayout.Get();
+	}
 
-ID3DBlob* PixelShader::GetBuffer()
-{
-	return myShaderBuffer.Get();
+	ID3DBlob* VertexShader::GetBuffer()
+	{
+		return myShaderBuffer.Get();
+	}
+
+	bool PixelShader::Init(std::wstring aFilePath)
+	{
+		// Read file to buffer
+		HRESULT hr = D3DReadFileToBlob(aFilePath.c_str(), &myShaderBuffer);
+		if (FAILED(hr))
+		{
+			std::cout << "Failed to read file" << std::endl;
+			return false;
+		}
+
+		// Create pixel shader
+		hr = DX11::Device->CreatePixelShader(myShaderBuffer->GetBufferPointer(), myShaderBuffer->GetBufferSize(), nullptr, &myShader);
+		if (FAILED(hr))
+		{
+			std::cout << "Failed to create pixel shader" << std::endl;
+			return false;
+		}
+		return true;
+	}
+
+	ID3D11PixelShader* PixelShader::GetShader()
+	{
+		return myShader.Get();
+	}
+
+	ID3DBlob* PixelShader::GetBuffer()
+	{
+		return myShaderBuffer.Get();
+	}
 }

@@ -6,19 +6,22 @@
 #include <vector>
 #include <string>
 
-class Model
+namespace Snow
 {
-public:
-	bool Initialize(const char* aFilepath);
-	void Initialize(Mesh aMesh);
+	class Model
+	{
+	public:
+		bool Initialize(const char* aFilepath);
+		void Initialize(Mesh aMesh);
 
-private:
-	friend class Renderer;
-	friend class SceneHierarchyPanel;
-	bool LoadModel(const char* aFilepath);
-	bool ProcessNode(aiNode* aNode, const aiScene* aScene);
-	Mesh ProcessMesh(aiMesh* aMesh);
+	private:
+		friend class Renderer;
+		friend class SceneHierarchyPanel;
+		bool LoadModel(const char* aFilepath);
+		bool ProcessNode(aiNode* aNode, const aiScene* aScene);
+		Mesh ProcessMesh(aiMesh* aMesh);
 
-	std::string myFilePath = "";
-	std::vector<Mesh> myMeshes;
-};
+		std::string myFilePath = "";
+		std::vector<Mesh> myMeshes;
+	};
+}

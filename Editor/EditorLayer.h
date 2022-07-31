@@ -4,18 +4,21 @@
 #include <Core/Layer.h>
 #include <Scene/Entity.h>
 
-class EditorLayer : public Layer
+namespace Snow
 {
-public:
-	virtual void OnAttach() override;
-	virtual void OnImGuiRender() override;
-	virtual void OnUpdate() override;
+	class EditorLayer : public Layer
+	{
+	public:
+		virtual void OnAttach() override;
+		virtual void OnImGuiRender() override;
+		virtual void OnUpdate() override;
 
-private:
-	Entity myCube;
-	Entity myChest;
-	Entity myPyramid;
+	private:
+		Entity myCube;
+		Entity myChest;
+		Entity myPyramid;
 
-	// Panels
-	SceneHierarchyPanel mySceneHierarchyPanel;
-};
+		// Panels
+		SceneHierarchyPanel mySceneHierarchyPanel;
+	};
+}

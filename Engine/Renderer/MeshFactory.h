@@ -1,11 +1,13 @@
 #pragma once
 
-class Mesh;
-
-class MeshFactory
+namespace Snow
 {
-public:
-	static Mesh CreateCube();
-	static Mesh CreatePyramid();
-};
+	class Mesh;
 
+	class MeshFactory
+	{
+	public:
+		static Mesh CreateCube();
+		static Mesh CreatePyramid();
+	};
+}

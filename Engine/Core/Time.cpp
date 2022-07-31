@@ -1,29 +1,32 @@
 #include "Time.h"
 
-std::chrono::time_point<std::chrono::steady_clock> Time::myStart, Time::myLastFrame;
-std::chrono::duration<double> Time::myDeltaTime, Time::myTotalTime;
-
-Time::Time()
+namespace Snow
 {
-	myStart = std::chrono::high_resolution_clock::now();
-	myLastFrame = myStart;
-	myDeltaTime = std::chrono::duration<double>(0);
-	myTotalTime = std::chrono::duration<double>(0);
-}
+	std::chrono::time_point<std::chrono::steady_clock> Time::myStart, Time::myLastFrame;
+	std::chrono::duration<double> Time::myDeltaTime, Time::myTotalTime;
 
-void Time::Update()
-{
-	myTotalTime = std::chrono::high_resolution_clock::now() - myStart;
-	myDeltaTime = std::chrono::high_resolution_clock::now() - myLastFrame;
-	myLastFrame = std::chrono::high_resolution_clock::now();
-}
+	Time::Time()
+	{
+		myStart = std::chrono::high_resolution_clock::now();
+		myLastFrame = myStart;
+		myDeltaTime = std::chrono::duration<double>(0);
+		myTotalTime = std::chrono::duration<double>(0);
+	}
 
-float Time::GetDeltaTime()
-{
-	return myDeltaTime.count();
-}
+	void Time::Update()
+	{
+		myTotalTime = std::chrono::high_resolution_clock::now() - myStart;
+		myDeltaTime = std::chrono::high_resolution_clock::now() - myLastFrame;
+		myLastFrame = std::chrono::high_resolution_clock::now();
+	}
 
-double Time::GetTotalTime()
-{
-	return myTotalTime.count();
+	float Time::GetDeltaTime()
+	{
+		return myDeltaTime.count();
+	}
+
+	double Time::GetTotalTime()
+	{
+		return myTotalTime.count();
+	}
 }

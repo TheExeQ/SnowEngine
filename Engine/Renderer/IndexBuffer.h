@@ -3,53 +3,56 @@
 #include <wrl/client.h>
 #include <vector>
 
-class IndexBuffer
+namespace Snow
 {
-private:
-	IndexBuffer(const IndexBuffer& rhs);
-
-private:
-	Microsoft::WRL::ComPtr<ID3D11Buffer> buffer;
-	UINT bufferSize = 0;
-	
-public:
-	IndexBuffer() {}
-
-	ID3D11Buffer* Get()const
+	class IndexBuffer
 	{
-		return buffer.Get();
-	}
+	private:
+		IndexBuffer(const IndexBuffer& rhs);
 
-	ID3D11Buffer* const* GetAddressOf()const
-	{
-		return buffer.GetAddressOf();
-	}
+	private:
+		Microsoft::WRL::ComPtr<ID3D11Buffer> buffer;
+		UINT bufferSize = 0;
 
-	UINT BufferSize() const
-	{
-		return bufferSize;
-	}
+	public:
+		IndexBuffer() {}
 
-	HRESULT Initialize(ID3D11Device* aDevice, DWORD* data, UINT numIndices)
-	{
-		if (buffer.Get() != nullptr)
+		ID3D11Buffer* Get()const
 		{
-			buffer.Reset();
+			return buffer.Get();
 		}
 
-		this->bufferSize = numIndices;
-		//Load Index Data
-		D3D11_BUFFER_DESC indexBufferDesc;
-		ZeroMemory(&indexBufferDesc, sizeof(indexBufferDesc));
-		indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-		indexBufferDesc.ByteWidth = sizeof(DWORD) * numIndices;
-		indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
-		indexBufferDesc.CPUAccessFlags = 0;
-		indexBufferDesc.MiscFlags = 0;
+		ID3D11Buffer* const* GetAddressOf()const
+		{
+			return buffer.GetAddressOf();
+		}
 
-		D3D11_SUBRESOURCE_DATA indexBufferData;
-		indexBufferData.pSysMem = data;
-		HRESULT hr = aDevice->CreateBuffer(&indexBufferDesc, &indexBufferData, buffer.GetAddressOf());
-		return hr;
-	}
-};
+		UINT BufferSize() const
+		{
+			return bufferSize;
+		}
+
+		HRESULT Initialize(ID3D11Device* aDevice, DWORD* data, UINT numIndices)
+		{
+			if (buffer.Get() != nullptr)
+			{
+				buffer.Reset();
+			}
+
+			this->bufferSize = numIndices;
+			//Load Index Data
+			D3D11_BUFFER_DESC indexBufferDesc;
+			ZeroMemory(&indexBufferDesc, sizeof(indexBufferDesc));
+			indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+			indexBufferDesc.ByteWidth = sizeof(DWORD) * numIndices;
+			indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
+			indexBufferDesc.CPUAccessFlags = 0;
+			indexBufferDesc.MiscFlags = 0;
+
+			D3D11_SUBRESOURCE_DATA indexBufferData;
+			indexBufferData.pSysMem = data;
+			HRESULT hr = aDevice->CreateBuffer(&indexBufferDesc, &indexBufferData, buffer.GetAddressOf());
+			return hr;
+		}
+	};
+}

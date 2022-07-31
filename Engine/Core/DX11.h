@@ -4,35 +4,35 @@
 
 using namespace Microsoft::WRL;
 
-class DX11
+namespace Snow
 {
-public:
-	static DX11& Get() { return *myInstance; };
+	class DX11
+	{
+	public:
+		static DX11& Get() { return *myInstance; };
 
-	static ComPtr<ID3D11Device> Device;
-	static ComPtr<ID3D11DeviceContext> Context;
-	static ComPtr<IDXGISwapChain> SwapChain;
-	
-private:
-	friend class Renderer;
-	bool Initialize(HWND hwnd, const int& aWidth, const int& aHeight);
-	
-	bool CreateDeviceAndSwapChain(HWND hwnd);
-	bool CreateRenderTargetView();
-	bool CreateDepthStencil();
-	bool CreateRasterizer();
-	bool CreateSamplerState();
+		static ComPtr<ID3D11Device> Device;
+		static ComPtr<ID3D11DeviceContext> Context;
+		static ComPtr<IDXGISwapChain> SwapChain;
 
-	ComPtr<ID3D11RenderTargetView> myRenderTargetView;
-	ComPtr<ID3D11DepthStencilView> myDepthStencilView;
-	ComPtr<ID3D11Texture2D> myDepthStencilBuffer;
-	ComPtr<ID3D11DepthStencilState> myDepthStencilState;
-	ComPtr<ID3D11RasterizerState> myRasterizerState;
-	ComPtr<ID3D11SamplerState> mySamplerState;
+	private:
+		friend class Renderer;
+		friend class WindowContainer;
+		bool Initialize(HWND hwnd, const int& aWidth, const int& aHeight);
 
-	UINT myWindowWidth = 0;
-	UINT myWindowHeight = 0;
+		bool CreateDeviceAndSwapChain(HWND hwnd);
+		bool CreateRenderTargetView();
+		bool CreateDepthStencil();
+		bool CreateRasterizer();
+		bool CreateSamplerState();
 
-	inline static DX11* myInstance = nullptr;
-};
+		ComPtr<ID3D11RenderTargetView> myRenderTargetView;
+		ComPtr<ID3D11DepthStencilView> myDepthStencilView;
+		ComPtr<ID3D11Texture2D> myDepthStencilBuffer;
+		ComPtr<ID3D11DepthStencilState> myDepthStencilState;
+		ComPtr<ID3D11RasterizerState> myRasterizerState;
+		ComPtr<ID3D11SamplerState> mySamplerState;
 
+		inline static DX11* myInstance = nullptr;
+	};
+}

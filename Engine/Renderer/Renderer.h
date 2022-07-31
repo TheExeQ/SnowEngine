@@ -7,26 +7,28 @@
 #include "ConstantBuffer.h"
 #include "Camera.h"
 
-class Renderer
+namespace Snow
 {
-private:
-	friend class Engine;
+	class Renderer
+	{
+	private:
+		friend class Engine;
 
-	bool Initialize(HWND hwnd, const int& aWidth, const int& aHeight);
-	void BeginFrame();
-	void EndFrame();
+		bool Initialize(HWND hwnd, const int& aWidth, const int& aHeight);
+		void BeginFrame();
+		void EndFrame();
 
-	bool CreateShaders();
-	bool CreateConstantBuffers();
-	
-	VertexShader myVertexShader;
-	PixelShader myPixelShader;
-	
-	ConstantBuffer<FrameBuffer> myFrameBuffer;
+		bool CreateShaders();
+		bool CreateConstantBuffers();
 
-	Camera myMainCamera;
+		VertexShader myVertexShader;
+		PixelShader myPixelShader;
 
-	DX11 myGraphicsAPI;
-	bool myVSyncEnabled = true;
-};
+		ConstantBuffer<FrameBuffer> myFrameBuffer;
 
+		Camera myMainCamera;
+
+		DX11 myGraphicsAPI;
+		bool myVSyncEnabled = true;
+	};
+}

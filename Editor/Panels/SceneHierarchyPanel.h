@@ -1,19 +1,22 @@
 #pragma once
 #include <Scene/Entity.h>
 
-class SceneHierarchyPanel
+namespace Snow
 {
-public:
-	void Init();
-	void OnImGuiRender();
+	class SceneHierarchyPanel
+	{
+	public:
+		void Init();
+		void OnImGuiRender();
 
-private:
-	template<typename T>
-	void DisplayAddComponentEntry(const std::string& entryName);
+	private:
+		template<typename T>
+		void DisplayAddComponentEntry(const std::string& entryName);
 
-	void DrawEntityNode(Entity entity);
-	void DrawComponents(Entity entity);
+		void DrawEntityNode(Entity entity);
+		void DrawComponents(Entity entity);
 
-	Scene* myContext = nullptr;
-	Entity mySelectionContext;
-};
+		Scene* myContext = nullptr;
+		Entity mySelectionContext;
+	};
+}

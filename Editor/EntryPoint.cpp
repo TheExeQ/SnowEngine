@@ -16,8 +16,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	freopen("CONOUT$", "w", stderr);
 #endif
 	
-	Engine engine;
-	EditorLayer editor;
+	Snow::Engine engine;
+	Snow::EditorLayer editor;
 	
 	if (engine.Initialize(hInstance, 1280, 720))
 	{

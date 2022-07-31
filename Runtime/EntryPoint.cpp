@@ -5,7 +5,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_ LPWSTR lpCmdLine,
 	_In_ int nCmdShow)
 {
-	Engine engine;
+	Snow::Engine engine;
 
 	if (engine.Initialize(hInstance, 1280, 720))
 	{

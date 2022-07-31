@@ -1,12 +1,15 @@
 #pragma once
 #include <glm/glm.hpp>
 
-struct FrameBuffer
+namespace Snow
 {
-	glm::mat4 ViewProjectionMatrix;
-};
+	struct FrameBuffer
+	{
+		glm::mat4 ViewProjectionMatrix;
+	};
 
-struct ObjectBuffer
-{
-	glm::mat4 WorldMatrix;
-};
+	struct ObjectBuffer
+	{
+		glm::mat4 WorldMatrix;
+	};
+}

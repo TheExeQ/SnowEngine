@@ -4,35 +4,38 @@
 #include <vector>
 #include <utility>
 
-class Renderer;
-class Entity;
-class Camera;
-
-class Scene
+namespace Snow
 {
-public:
-	Scene();
-	~Scene();
+	class Renderer;
+	class Entity;
+	class Camera;
 
-	Entity CreateEntity(const char* aName);
-	void DestroyEntity(Entity aEntity);
+	class Scene
+	{
+	public:
+		Scene();
+		~Scene();
 
-	void OnRuntimeStart();
-	void OnRuntimeStop();
+		Entity CreateEntity(const char* aName);
+		void DestroyEntity(Entity aEntity);
 
-	void OnSimulationStart();
-	void OnSimulationStop();
+		void OnRuntimeStart();
+		void OnRuntimeStop();
 
-	void OnUpdateRuntime();
-	void OnUpdateSimulation();
-	void OnUpdateEditor();
+		void OnSimulationStart();
+		void OnSimulationStop();
 
-private:
-	friend class Renderer;
-	friend class Entity;
-	friend class SceneHierarchyPanel;
+		void OnUpdateRuntime();
+		void OnUpdateSimulation();
+		void OnUpdateEditor();
 
-	std::vector<std::pair<const TransformComponent*, const StaticMeshComponent*>> RenderScene(const Camera& aCamera) const; // Return entitys to render
+	private:
+		friend class Renderer;
+		friend class Entity;
+		friend class SceneHierarchyPanel;
 
-	entt::registry myRegistry;
-};
+		std::vector<std::pair<const TransformComponent*, const StaticMeshComponent*>> RenderScene(const Camera& aCamera) const; // Return entitys to render
+
+		entt::registry myRegistry;
+	};
+}
