@@ -9,6 +9,12 @@
 
 namespace Snow
 {
+	enum class EngineRunMode
+	{
+		Editor,
+		Game
+	};
+
 	class Engine
 	{
 	public:
@@ -23,6 +29,8 @@ namespace Snow
 		void EnableVSync() { myRenderer.myVSyncEnabled = true; };
 		void DisableVSync() { myRenderer.myVSyncEnabled = false; };
 
+		void SetRunMode(EngineRunMode aMode) { myRunMode = aMode; };
+		EngineRunMode GetRunMode() { return myRunMode; };
 		bool IsRunning() const { return myIsRunning; };
 
 		static Engine& Get() { return *myInstance; };
@@ -31,8 +39,6 @@ namespace Snow
 		static Scene* GetActiveScene() { return &Get().myActiveScene; }
 
 	private:
-		friend class DX11;
-		friend class WindowContainer;
 		friend LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 		WindowContainer myWindowContainer;
@@ -44,6 +50,7 @@ namespace Snow
 		Scene myActiveScene;
 
 		bool myIsRunning = true;
+		EngineRunMode myRunMode = EngineRunMode::Game;
 
 		inline static Engine* myInstance = nullptr;
 	};

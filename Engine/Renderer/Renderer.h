@@ -14,7 +14,7 @@ namespace Snow
 	private:
 		friend class Engine;
 
-		bool Initialize(HWND hwnd, const int& aWidth, const int& aHeight);
+		bool Initialize(HWND hwnd);
 		void BeginFrame();
 		void EndFrame();
 

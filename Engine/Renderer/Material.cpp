@@ -5,9 +5,9 @@ namespace Snow
 	Material::Material()
 	{
 		myAlbedo.LoadTexture(&Colors::MissingTextureColor, 1, 1);
-		myRoughnessMap.LoadTexture(&Colors::UnhandledTextureColor, 1, 1);
-		myMetalnessMap.LoadTexture(&Colors::UnhandledTextureColor, 1, 1);
-		myNormalMap.LoadTexture(&Colors::UnhandledTextureColor, 1, 1);
+		//myRoughnessMap.LoadTexture(&Colors::UnhandledTextureColor, 1, 1);
+		//myMetalnessMap.LoadTexture(&Colors::UnhandledTextureColor, 1, 1);
+		//myNormalMap.LoadTexture(&Colors::UnhandledTextureColor, 1, 1);
 	}
 
 	void Material::SetAlbedo(const char* aFileName)

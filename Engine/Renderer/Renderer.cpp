@@ -4,9 +4,9 @@
 
 namespace Snow
 {
-	bool Renderer::Initialize(HWND hwnd, const int& aWidth, const int& aHeight)
+	bool Renderer::Initialize(HWND hwnd)
 	{
-		if (!myGraphicsAPI.Initialize(hwnd, aWidth, aHeight)) { return false; }
+		if (!myGraphicsAPI.Initialize(hwnd)) { return false; }
 		if (!CreateShaders()) { return false; }
 		if (!CreateConstantBuffers()) { return false; }
 
@@ -64,8 +64,16 @@ namespace Snow
 		DX11::Context->OMSetRenderTargets(1, DX11::Get().myRenderTargetView.GetAddressOf(), DX11::Get().myDepthStencilView.Get());
 		DX11::Context->ClearRenderTargetView(DX11::Get().myRenderTargetView.Get(), bgColor);
 		DX11::Context->ClearDepthStencilView(DX11::Get().myDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-
 		DX11::Context->OMSetDepthStencilState(DX11::Get().myDepthStencilState.Get(), 1);
+
+		if (Engine::Get().GetRunMode() == EngineRunMode::Editor)
+		{
+			DX11::Context->OMSetRenderTargets(1, DX11::Get().myEditorRenderTargetView.GetAddressOf(), DX11::Get().myEditorDepthStencilView.Get());
+			DX11::Context->ClearRenderTargetView(DX11::Get().myEditorRenderTargetView.Get(), bgColor);
+			DX11::Context->ClearDepthStencilView(DX11::Get().myEditorDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+			DX11::Context->OMSetDepthStencilState(DX11::Get().myEditorDepthStencilState.Get(), 1);
+		}
+
 		DX11::Context->RSSetState(DX11::Get().myRasterizerState.Get());
 		DX11::Context->PSSetSamplers(0, 1, DX11::Get().mySamplerState.GetAddressOf());
 
@@ -101,6 +109,12 @@ namespace Snow
 				DX11::Context->IASetIndexBuffer(mesh.myIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 				DX11::Context->DrawIndexed(mesh.myIndexBuffer.BufferSize(), 0, 0);
 			}
+		}
+		
+		if (Engine::Get().GetRunMode() == EngineRunMode::Editor)
+		{
+			DX11::Context->OMSetRenderTargets(1, DX11::Get().myRenderTargetView.GetAddressOf(), DX11::Get().myDepthStencilView.Get());
+			DX11::Context->ClearRenderTargetView(DX11::Get().myRenderTargetView.Get(), bgColor);
 		}
 	}
 

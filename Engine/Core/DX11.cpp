@@ -8,7 +8,7 @@ namespace Snow
 	ComPtr<ID3D11DeviceContext> DX11::Context = nullptr;
 	ComPtr<IDXGISwapChain> DX11::SwapChain = nullptr;
 
-	bool DX11::Initialize(HWND hwnd, const int& aWidth, const int& aHeight)
+	bool DX11::Initialize(HWND hwnd)
 	{
 		if (!myInstance) { myInstance = this; }
 		else { return false; }
@@ -16,6 +16,7 @@ namespace Snow
 		if (!CreateDeviceAndSwapChain(hwnd)) { return false; };
 		if (!CreateRenderTargetView()) { return false; };
 		if (!CreateDepthStencil()) { return false; };
+		if (Engine::Get().GetRunMode() == EngineRunMode::Editor && (!CreateEditorRenderTargetView(1, 1) || !CreateEditorDepthStencil(1, 1))) { return false; };
 		if (!CreateRasterizer()) { return false; };
 		if (!CreateSamplerState()) { return false; };
 
@@ -108,6 +109,7 @@ namespace Snow
 		vp.MinDepth = 0.0f;
 		vp.MaxDepth = 1.0f;
 
+		Context->OMSetRenderTargets(1, myRenderTargetView.GetAddressOf(), nullptr);
 		Context->RSSetViewports(1, &vp);
 
 		return true;
@@ -132,7 +134,7 @@ namespace Snow
 		depthStencilBufferDesc.CPUAccessFlags = 0;
 		depthStencilBufferDesc.MiscFlags = 0;
 
-		result = Device->CreateTexture2D(&depthStencilBufferDesc, NULL, myDepthStencilBuffer.GetAddressOf());
+		result = Device->CreateTexture2D(&depthStencilBufferDesc, NULL, myDepthStencilTexture.GetAddressOf());
 		if (FAILED(result))
 		{
 			std::cout << "Failed to create depth stencil texture" << std::endl;
@@ -145,7 +147,7 @@ namespace Snow
 		dsvd.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 		dsvd.Texture2D.MipSlice = 0;
 
-		result = Device->CreateDepthStencilView(myDepthStencilBuffer.Get(), &dsvd, myDepthStencilView.GetAddressOf());
+		result = Device->CreateDepthStencilView(myDepthStencilTexture.Get(), &dsvd, myDepthStencilView.GetAddressOf());
 		if (FAILED(result))
 		{
 			std::cout << "Failed to create depth stencil view" << std::endl;
@@ -164,6 +166,135 @@ namespace Snow
 		if (FAILED(result))
 		{
 			std::cout << "Failed to create depth stencil state" << std::endl;
+			return false;
+		}
+		return true;
+	}
+
+	bool DX11::CreateEditorRenderTargetView(const int& aWidth, const int& aHeight)
+	{
+		HRESULT result;
+		D3D11_TEXTURE2D_DESC textureDesc;
+		D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc;
+		D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
+
+		// Initialize the render target texture description.
+		ZeroMemory(&textureDesc, sizeof(textureDesc));
+
+		// Setup the render target texture description.
+		textureDesc.Width = aWidth;
+		textureDesc.Height = aHeight;
+		textureDesc.MipLevels = 1;
+		textureDesc.ArraySize = 1;
+		textureDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		textureDesc.SampleDesc.Count = 1;
+		textureDesc.Usage = D3D11_USAGE_DEFAULT;
+		textureDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+		textureDesc.CPUAccessFlags = 0;
+		textureDesc.MiscFlags = 0;
+
+		// Create the render target texture.
+		result = Device->CreateTexture2D(&textureDesc, NULL, myEditorTexture.GetAddressOf());
+		if (FAILED(result))
+		{
+			std::cout << "Failed to create editor texture" << std::endl;
+			return false;
+		}
+
+		// Setup the description of the render target view.
+		renderTargetViewDesc.Format = textureDesc.Format;
+		renderTargetViewDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+		renderTargetViewDesc.Texture2D.MipSlice = 0;
+
+		// Create the render target view.
+		result = Device->CreateRenderTargetView(myEditorTexture.Get(), &renderTargetViewDesc, myEditorRenderTargetView.GetAddressOf());
+		if (FAILED(result))
+		{
+			std::cout << "Failed to create editor render target view" << std::endl;
+			return false;
+		}
+
+		// Setup the description of the shader resource view.
+		shaderResourceViewDesc.Format = textureDesc.Format;
+		shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+		shaderResourceViewDesc.Texture2D.MostDetailedMip = 0;
+		shaderResourceViewDesc.Texture2D.MipLevels = 1;
+
+		// Create the shader resource view.
+		result = Device->CreateShaderResourceView(myEditorTexture.Get(), &shaderResourceViewDesc, myEditorShaderResourceView.GetAddressOf());
+		if (FAILED(result))
+		{
+			std::cout << "Failed to create editor shader resource view" << std::endl;
+			return false;
+		}
+
+		D3D11_VIEWPORT vp;
+		ZeroMemory(&vp, sizeof(D3D11_VIEWPORT));
+
+		vp.TopLeftX = 0;
+		vp.TopLeftY = 0;
+		vp.Width = (FLOAT)aWidth;
+		vp.Height = (FLOAT)aHeight;
+		vp.MinDepth = 0.0f;
+		vp.MaxDepth = 1.0f;
+
+		Context->OMSetRenderTargets(1, myEditorRenderTargetView.GetAddressOf(), nullptr);
+		Context->RSSetViewports(1, &vp);
+
+		return true;
+	}
+
+	bool DX11::CreateEditorDepthStencil(const int& aWidth, const int& aHeight)
+	{
+		HRESULT result;
+
+		// Create the depth stencil view
+		D3D11_TEXTURE2D_DESC depthStencilBufferDesc;
+		ZeroMemory(&depthStencilBufferDesc, sizeof(depthStencilBufferDesc));
+		depthStencilBufferDesc.Width = aWidth;
+		depthStencilBufferDesc.Height = aHeight;
+		depthStencilBufferDesc.MipLevels = 1;
+		depthStencilBufferDesc.ArraySize = 1;
+		depthStencilBufferDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+		depthStencilBufferDesc.SampleDesc.Count = 1;
+		depthStencilBufferDesc.SampleDesc.Quality = 0;
+		depthStencilBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+		depthStencilBufferDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+		depthStencilBufferDesc.CPUAccessFlags = 0;
+		depthStencilBufferDesc.MiscFlags = 0;
+
+		result = Device->CreateTexture2D(&depthStencilBufferDesc, NULL, myEditorDepthStencilTexture.GetAddressOf());
+		if (FAILED(result))
+		{
+			std::cout << "Failed to create editor depth stencil texture" << std::endl;
+			return false;
+		}
+
+		D3D11_DEPTH_STENCIL_VIEW_DESC dsvd;
+		ZeroMemory(&dsvd, sizeof(dsvd));
+		dsvd.Format = depthStencilBufferDesc.Format;
+		dsvd.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+		dsvd.Texture2D.MipSlice = 0;
+
+		result = Device->CreateDepthStencilView(myEditorDepthStencilTexture.Get(), &dsvd, myEditorDepthStencilView.GetAddressOf());
+		if (FAILED(result))
+		{
+			std::cout << "Failed to create editor depth stencil view" << std::endl;
+			return false;
+		}
+
+		// Create the depth state
+		D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
+		ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
+		depthStencilDesc.DepthEnable = true;
+		depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+		depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
+		depthStencilDesc.StencilEnable = false;
+
+		result = Device->CreateDepthStencilState(&depthStencilDesc, myEditorDepthStencilState.GetAddressOf());
+		if (FAILED(result))
+		{
+			std::cout << "Failed to create editor depth stencil state" << std::endl;
 			return false;
 		}
 		return true;

@@ -28,11 +28,14 @@ namespace Snow
 		myPyramid.AddComponent<StaticMeshComponent>()->model.Initialize(MeshFactory::CreatePyramid());
 
 		mySceneHierarchyPanel.Init();
+		mySceneViewportPanel.Init();
 	}
 
 	void EditorLayer::OnImGuiRender()
 	{
+		mySceneViewportPanel.OnImGuiRender();
 		mySceneHierarchyPanel.OnImGuiRender();
+		ImGui::ShowDemoWindow();
 	}
 
 	void EditorLayer::OnUpdate()

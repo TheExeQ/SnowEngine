@@ -26,7 +26,7 @@ namespace Snow
 
 		HWND handle = myWindowContainer.GetWindowHandle();
 
-		result = myRenderer.Initialize(handle, aWidth, aHeight);
+		result = myRenderer.Initialize(handle);
 		if (!result)
 		{
 			std::cout << "Failed to initialize Renderer" << std::endl;

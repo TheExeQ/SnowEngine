@@ -1,6 +1,7 @@
 #include "WindowContainer.h"
 #include "Engine.h"
 #include "Core/DX11.h"
+#include "Editor/SceneViewportPanel.h"
 #include <iostream>
 
 // Forward declare message handler from imgui_impl_win32.cpp
@@ -28,10 +29,9 @@ namespace Snow
 			DX11::Context->OMSetRenderTargets(0, 0, 0);
 
 			DX11::Get().myRenderTargetView->Release();
-
 			DX11::Get().myDepthStencilView->Release();
 			DX11::Get().myDepthStencilState->Release();
-			DX11::Get().myDepthStencilBuffer->Release();
+			DX11::Get().myDepthStencilTexture->Release();
 
 			HRESULT hr;
 			hr = DX11::SwapChain->ResizeBuffers(0, width, height, DXGI_FORMAT_UNKNOWN, 0);
@@ -43,6 +43,9 @@ namespace Snow
 
 			DX11::Get().CreateRenderTargetView();
 			DX11::Get().CreateDepthStencil();
+			
+			SceneViewportPanel::Get().OnResize();
+
 			std::cout << "Window successfully resized" << std::endl;
 		}
 	}

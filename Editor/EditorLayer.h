@@ -1,5 +1,6 @@
 #pragma once
 #include "Panels/SceneHierarchyPanel.h"
+#include "Editor/SceneViewportPanel.h"
 
 #include <Core/Layer.h>
 #include <Scene/Entity.h>
@@ -20,5 +21,6 @@ namespace Snow
 
 		// Panels
 		SceneHierarchyPanel mySceneHierarchyPanel;
+		SceneViewportPanel mySceneViewportPanel;
 	};
 }

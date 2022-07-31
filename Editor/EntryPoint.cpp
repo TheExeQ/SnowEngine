@@ -17,6 +17,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 #endif
 	
 	Snow::Engine engine;
+	engine.SetRunMode(Snow::EngineRunMode::Editor);
 	Snow::EditorLayer editor;
 	
 	if (engine.Initialize(hInstance, 1280, 720))

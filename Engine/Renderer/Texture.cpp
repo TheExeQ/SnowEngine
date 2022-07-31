@@ -30,7 +30,7 @@ namespace Snow
 		myTexture = static_cast<ID3D11Texture2D*>(pTexture);
 		CD3D11_SHADER_RESOURCE_VIEW_DESC srvDesc(D3D11_SRV_DIMENSION_TEXTURE2D, textureDesc.Format);
 
-		hr = DX11::Device->CreateShaderResourceView(myTexture.Get(), &srvDesc, myTextureView.GetAddressOf());
+		hr = DX11::Device->CreateShaderResourceView(myTexture.Get(), &srvDesc, &myTextureView);
 		if (FAILED(hr))
 		{
 			std::cout << "Failed to create shader resource view from texture generated from color data." << std::endl;
@@ -79,7 +79,7 @@ namespace Snow
 			D3D11_SRV_DIMENSION_TEXTURE2D;
 		srvDesc.Texture2D.MipLevels = -1;
 		srvDesc.Texture2D.MostDetailedMip = 0;
-		hr = DX11::Device->CreateShaderResourceView(pTexture, &srvDesc, myTextureView.GetAddressOf());
+		hr = DX11::Device->CreateShaderResourceView(pTexture, &srvDesc, &myTextureView);
 		if (FAILED(hr))
 		{
 			std::cout << "Failed to create shader resource view from texture generated from " << filename << std::endl;
