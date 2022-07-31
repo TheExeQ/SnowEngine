@@ -3,6 +3,9 @@
 #include "Core/DX11.h"
 #include <iostream>
 
+// Forward declare message handler from imgui_impl_win32.cpp
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 namespace Snow
 {
 	void WindowContainer::OnResize(UINT flag, int width, int height)
@@ -44,12 +47,9 @@ namespace Snow
 		}
 	}
 
-	// Forward declare message handler from imgui_impl_win32.cpp
-	extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
 	LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	{
-		if (ImGui_ImplWin32_WndProcHandler(hwnd, uMsg, wParam, lParam))
+		if (::ImGui_ImplWin32_WndProcHandler(hwnd, uMsg, wParam, lParam))
 			return true;
 
 		switch (uMsg)
