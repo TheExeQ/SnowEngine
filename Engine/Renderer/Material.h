@@ -16,6 +16,7 @@ namespace Snow
 	private:
 		friend class Renderer;
 		friend class SceneHierarchyPanel;
+		friend class SceneSerializer;
 		Texture myAlbedo;
 		Texture myRoughnessMap;
 		Texture myMetalnessMap;

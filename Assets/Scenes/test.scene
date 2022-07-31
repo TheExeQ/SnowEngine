@@ -1,0 +1,38 @@
+Scene: Untitled
+Entities:
+  - Entity: 2
+    TagComponent:
+      Tag: Pyramid
+    TransformComponent:
+      Position: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    StaticMeshComponent:
+      Model:
+        MeshPath: ""
+      Material:
+        AlbedoPath: ""
+  - Entity: 1
+    TagComponent:
+      Tag: Chest
+    TransformComponent:
+      Position: [-2, -0.5, 0]
+      Rotation: [0, -0.785398185, 0]
+      Scale: [0.00999999978, 0.00999999978, 0.00999999978]
+    StaticMeshComponent:
+      Model:
+        MeshPath: ../Assets/Models/SM/Particle_Chest.fbx
+      Material:
+        AlbedoPath: ../Assets/Textures/T_Particle_Chest_C.png
+  - Entity: 0
+    TagComponent:
+      Tag: Cube
+    TransformComponent:
+      Position: [2, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    StaticMeshComponent:
+      Model:
+        MeshPath: ""
+      Material:
+        AlbedoPath: ""

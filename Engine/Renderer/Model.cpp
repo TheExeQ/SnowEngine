@@ -1,5 +1,6 @@
 #include "Model.h"
 #include "Core/Random.h"
+#include "MeshFactory.h"
 #include <iostream>
 
 namespace Snow
@@ -10,7 +11,6 @@ namespace Snow
 		{
 			return false;
 		}
-		myFilePath = filepath;
 		return true;
 	}
 
@@ -35,6 +35,7 @@ namespace Snow
 		myMeshes.clear();
 
 		ProcessNode(scene->mRootNode, scene);
+		myFilePath = aFilepath;
 		return true;
 	}
 

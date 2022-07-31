@@ -17,6 +17,7 @@ namespace Snow
 	private:
 		friend class Renderer;
 		friend class SceneHierarchyPanel;
+		friend class SceneSerializer;
 		bool LoadModel(const char* aFilepath);
 		bool ProcessNode(aiNode* aNode, const aiScene* aScene);
 		Mesh ProcessMesh(aiMesh* aMesh);

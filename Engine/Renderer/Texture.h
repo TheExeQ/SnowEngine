@@ -18,6 +18,7 @@ namespace Snow
 	private:
 		friend class Renderer;
 		friend class SceneHierarchyPanel;
+		friend class SceneSerializer;
 		bool LoadTextureFromFile(const char* filename);
 
 		std::string myFilePath = "";

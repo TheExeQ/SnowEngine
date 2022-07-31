@@ -35,7 +35,7 @@ namespace Snow
 	{
 		mySceneViewportPanel.OnImGuiRender();
 		mySceneHierarchyPanel.OnImGuiRender();
-		ImGui::ShowDemoWindow();
+		//ImGui::ShowDemoWindow();
 	}
 
 	void EditorLayer::OnUpdate()

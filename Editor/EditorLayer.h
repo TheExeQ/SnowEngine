@@ -2,6 +2,8 @@
 #include "Panels/SceneHierarchyPanel.h"
 #include "Editor/SceneViewportPanel.h"
 
+#include "Scene/SceneSerializer.h"
+
 #include <Core/Layer.h>
 #include <Scene/Entity.h>
 
