@@ -1,14 +1,13 @@
-#include "EditorLayer.h"
+#include "GameLayer.h"
 #include <Engine.h>
 #include <Renderer/MeshFactory.h>
-#include <imgui/imgui.h>
 #include <iostream>
 
 namespace Snow
 {
-	void EditorLayer::OnAttach()
+	void GameLayer::OnAttach()
 	{
-		std::cout << "Editor Layer Attached" << std::endl;
+		std::cout << "Game Layer Attached" << std::endl;
 
 		myCube = Engine::GetActiveScene()->CreateEntity("Cube");
 		myCube.GetComponent<TransformComponent>()->position = { 2.0f, 0.0f, 0.0f };
@@ -26,33 +25,23 @@ namespace Snow
 		myPyramid.GetComponent<TransformComponent>()->position = { 0.0f, 0.0f, 0.0f };
 		myPyramid.GetComponent<TransformComponent>()->rotation = { 0.0f, 0.0f, 0.0f };
 		myPyramid.AddComponent<StaticMeshComponent>()->model.Initialize(MeshFactory::CreatePyramid());
-
-		mySceneHierarchyPanel.Init();
-		mySceneViewportPanel.Init();
 	}
 
-	void EditorLayer::OnImGuiRender()
-	{
-		mySceneViewportPanel.OnImGuiRender();
-		mySceneHierarchyPanel.OnImGuiRender();
-		ImGui::ShowDemoWindow();
-	}
-
-	void EditorLayer::OnUpdate()
+	void GameLayer::OnUpdate()
 	{
 		if (myCube.HasComponent<TransformComponent>())
 		{
-			//myCube.GetComponent<TransformComponent>()->rotation.z += glm::radians(0.5f);
+			myCube.GetComponent<TransformComponent>()->rotation.z += glm::radians(0.5f);
 		}
 
 		if (myChest.HasComponent<TransformComponent>())
 		{
-			//myChest.GetComponent<TransformComponent>()->rotation.y += glm::radians(0.5f);
+			myChest.GetComponent<TransformComponent>()->rotation.y += glm::radians(0.5f);
 		}
 
 		if (myPyramid.HasComponent<TransformComponent>())
 		{
-			//myPyramid.GetComponent<TransformComponent>()->rotation.y += glm::radians(0.5f);
+			myPyramid.GetComponent<TransformComponent>()->rotation.y += glm::radians(0.5f);
 		}
 	}
 }

@@ -238,7 +238,6 @@ namespace Snow
 		vp.MinDepth = 0.0f;
 		vp.MaxDepth = 1.0f;
 
-		Context->OMSetRenderTargets(1, myEditorRenderTargetView.GetAddressOf(), nullptr);
 		Context->RSSetViewports(1, &vp);
 
 		return true;

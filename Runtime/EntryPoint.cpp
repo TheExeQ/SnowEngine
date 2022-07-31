@@ -1,4 +1,5 @@
 #include <Engine.h>
+#include "GameLayer.h"
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
@@ -6,13 +7,20 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_ int nCmdShow)
 {
 	Snow::Engine engine;
+	Snow::GameLayer game;
 
 	if (engine.Initialize(hInstance, 1280, 720))
 	{
+		// Initialization
+		engine.PushLayer(&game);
+
+		// Update Loop
 		while (engine.IsRunning())
 		{
 			engine.Update();
 		}
+
+		// CleanUp
 		engine.CleanUp();
 	}
 	return 0;
