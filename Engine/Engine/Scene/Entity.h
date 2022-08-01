@@ -11,7 +11,17 @@ namespace Snow
 		Entity() {};
 		Entity(entt::entity aEntityHandle, Scene* aScene);
 
-		inline entt::entity GetHandle() {
+		inline bool IsValid() 
+		{
+			if (!myScene) { return false; }
+			else
+			{
+				return myScene->myRegistry.valid(myEntityHandle);
+			}
+		}
+
+		inline entt::entity GetHandle() 
+		{
 			return myEntityHandle;
 		}
 

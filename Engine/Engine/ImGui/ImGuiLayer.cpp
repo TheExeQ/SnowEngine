@@ -1,6 +1,7 @@
 #include "ImGuiLayer.h"
 #include "Engine/Engine.h"
 #include "Engine/Core/DX11.h"
+#include <ImGuizmo/ImGuizmo.h>
 
 namespace Snow
 {
@@ -21,6 +22,9 @@ namespace Snow
 		//io.ConfigViewportsNoDefaultParent = true;
 		//io.ConfigDockingAlwaysTabBar = true;
 		//io.ConfigDockingTransparentPayload = true;
+
+		io.Fonts->AddFontFromFileTTF("../Editor/Assets/Fonts/opensans/OpenSans-Bold.ttf", 18.f);
+		io.FontDefault = io.Fonts->AddFontFromFileTTF("../Editor/Assets/Fonts/opensans/OpenSans-Regular.ttf", 18.f);
 
 		// Setup Dear ImGui style
 		ImGui::StyleColorsDark();
@@ -57,6 +61,7 @@ namespace Snow
 		ImGui_ImplDX11_NewFrame();
 		ImGui_ImplWin32_NewFrame();
 		ImGui::NewFrame();
+		ImGuizmo::BeginFrame();
 	}
 
 	void ImGuiLayer::End()

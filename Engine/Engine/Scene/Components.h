@@ -17,6 +17,15 @@ namespace Snow
 		glm::vec3 position = { 0.f, 0.f, 0.f };
 		glm::vec3 rotation = { 0.f, 0.f, 0.f };
 		glm::vec3 scale = { 1.f, 1.f, 1.f };
+
+		glm::mat4 GetTransform() const
+		{
+			glm::mat4 positionMatrix = glm::translate(glm::mat4(1.f), position);
+			glm::mat4 rotationMatrix = glm::eulerAngleYXZ(rotation.y, rotation.x, rotation.z);
+			glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.f), scale);
+
+			return positionMatrix * rotationMatrix * scaleMatrix;
+		}
 	};
 
 	struct CameraComponent

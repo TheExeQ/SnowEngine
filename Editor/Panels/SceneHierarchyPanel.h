@@ -8,6 +8,7 @@ namespace Snow
 	public:
 		void Init();
 		void OnImGuiRender();
+		Entity GetSelectedEntity() const { return mySelectionContext; };
 
 	private:
 		template<typename T>

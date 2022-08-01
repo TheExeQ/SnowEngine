@@ -13,6 +13,7 @@ namespace Snow
 	{
 	private:
 		friend class Engine;
+		friend class SceneViewportPanel;
 
 		bool Initialize(HWND hwnd);
 		void BeginFrame();

@@ -163,21 +163,20 @@ namespace Snow {
 			bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, name.c_str());
 			ImGui::PopStyleVar(
 			);
-			ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
-			if (ImGui::Button("+", ImVec2{ lineHeight, lineHeight }))
+			if (typeid(T) != typeid(TagComponent) && typeid(T) != typeid(TransformComponent))
 			{
-				ImGui::OpenPopup("ComponentSettings");
+				ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
+				if (ImGui::Button("+", ImVec2{ lineHeight, lineHeight }))
+				{
+					ImGui::OpenPopup("ComponentSettings");
+				}
 			}
 
 			bool removeComponent = false;
 			if (ImGui::BeginPopup("ComponentSettings"))
 			{
-				if (typeid(T) != typeid(TagComponent) && typeid(T) != typeid(TransformComponent))
-				{
-					if (ImGui::MenuItem("Remove component"))
-						removeComponent = true;
-				}
-
+				if (ImGui::MenuItem("Remove component"))
+					removeComponent = true;
 				ImGui::EndPopup();
 			}
 

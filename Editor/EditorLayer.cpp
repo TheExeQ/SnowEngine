@@ -33,25 +33,77 @@ namespace Snow
 
 	void EditorLayer::OnImGuiRender()
 	{
-		mySceneViewportPanel.OnImGuiRender();
+		RenderDockspace(); // This has to be rendered before windows that should be dockable.
+		
 		mySceneHierarchyPanel.OnImGuiRender();
+		mySceneViewportPanel.OnImGuiRender(mySceneHierarchyPanel.GetSelectedEntity());
 	}
 
 	void EditorLayer::OnUpdate()
 	{
-		if (myCube.HasComponent<TransformComponent>())
+		
+	}
+
+	void EditorLayer::RenderDockspace()
+	{
+		static bool dockspace_opened = true;
+		static bool opt_fullscreen = true;
+		static bool opt_padding = false;
+		static ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
+
+		ImGuiWindowFlags window_flags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+		if (opt_fullscreen)
 		{
-			//myCube.GetComponent<TransformComponent>()->rotation.z += glm::radians(0.5f);
+			const ImGuiViewport* viewport = ImGui::GetMainViewport();
+			ImGui::SetNextWindowPos(viewport->WorkPos);
+			ImGui::SetNextWindowSize(viewport->WorkSize);
+			ImGui::SetNextWindowViewport(viewport->ID);
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+			window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+			window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
 		}
 
-		if (myChest.HasComponent<TransformComponent>())
+		if (!opt_padding)
+			ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+		ImGui::Begin("DockSpace", &dockspace_opened, window_flags);
+		if (!opt_padding)
+			ImGui::PopStyleVar();
+
+		if (opt_fullscreen)
+			ImGui::PopStyleVar(2);
+
+		ImGuiIO& io = ImGui::GetIO();
+		ImGuiStyle& style = ImGui::GetStyle();
+		auto oldMinSize = style.WindowMinSize;
+		style.WindowMinSize.x = 370.f;
+		
+		if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
 		{
-			//myChest.GetComponent<TransformComponent>()->rotation.y += glm::radians(0.5f);
+			ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+			ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+		}
+		
+		style.WindowMinSize = oldMinSize;
+
+		if (ImGui::BeginMenuBar())
+		{
+			if (ImGui::BeginMenu("File"))
+			{
+				if (ImGui::MenuItem("Open...", NULL))
+				{
+					std::cout << "Open not working atm." << std::endl;
+				};
+				if (ImGui::MenuItem("Save As...", NULL))
+				{
+					std::cout << "Save As not working atm." << std::endl;
+				};
+				ImGui::EndMenu();
+			}
+			
+			ImGui::EndMenuBar();
 		}
 
-		if (myPyramid.HasComponent<TransformComponent>())
-		{
-			//myPyramid.GetComponent<TransformComponent>()->rotation.y += glm::radians(0.5f);
-		}
+		ImGui::End();
 	}
 }

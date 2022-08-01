@@ -39,6 +39,7 @@ namespace Snow
 		static Scene* GetActiveScene() { return &Get().myActiveScene; }
 
 	private:
+		friend class SceneViewportPanel;
 		friend LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 		WindowContainer myWindowContainer;

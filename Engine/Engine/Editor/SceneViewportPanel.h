@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
+#include "Engine/Scene/Entity.h"
 
 namespace Snow
 {
@@ -10,7 +11,7 @@ namespace Snow
 		friend class WindowContainer;
 
 		void Init();
-		void OnImGuiRender();
+		void OnImGuiRender(Entity aSelectedEntity);
 		void OnResize();
 
 		static SceneViewportPanel& Get() { return *myInstace; }

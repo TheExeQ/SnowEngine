@@ -17,6 +17,8 @@ namespace Snow
 		virtual void OnUpdate() override;
 
 	private:
+		void RenderDockspace();
+
 		Entity myCube;
 		Entity myChest;
 		Entity myPyramid;
