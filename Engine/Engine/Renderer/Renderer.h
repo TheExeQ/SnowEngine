@@ -26,6 +26,7 @@ namespace Snow
 		PixelShader myPixelShader;
 
 		ConstantBuffer<FrameBuffer> myFrameBuffer;
+		ConstantBuffer<ObjectBuffer> myObjectBuffer;
 
 		Camera myMainCamera;
 

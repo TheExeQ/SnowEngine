@@ -40,7 +40,6 @@ namespace Snow
 	bool Renderer::CreateConstantBuffers()
 	{
 		HRESULT hr;
-		// Set transform matrix of the sqaure to constant buffer
 		hr = myFrameBuffer.Init(DX11::Device.Get(), DX11::Context.Get());
 		if (FAILED(hr))
 		{
@@ -49,6 +48,20 @@ namespace Snow
 		}
 
 		hr = myFrameBuffer.ApplyChanges();
+		if (FAILED(hr))
+		{
+			std::cout << "Failed to update constant buffer" << std::endl;
+			return false;
+		}
+
+		hr = myObjectBuffer.Init(DX11::Device.Get(), DX11::Context.Get());
+		if (FAILED(hr))
+		{
+			std::cout << "Failed to create constant buffer" << std::endl;
+			return false;
+		}
+
+		hr = myObjectBuffer.ApplyChanges();
 		if (FAILED(hr))
 		{
 			std::cout << "Failed to update constant buffer" << std::endl;
@@ -89,9 +102,12 @@ namespace Snow
 			objMatrix = glm::rotate(objMatrix, object.first->rotation.z, { 0.f, 0.f, 1.f });
 			objMatrix = glm::scale(objMatrix, object.first->scale);
 
-			myFrameBuffer.myData.ViewProjectionMatrix = myMainCamera.GetProjectionMatrix() * myMainCamera.GetViewMatrix() * objMatrix;
-			myFrameBuffer.myData.ViewProjectionMatrix = glm::transpose(myFrameBuffer.myData.ViewProjectionMatrix);
+			myFrameBuffer.myData.ViewMatrix = myMainCamera.GetViewMatrix();
+			myFrameBuffer.myData.ProjectionMatrix = myMainCamera.GetProjectionMatrix();
 			myFrameBuffer.ApplyChanges();
+
+			myObjectBuffer.myData.WorldMatrix = objMatrix;
+			myObjectBuffer.ApplyChanges();
 
 			DX11::Context->PSSetShaderResources(0, 1, object.second->material.myAlbedo.myTextureView.GetAddressOf());
 			for (auto mesh : object.second->model.myMeshes)
@@ -103,6 +119,7 @@ namespace Snow
 				DX11::Context->PSSetShader(myPixelShader.GetShader(), nullptr, 0);
 
 				DX11::Context->VSSetConstantBuffers(0, 1, myFrameBuffer.GetAddressOf());
+				DX11::Context->VSSetConstantBuffers(1, 1, myObjectBuffer.GetAddressOf());
 
 				UINT offset = 0;
 

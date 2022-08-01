@@ -5,7 +5,8 @@ namespace Snow
 {
 	struct FrameBuffer
 	{
-		glm::mat4 ViewProjectionMatrix;
+		glm::mat4 ViewMatrix;
+		glm::mat4 ProjectionMatrix;
 	};
 
 	struct ObjectBuffer

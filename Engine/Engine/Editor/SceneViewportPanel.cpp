@@ -24,7 +24,7 @@ namespace Snow
 	void SceneViewportPanel::OnImGuiRender(Entity aSelectedEntity)
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
-		ImGui::Begin("Viewport", &myOpened , ImGuiWindowFlags_NoCollapse);
+		ImGui::Begin("Viewport", &myOpened , ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar);
 		auto viewportPanelSize = ImGui::GetContentRegionAvail();
 		if (myViewportSize != *(glm::vec2*)&viewportPanelSize)
 		{
