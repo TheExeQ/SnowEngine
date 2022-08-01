@@ -1,6 +1,6 @@
 #pragma once
-#include <Core/Layer.h>
-#include <Scene/Entity.h>
+#include <Engine/Core/Layer.h>
+#include <Engine/Scene/Entity.h>
 
 namespace Snow
 {

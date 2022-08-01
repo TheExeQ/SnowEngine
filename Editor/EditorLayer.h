@@ -1,11 +1,11 @@
 #pragma once
 #include "Panels/SceneHierarchyPanel.h"
-#include "Editor/SceneViewportPanel.h"
+#include "Engine/Editor/SceneViewportPanel.h"
 
-#include "Scene/SceneSerializer.h"
+#include "Engine/Scene/SceneSerializer.h"
 
-#include <Core/Layer.h>
-#include <Scene/Entity.h>
+#include <Engine/Core/Layer.h>
+#include <Engine/Scene/Entity.h>
 
 namespace Snow
 {

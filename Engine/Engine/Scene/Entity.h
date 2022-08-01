@@ -1,7 +1,7 @@
 #pragma once
 #include "entt/entt.hpp"
 #include "Components.h"
-#include "Scene/Scene.h"
+#include "Scene.h"
 
 namespace Snow
 {

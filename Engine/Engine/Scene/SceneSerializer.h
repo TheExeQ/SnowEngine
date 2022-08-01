@@ -1,6 +1,6 @@
 #pragma once
-#include "Scene/Scene.h"
-#include "Scene/Entity.h"
+#include "Scene.h"
+#include "Entity.h"
 #include <yaml-cpp/yaml.h>
 
 namespace Snow

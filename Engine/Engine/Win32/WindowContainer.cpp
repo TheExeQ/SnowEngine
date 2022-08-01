@@ -1,7 +1,7 @@
 #include "WindowContainer.h"
-#include "Engine.h"
-#include "Core/DX11.h"
-#include "Editor/SceneViewportPanel.h"
+#include "Engine/Engine.h"
+#include "Engine/Core/DX11.h"
+#include "Engine/Editor/SceneViewportPanel.h"
 #include <iostream>
 
 // Forward declare message handler from imgui_impl_win32.cpp

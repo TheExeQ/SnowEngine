@@ -1,6 +1,6 @@
 #include "EditorLayer.h"
-#include <Engine.h>
-#include <Renderer/MeshFactory.h>
+#include <Engine/Engine.h>
+#include <Engine/Renderer/MeshFactory.h>
 #include <imgui/imgui.h>
 #include <iostream>
 
@@ -35,7 +35,6 @@ namespace Snow
 	{
 		mySceneViewportPanel.OnImGuiRender();
 		mySceneHierarchyPanel.OnImGuiRender();
-		//ImGui::ShowDemoWindow();
 	}
 
 	void EditorLayer::OnUpdate()

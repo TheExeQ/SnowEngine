@@ -1,6 +1,6 @@
 #include "ImGuiLayer.h"
-#include "Engine.h"
-#include "Core/DX11.h"
+#include "Engine/Engine.h"
+#include "Engine/Core/DX11.h"
 
 namespace Snow
 {

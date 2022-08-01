@@ -1,5 +1,5 @@
-#include "Scene/SceneSerializer.h"
-#include "Scene/Components.h"
+#include "SceneSerializer.h"
+#include "Components.h"
 
 #include <glm/glm.hpp>
 #include <fstream>
@@ -133,6 +133,8 @@ namespace Snow
 			std::cout << "Could not load scene" << std::endl;
 			return false; 
 		}
+		
+		myScene->myRegistry.clear();
 
 		auto entities = data["Entities"];
 		if (entities)
