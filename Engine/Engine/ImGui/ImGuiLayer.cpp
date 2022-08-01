@@ -22,7 +22,8 @@ namespace Snow
 		//io.ConfigViewportsNoDefaultParent = true;
 		//io.ConfigDockingAlwaysTabBar = true;
 		//io.ConfigDockingTransparentPayload = true;
-
+		io.ConfigWindowsMoveFromTitleBarOnly = true;
+		
 		io.Fonts->AddFontFromFileTTF("../Editor/Assets/Fonts/opensans/OpenSans-Bold.ttf", 18.f);
 		io.FontDefault = io.Fonts->AddFontFromFileTTF("../Editor/Assets/Fonts/opensans/OpenSans-Regular.ttf", 18.f);
 

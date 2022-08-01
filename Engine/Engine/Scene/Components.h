@@ -21,7 +21,7 @@ namespace Snow
 		glm::mat4 GetTransform() const
 		{
 			glm::mat4 positionMatrix = glm::translate(glm::mat4(1.f), position);
-			glm::mat4 rotationMatrix = glm::eulerAngleYXZ(rotation.y, rotation.x, rotation.z);
+			glm::mat4 rotationMatrix = glm::eulerAngleXYZ(rotation.x, rotation.y, rotation.z);
 			glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.f), scale);
 
 			return positionMatrix * rotationMatrix * scaleMatrix;
