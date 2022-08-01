@@ -6,6 +6,7 @@
 
 #include <Engine/Core/Layer.h>
 #include <Engine/Scene/Entity.h>
+#include <string>
 
 namespace Snow
 {
@@ -14,14 +15,11 @@ namespace Snow
 	public:
 		virtual void OnAttach() override;
 		virtual void OnImGuiRender() override;
-		virtual void OnUpdate() override;
 
 	private:
 		void RenderDockspace();
 
-		Entity myCube;
-		Entity myChest;
-		Entity myPyramid;
+		std::string myLastLoadedScene = "";
 
 		// Panels
 		SceneHierarchyPanel mySceneHierarchyPanel;

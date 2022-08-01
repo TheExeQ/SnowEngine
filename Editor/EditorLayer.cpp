@@ -4,29 +4,15 @@
 #include <imgui/imgui.h>
 #include <iostream>
 
+#include <windows.h>
+#include <filesystem>
+
 namespace Snow
 {
 	void EditorLayer::OnAttach()
 	{
 		std::cout << "Editor Layer Attached" << std::endl;
-
-		myCube = Engine::GetActiveScene()->CreateEntity("Cube");
-		myCube.GetComponent<TransformComponent>()->position = { 2.0f, 0.0f, 0.0f };
-		myCube.GetComponent<TransformComponent>()->rotation = { 0.f, 0.0f, 0.0f };
-		myCube.AddComponent<StaticMeshComponent>()->model.Initialize(MeshFactory::CreateCube());
-
-		myChest = Engine::GetActiveScene()->CreateEntity("Chest");
-		myChest.GetComponent<TransformComponent>()->position = { -2.0f, -0.5f, 0.0f };
-		myChest.GetComponent<TransformComponent>()->rotation = { 0.f, glm::radians(-45.0f), 0.0f };
-		myChest.GetComponent<TransformComponent>()->scale = { 0.01f, 0.01f, 0.01f };
-		myChest.AddComponent<StaticMeshComponent>()->model.Initialize("../Assets/Models/SM/Particle_Chest.fbx");
-		myChest.GetComponent<StaticMeshComponent>()->material.SetAlbedo("../Assets/Textures/T_Particle_Chest_C.png");
-
-		myPyramid = Engine::GetActiveScene()->CreateEntity("Pyramid");
-		myPyramid.GetComponent<TransformComponent>()->position = { 0.0f, 0.0f, 0.0f };
-		myPyramid.GetComponent<TransformComponent>()->rotation = { 0.0f, 0.0f, 0.0f };
-		myPyramid.AddComponent<StaticMeshComponent>()->model.Initialize(MeshFactory::CreatePyramid());
-
+		
 		mySceneHierarchyPanel.Init();
 		mySceneViewportPanel.Init();
 	}
@@ -37,11 +23,6 @@ namespace Snow
 		
 		mySceneHierarchyPanel.OnImGuiRender();
 		mySceneViewportPanel.OnImGuiRender(mySceneHierarchyPanel.GetSelectedEntity());
-	}
-
-	void EditorLayer::OnUpdate()
-	{
-		
 	}
 
 	void EditorLayer::RenderDockspace()
@@ -90,13 +71,52 @@ namespace Snow
 		{
 			if (ImGui::BeginMenu("File"))
 			{
+				auto originalPath = std::filesystem::current_path();
+
+				OPENFILENAME ofn;
+				wchar_t fileName[MAX_PATH] = L"";
+				ZeroMemory(&ofn, sizeof(ofn));
+
+				ofn.lStructSize = sizeof(OPENFILENAME);
+				ofn.hwndOwner = Engine::GetWindowContainer()->GetWindowHandle();
+				ofn.lpstrFilter = L"Scene (*.scene)\0*.scene\0";
+				ofn.lpstrFile = fileName;
+				ofn.nMaxFile = MAX_PATH;
+				ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
+				ofn.lpstrDefExt = L"txt";
+
+				std::wstring fileNameStr;
+				
 				if (ImGui::MenuItem("Open...", NULL))
 				{
-					std::cout << "Open not working atm." << std::endl;
+					if (GetOpenFileName(&ofn))
+					{
+						std::filesystem::current_path(originalPath);
+						fileNameStr = fileName;
+						SceneSerializer serializer(Engine::GetActiveScene());
+						serializer.Deserialize(std::string(fileNameStr.begin(), fileNameStr.end()).c_str());
+
+						myLastLoadedScene = std::string(fileNameStr.begin(), fileNameStr.end());
+					}
+				};
+				if (ImGui::MenuItem("Save", NULL))
+				{
+					if (!myLastLoadedScene.empty())
+					{
+						SceneSerializer serializer(Engine::GetActiveScene());
+						serializer.Serialize(myLastLoadedScene.c_str());
+					}
 				};
 				if (ImGui::MenuItem("Save As...", NULL))
 				{
-					std::cout << "Save As not working atm." << std::endl;
+					if (GetSaveFileName(&ofn))
+					{
+						fileNameStr = fileName;
+						SceneSerializer serializer(Engine::GetActiveScene());
+						serializer.Serialize(std::string(fileNameStr.begin(), fileNameStr.end()).c_str());
+						std::filesystem::current_path(originalPath);
+						std::cout << std::filesystem::current_path() << std::endl;
+					}
 				};
 				ImGui::EndMenu();
 			}
