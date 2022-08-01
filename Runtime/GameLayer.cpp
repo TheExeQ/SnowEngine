@@ -1,6 +1,8 @@
 #include "GameLayer.h"
 #include <Engine/Engine.h>
 #include <Engine/Renderer/MeshFactory.h>
+#include <Engine/Scene/Scene.h>
+
 #include <iostream>
 
 namespace Snow
@@ -9,39 +11,35 @@ namespace Snow
 	{
 		std::cout << "Game Layer Attached" << std::endl;
 
-		myCube = Engine::GetActiveScene()->CreateEntity("Cube");
-		myCube.GetComponent<TransformComponent>()->position = { 2.0f, 0.0f, 0.0f };
-		myCube.GetComponent<TransformComponent>()->rotation = { 0.f, 0.0f, 0.0f };
-		myCube.AddComponent<StaticMeshComponent>()->model.Initialize(MeshFactory::CreateCube());
-
-		myChest = Engine::GetActiveScene()->CreateEntity("Chest");
-		myChest.GetComponent<TransformComponent>()->position = { -2.0f, -0.5f, 0.0f };
-		myChest.GetComponent<TransformComponent>()->rotation = { 0.f, glm::radians(-45.0f), 0.0f };
-		myChest.GetComponent<TransformComponent>()->scale = { 0.01f, 0.01f, 0.01f };
-		myChest.AddComponent<StaticMeshComponent>()->model.Initialize("../Assets/Models/SM/Particle_Chest.fbx");
-		myChest.GetComponent<StaticMeshComponent>()->material.SetAlbedo("../Assets/Textures/T_Particle_Chest_C.png");
-
-		myPyramid = Engine::GetActiveScene()->CreateEntity("Pyramid");
-		myPyramid.GetComponent<TransformComponent>()->position = { 0.0f, 0.0f, 0.0f };
-		myPyramid.GetComponent<TransformComponent>()->rotation = { 0.0f, 0.0f, 0.0f };
-		myPyramid.AddComponent<StaticMeshComponent>()->model.Initialize(MeshFactory::CreatePyramid());
+		Engine::GetActiveScene()->LoadScene("../Assets/Scenes/test.scene");
+		myEntity = Entity(entt::entity(1), Engine::GetActiveScene());
 	}
 
 	void GameLayer::OnUpdate()
 	{
-		if (myCube.HasComponent<TransformComponent>())
+		if (InputManager::Get()->IsKeyDown(Key::W))
 		{
-			myCube.GetComponent<TransformComponent>()->rotation.z += glm::radians(0.5f);
+			myEntity.GetComponent<TransformComponent>()->position.z -= 1.f * Time::GetDeltaTime();
 		}
-
-		if (myChest.HasComponent<TransformComponent>())
+		if (InputManager::Get()->IsKeyDown(Key::A))
 		{
-			myChest.GetComponent<TransformComponent>()->rotation.y += glm::radians(0.5f);
+			myEntity.GetComponent<TransformComponent>()->position.x += 1.f * Time::GetDeltaTime();
 		}
-
-		if (myPyramid.HasComponent<TransformComponent>())
+		if (InputManager::Get()->IsKeyDown(Key::S))
 		{
-			myPyramid.GetComponent<TransformComponent>()->rotation.y += glm::radians(0.5f);
+			myEntity.GetComponent<TransformComponent>()->position.z += 1.f * Time::GetDeltaTime();
+		}
+		if (InputManager::Get()->IsKeyDown(Key::D))
+		{
+			myEntity.GetComponent<TransformComponent>()->position.x -= 1.f * Time::GetDeltaTime();
+		}
+		if (InputManager::Get()->IsKeyDown(Key::SPACE))
+		{
+			myEntity.GetComponent<TransformComponent>()->position.y += 1.f * Time::GetDeltaTime();
+		}
+		if (InputManager::Get()->IsKeyDown(Key::CONTROL))
+		{
+			myEntity.GetComponent<TransformComponent>()->position.y -= 1.f * Time::GetDeltaTime();
 		}
 	}
 }

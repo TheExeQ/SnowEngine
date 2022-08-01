@@ -55,6 +55,8 @@ namespace Snow
 		if (::ImGui_ImplWin32_WndProcHandler(hwnd, uMsg, wParam, lParam))
 			return true;
 
+		InputManager::Get()->UpdateEvents(uMsg, wParam, lParam);
+
 		switch (uMsg)
 		{
 		case WM_SIZE:

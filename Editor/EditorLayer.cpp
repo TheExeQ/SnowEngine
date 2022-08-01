@@ -1,6 +1,7 @@
 #include "EditorLayer.h"
 #include <Engine/Engine.h>
 #include <Engine/Renderer/MeshFactory.h>
+#include <Engine/Input/Input.h>
 #include <imgui/imgui.h>
 #include <iostream>
 
@@ -23,6 +24,14 @@ namespace Snow
 		
 		mySceneHierarchyPanel.OnImGuiRender();
 		mySceneViewportPanel.OnImGuiRender(mySceneHierarchyPanel.GetSelectedEntity());
+	}
+
+	void EditorLayer::OnUpdate()
+	{
+		if (InputManager::Get()->IsKeyPressed(Key::SPACE))
+		{
+			std::cout << "Space pressed!" << std::endl;
+		}
 	}
 
 	void EditorLayer::RenderDockspace()

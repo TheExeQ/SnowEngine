@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "Entity.h"
+#include "SceneSerializer.h"
 
 namespace Snow
 {
@@ -11,6 +12,12 @@ namespace Snow
 	Scene::~Scene()
 	{
 
+	}
+
+	void Scene::LoadScene(const char* aFilePath)
+	{
+		SceneSerializer serializer(this);
+		serializer.Deserialize(aFilePath);
 	}
 
 	Entity Scene::CreateEntity(const char* aName)

@@ -15,6 +15,7 @@ namespace Snow
 	public:
 		virtual void OnAttach() override;
 		virtual void OnImGuiRender() override;
+		virtual void OnUpdate() override;
 
 	private:
 		void RenderDockspace();

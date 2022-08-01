@@ -18,6 +18,8 @@ namespace Snow
 
 		std::string GetName() const { return mySceneName; };
 		void SetName(const std::string& aName) { mySceneName = aName; };
+
+		void LoadScene(const char* aFilePath);
 		
 		Entity CreateEntity(const char* aName);
 		void DestroyEntity(Entity aEntity);

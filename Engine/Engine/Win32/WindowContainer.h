@@ -1,4 +1,5 @@
 #pragma once
+#include "Engine/Input/Input.h"
 #include <windows.h>
 #include <string>
 
@@ -33,6 +34,8 @@ namespace Snow
 		std::wstring myWindowTitleWide;
 		std::string myWindowClass;
 		std::wstring myWindowClassWide;
+
+		InputManager myInputManager;
 
 		inline static int myWindowWidth = 0;
 		inline static int myClientWidth = 0;
