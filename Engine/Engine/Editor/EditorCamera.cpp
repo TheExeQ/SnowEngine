@@ -2,6 +2,9 @@
 #include "Engine/Input/Input.h"
 #include "Engine/Core/Time.h"
 
+#include "Engine/Editor/SceneViewportPanel.h"
+#include <ImGuizmo/ImGuizmo.h>
+
 void Snow::EditorCamera::UpdateMovement()
 {
 	static POINT prevMousePos = InputManager::GetMousePosition();
@@ -9,6 +12,7 @@ void Snow::EditorCamera::UpdateMovement()
 
 	if (myViewportWindowSelected && InputManager::IsKeyDown(Mouse::MOUSERBUTTON))
 	{
+		SceneViewportPanel::Get().myShowGizmos = false;
 		float speed = (InputManager::IsKeyDown(Key::SHIFT)) ? myMoveSpeed * 2.5f : myMoveSpeed;
 
 		// Rotate
@@ -53,6 +57,22 @@ void Snow::EditorCamera::UpdateMovement()
 		if (InputManager::IsKeyDown(Key::Q) || InputManager::IsKeyDown(Key::CONTROL))
 		{
 			AdjustPosition(0.f, -speed * Time::GetDeltaTime(), 0.f);
+		}
+	}
+	else
+	{
+		SceneViewportPanel::Get().myShowGizmos = true;
+		if (InputManager::IsKeyPressed(Key::W)) // Set Translate
+		{
+			SceneViewportPanel::Get().myGizmoOperation = ImGuizmo::TRANSLATE;
+		}
+		if (InputManager::IsKeyPressed(Key::E)) // Set Rotate
+		{
+			SceneViewportPanel::Get().myGizmoOperation = ImGuizmo::ROTATE;
+		}
+		if (InputManager::IsKeyPressed(Key::R)) // Set Scale
+		{
+			SceneViewportPanel::Get().myGizmoOperation = ImGuizmo::SCALE;
 		}
 	}
 	

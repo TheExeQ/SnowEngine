@@ -4,8 +4,6 @@
 #include "Engine/Engine.h"
 #include "Engine/Math/Math.h"
 
-#include <imgui/imgui.h>
-#include <ImGuizmo/ImGuizmo.h>
 #include <glm/gtx/matrix_decompose.hpp>
 
 namespace Snow
@@ -39,7 +37,7 @@ namespace Snow
 		ImGui::Image(DX11::Get().myEditorShaderResourceView.Get(), ImVec2(myViewportSize.x, myViewportSize.y));
 
 		// Gizmos
-		if (aSelectedEntity.IsValid())
+		if (aSelectedEntity.IsValid() && myShowGizmos)
 		{
 			ImGuizmo::SetOrthographic(false);
 			ImGuizmo::SetDrawlist();
@@ -55,7 +53,7 @@ namespace Snow
 			auto oldRot = comp->rotation;
 			glm::mat4 entityTransform = comp->GetTransform();
 		
-			ImGuizmo::Manipulate(glm::value_ptr(viewMat), glm::value_ptr(projectionMat), ImGuizmo::ROTATE, ImGuizmo::LOCAL, glm::value_ptr(entityTransform));
+			ImGuizmo::Manipulate(glm::value_ptr(viewMat), glm::value_ptr(projectionMat), myGizmoOperation, myGizmoMode, glm::value_ptr(entityTransform));
 
 			if (ImGuizmo::IsUsing())
 			{
