@@ -1,7 +1,9 @@
 #include "SceneViewportPanel.h"
+#include "EditorCamera.h"
 #include "Engine/Core/DX11.h"
 #include "Engine/Engine.h"
 #include "Engine/Math/Math.h"
+
 #include <imgui/imgui.h>
 #include <ImGuizmo/ImGuizmo.h>
 #include <glm/gtx/matrix_decompose.hpp>
@@ -25,6 +27,9 @@ namespace Snow
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.f, 0.f));
 		ImGui::Begin("Viewport", &myOpened , ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar);
+		
+		EditorCamera::myViewportWindowSelected = ImGui::IsWindowHovered();
+
 		auto viewportPanelSize = ImGui::GetContentRegionAvail();
 		if (myViewportSize != *(glm::vec2*)&viewportPanelSize)
 		{
@@ -47,9 +52,10 @@ namespace Snow
 			glm::mat4 viewMat = camera->GetViewMatrix();
 
 			auto comp = aSelectedEntity.GetComponent<TransformComponent>();
+			auto oldRot = comp->rotation;
 			glm::mat4 entityTransform = comp->GetTransform();
 		
-			ImGuizmo::Manipulate(glm::value_ptr(viewMat), glm::value_ptr(projectionMat), ImGuizmo::TRANSLATE, ImGuizmo::LOCAL, glm::value_ptr(entityTransform));
+			ImGuizmo::Manipulate(glm::value_ptr(viewMat), glm::value_ptr(projectionMat), ImGuizmo::ROTATE, ImGuizmo::LOCAL, glm::value_ptr(entityTransform));
 
 			if (ImGuizmo::IsUsing())
 			{
@@ -59,12 +65,10 @@ namespace Snow
 				
 				Snow::Math::DecomposeTransform(entityTransform, newPos, newRot, newScale);
 				
-				glm::vec3 deltaRot = newRot - comp->rotation;
-
-				// Rotation currently broken tbc.
+				glm::vec3 deltaRot = newRot - oldRot;
 
 				comp->position = newPos;
-				//comp->rotation += deltaRot;
+				comp->rotation += deltaRot;
 				comp->scale = newScale;
 			}
 		}

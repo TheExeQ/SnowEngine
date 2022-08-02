@@ -7,6 +7,7 @@
 
 #include <windows.h>
 #include <filesystem>
+#include <sstream>
 
 namespace Snow
 {
@@ -26,6 +27,19 @@ namespace Snow
 		
 		mySceneHierarchyPanel.OnImGuiRender();
 		mySceneViewportPanel.OnImGuiRender(mySceneHierarchyPanel.GetSelectedEntity());
+
+		std::stringstream ss;
+		std::stringstream ss2;
+		auto camPos = myEditorCamera.GetPosition();
+		auto camRot = myEditorCamera.GetRotation();
+
+		ss << "Position: [" << camPos.x << ", " << camPos.y << ", " << camPos.z << "]";
+		ss2 << "Rotation: [" << camRot.x << ", " << camRot.y << ", " << camRot.z << "]";
+
+		ImGui::Begin("EditorCamera");
+		ImGui::Text(ss.str().c_str());
+		ImGui::Text(ss2.str().c_str());
+		ImGui::End();
 	}
 
 	void EditorLayer::OnUpdate()

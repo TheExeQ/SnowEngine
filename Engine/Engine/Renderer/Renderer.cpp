@@ -88,18 +88,12 @@ namespace Snow
 		DX11::Context->RSSetState(DX11::Get().myRasterizerState.Get());
 		DX11::Context->PSSetSamplers(0, 1, DX11::Get().mySamplerState.GetAddressOf());
 
+		auto objectsToRender = Engine::GetActiveScene()->RenderScene(myMainCamera);
 		if (myMainCamera)
 		{
-			auto objectsToRender = Engine::GetActiveScene()->RenderScene(myMainCamera);
-
 			for (const auto& object : objectsToRender)
 			{
-				auto objMatrix = glm::mat4(1.f);
-				objMatrix = glm::translate(objMatrix, object.first->position);
-				objMatrix = glm::rotate(objMatrix, object.first->rotation.x, { 1.f, 0.f, 0.f });
-				objMatrix = glm::rotate(objMatrix, object.first->rotation.y, { 0.f, 1.f, 0.f });
-				objMatrix = glm::rotate(objMatrix, object.first->rotation.z, { 0.f, 0.f, 1.f });
-				objMatrix = glm::scale(objMatrix, object.first->scale);
+				auto objMatrix = object.first->GetTransform();
 
 				myFrameBuffer.myData.ViewMatrix = myMainCamera->GetViewMatrix();
 				myFrameBuffer.myData.ProjectionMatrix = myMainCamera->GetProjectionMatrix();

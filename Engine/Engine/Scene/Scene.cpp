@@ -2,6 +2,8 @@
 #include "Entity.h"
 #include "SceneSerializer.h"
 
+#include "Engine/Renderer/Camera.h"
+
 namespace Snow
 {
 	Scene::Scene()
@@ -68,8 +70,22 @@ namespace Snow
 
 	}
 
-	std::vector<std::pair<const TransformComponent*, const StaticMeshComponent*>> Scene::RenderScene(const Camera* aCamera) const
+	std::vector<std::pair<const TransformComponent*, const StaticMeshComponent*>> Scene::RenderScene(Camera* aCamera) const
 	{
+		if (!aCamera)
+		{
+			myRegistry.each([&](entt::entity entity)
+				{
+					auto comp = myRegistry.try_get<CameraComponent>(entity);
+					if (comp)
+					{
+						auto position = myRegistry.try_get<TransformComponent>(entity)->position;
+						//aCamera = &comp->camera;
+						//aCamera->SetPosition(position.x, position.y, position.z);
+					}
+				});
+		}
+
 		std::vector<std::pair<const TransformComponent*, const StaticMeshComponent*>> entitiesToRender;
 		myRegistry.each([&](entt::entity entity)
 			{

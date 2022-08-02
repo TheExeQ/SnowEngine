@@ -1,17 +1,28 @@
 Scene: Untitled
 Entities:
+  - Entity: 3
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Position: [0, 0, -10]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      FOV: 90
+      Near: 0.100000001
+      Far: 1000
   - Entity: 2
     TagComponent:
-      Tag: Green Chest
+      Tag: Chest
     TransformComponent:
-      Position: [2, -0.5, 0]
-      Rotation: [0, 0.785398185, 0]
+      Position: [-2, -0.5, 0]
+      Rotation: [0, -0.785398185, 0]
       Scale: [0.00999999978, 0.00999999978, 0.00999999978]
     StaticMeshComponent:
       Model:
         MeshPath: ../Assets/Models/SM/Particle_Chest.fbx
       Material:
-        AlbedoPath: ../Assets/Textures/T_Particle_Chest_M.png
+        AlbedoPath: ../Assets/Textures/T_Particle_Chest_C.png
   - Entity: 1
     TagComponent:
       Tag: Gremlin
@@ -26,13 +37,13 @@ Entities:
         AlbedoPath: ../Assets/Textures/T_Particle_Chest_C.png
   - Entity: 0
     TagComponent:
-      Tag: Chest
+      Tag: Green Chest
     TransformComponent:
-      Position: [-2, -0.5, 0]
-      Rotation: [0, -0.785398185, 0]
+      Position: [2, -0.5, 0]
+      Rotation: [0, 0.785398185, 0]
       Scale: [0.00999999978, 0.00999999978, 0.00999999978]
     StaticMeshComponent:
       Model:
         MeshPath: ../Assets/Models/SM/Particle_Chest.fbx
       Material:
-        AlbedoPath: ../Assets/Textures/T_Particle_Chest_C.png
+        AlbedoPath: ../Assets/Textures/T_Particle_Chest_M.png

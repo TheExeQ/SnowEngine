@@ -9,7 +9,11 @@ namespace Snow
 		void UpdateMovement();
 		
 	private:
+		friend class SceneViewportPanel;
+
+		inline static bool myViewportWindowSelected = false;
+
 		float myMoveSpeed = 1.f;
-		float myRotationSpeed = 0.1f;
+		float myRotationSpeed = 0.01f;
 	};
 }

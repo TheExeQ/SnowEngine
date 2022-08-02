@@ -99,6 +99,20 @@ namespace Snow
 			
 			outEmitter << YAML::EndMap;
 		}
+
+		if (aEntity.HasComponent<CameraComponent>())
+		{
+			outEmitter << YAML::Key << "CameraComponent";
+			outEmitter << YAML::BeginMap;
+			auto comp = aEntity.GetComponent<CameraComponent>();
+
+			outEmitter << YAML::Key << "FOV" << YAML::Value << comp->camera.myFov;
+			outEmitter << YAML::Key << "Near" << YAML::Value << comp->camera.myNearPlane;
+			outEmitter << YAML::Key << "Far" << YAML::Value << comp->camera.myFarPlane;
+
+			outEmitter << YAML::EndMap;
+		}
+
 		outEmitter << YAML::EndMap;
 	}
 
@@ -167,6 +181,17 @@ namespace Snow
 					auto comp = DeserializedEntity.AddComponent<StaticMeshComponent>();
 					comp->model.LoadModel(model["MeshPath"].as<std::string>().c_str());
 					comp->material.SetAlbedo(material["AlbedoPath"].as<std::string>().c_str());
+				}
+
+				if (ent["CameraComponent"])
+				{
+					auto fov = ent["CameraComponent"]["FOV"];
+					auto nearPlane = ent["CameraComponent"]["Near"];
+					auto farPlane = ent["CameraComponent"]["Far"];
+					auto comp = DeserializedEntity.AddComponent<CameraComponent>();
+					comp->camera.myFov = fov.as<float>();
+					comp->camera.myNearPlane = nearPlane.as<float>();
+					comp->camera.myFarPlane = farPlane.as<float>();
 				}
 			}
 		}

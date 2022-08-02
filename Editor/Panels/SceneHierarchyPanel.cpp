@@ -4,6 +4,8 @@
 #include <imgui/imgui_internal.h>
 #include <string>
 
+#include "Engine/Scene/Components.h"
+
 namespace Snow {
 
 	void SceneHierarchyPanel::Init()
@@ -227,6 +229,7 @@ namespace Snow {
 		if (ImGui::BeginPopup("AddComponent"))
 		{
 			DisplayAddComponentEntry<StaticMeshComponent>("Static Mesh");
+			DisplayAddComponentEntry<CameraComponent>("Camera Component");
 
 			ImGui::EndPopup();
 		}
@@ -245,7 +248,7 @@ namespace Snow {
 		DrawComponent<StaticMeshComponent>("Static Mesh", entity, [](auto component)
 			{
 
-				// TODO: Change so this doesn't take ref to filepath, instead a copy and update componfilepath on button reload click.
+				// TODO: Change so this doesn't take ref to filepath, instead a copy and update component filepath on button reload click.
 
 				auto& meshFilepath = component->model.myFilePath;
 
@@ -274,6 +277,34 @@ namespace Snow {
 				{
 					component->model.Initialize(meshFilepath.c_str());
 					component->material.myAlbedo.LoadTexture(albedoFilepath.c_str());
+				}
+			});
+
+		DrawComponent<CameraComponent>("Camera Component", entity, [](auto component)
+			{
+				bool changesMade = false;
+				float fov = component->camera.GetFOV();
+				float nearPlane = component->camera.GetNear();
+				float farPlane = component->camera.GetFar();
+				
+				if (ImGui::DragFloat("FOV", &fov))
+				{
+					changesMade = true;
+				}
+
+				if (ImGui::DragFloat("Near", &nearPlane))
+				{
+					changesMade = true;
+				}
+
+				if (ImGui::DragFloat("Far", &farPlane))
+				{
+					changesMade = true;
+				}
+
+				if (changesMade)
+				{
+					component->camera.SetProjectionValues(fov, 16.f/9.f, nearPlane, farPlane);
 				}
 			});
 	}

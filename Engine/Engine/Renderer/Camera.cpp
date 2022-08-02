@@ -5,118 +5,116 @@ namespace Snow
 	Camera::Camera()
 	{
 		SetProjectionValues(90.f, 16 / 9, 0.1f, 1000.f);
-		this->pos = glm::vec3(0.0f, 0.0f, 0.0f);
-		this->posVector = glm::vec4(pos, 0.f);
-		this->rot = glm::vec3(0.0f, 0.0f, 0.0f);
-		this->rotVector = glm::vec4(rot, 0.f);
-		this->UpdateViewMatrix();
+		myPosVector = glm::vec4(0.f, 0.f, 0.f, 0.f);
+		myRotVector = glm::vec4(0.f, 0.f, 0.f, 0.f);
+		UpdateViewMatrix();
+	}
+
+	Camera::Camera(const Camera& aCamera)
+	{
+		myPosVector = aCamera.myPosVector;
+		myRotVector = aCamera.myRotVector;
+		myViewMatrix = aCamera.myViewMatrix;
+		myProjectionMatrix = aCamera.myProjectionMatrix;
 	}
 
 	void Camera::SetProjectionValues(float fovDegrees, float aspectRatio, float nearZ, float farZ)
 	{
 		float fovRadians = (fovDegrees / 360.0f) * glm::two_pi<float>();
-		this->projectionMatrix = glm::perspective(fovRadians, aspectRatio, nearZ, farZ);
+		myProjectionMatrix = glm::perspective(fovRadians, aspectRatio, nearZ, farZ);
+
+		myFov = fovDegrees;
+		myNearPlane = nearZ;
+		myFarPlane = farZ;
 	}
 
 	const glm::mat4& Camera::GetViewMatrix() const
 	{
-		return this->viewMatrix;
+		return myViewMatrix;
 	}
 
 	const glm::mat4& Camera::GetProjectionMatrix() const
 	{
-		return this->projectionMatrix;
+		return myProjectionMatrix;
 	}
 
-	const glm::vec4& Camera::GetPositionVector() const
+	const glm::vec4& Camera::GetPositionVec4() const
 	{
-		return this->posVector;
+		return myPosVector;
 	}
 
-	const glm::vec3& Camera::GetPositionFloat3() const
+	const glm::vec3& Camera::GetPosition() const
 	{
-		return this->pos;
+		return myPosVector;
 	}
 
-	const glm::vec4& Camera::GetRotationVector() const
+	const glm::vec4& Camera::GetRotationVec4() const
 	{
-		return this->rotVector;
+		return myRotVector;
 	}
 
-	const glm::vec3& Camera::GetRotationFloat3() const
+	const glm::vec3& Camera::GetRotation() const
 	{
-		return this->rot;
+		return myRotVector;
 	}
 
-	void Camera::SetPosition(const glm::vec4& pos)
+	void Camera::SetPosition(const glm::vec3& pos)
 	{
-		this->pos = glm::vec3(pos.x, pos.y, pos.z);
-		this->posVector = pos;
-		this->UpdateViewMatrix();
+		myPosVector = glm::vec4(pos, 0.f);
+		UpdateViewMatrix();
 	}
 
 	void Camera::SetPosition(float x, float y, float z)
 	{
-		this->pos = glm::vec3(x, y, z);
-		this->posVector = glm::vec4(pos, 0.f);
-		this->UpdateViewMatrix();
+		myPosVector = glm::vec4(x, y, z, 0.f);
+		UpdateViewMatrix();
 	}
 
-	void Camera::AdjustPosition(const glm::vec4& pos)
+	void Camera::AdjustPosition(const glm::vec3& pos)
 	{
-		this->posVector += pos;
-		this->pos = glm::vec3(pos.x, pos.y, pos.z);
-		this->UpdateViewMatrix();
+		myPosVector += glm::vec4(pos, 0.f);
+		UpdateViewMatrix();
 	}
 
 	void Camera::AdjustPosition(float x, float y, float z)
 	{
-		this->pos.x += x;
-		this->pos.y += y;
-		this->pos.z += z;
-		this->posVector = glm::vec4(pos, 0.f);
-		this->UpdateViewMatrix();
+		myPosVector += glm::vec4(x, y, z, 0.f);
+		UpdateViewMatrix();
 	}
 
-	void Camera::SetRotation(const glm::vec4& rot)
+	void Camera::SetRotation(const glm::vec3& rot)
 	{
-		this->rotVector = rot;
-		this->rot = glm::vec3(rot.x, rot.y, rot.z);
-		this->UpdateViewMatrix();
+		myRotVector = glm::vec4(rot, 0.f);
+		UpdateViewMatrix();
 	}
 
 	void Camera::SetRotation(float x, float y, float z)
 	{
-		this->rot = glm::vec3(x, y, z);
-		this->rotVector = glm::vec4(rot, 0.f);
-		this->UpdateViewMatrix();
+		myRotVector = glm::vec4(x, y, z, 0.f);
+		UpdateViewMatrix();
 	}
 
-	void Camera::AdjustRotation(const glm::vec4& rot)
+	void Camera::AdjustRotation(const glm::vec3& rot)
 	{
-		this->rotVector += rot;
-		this->rot = glm::vec3(rotVector.x, rotVector.y, rotVector.z);
-		this->UpdateViewMatrix();
+		myRotVector += glm::vec4(rot, 0.f);
+		UpdateViewMatrix();
 	}
 
 	void Camera::AdjustRotation(float x, float y, float z)
 	{
-		this->rot.x += x;
-		this->rot.y += y;
-		this->rot.z += z;
-		this->rotVector = glm::vec4(rot, 0.f);
-		this->UpdateViewMatrix();
+		myRotVector += glm::vec4(x, y, z, 0.f);
+		UpdateViewMatrix();
 	}
 
 	void Camera::SetLookAtPos(glm::vec3 lookAtPos)
 	{
 		//Verify that look at pos is not the same as cam pos. They cannot be the same as that wouldn't make sense and would result in undefined behavior.
-		if (lookAtPos.x == this->pos.x && lookAtPos.y == this->pos.y && lookAtPos.z == this->pos.z)
+		if (lookAtPos.x == myPosVector.x && lookAtPos.y == myPosVector.y && lookAtPos.z == myPosVector.z)
 			return;
 
-		lookAtPos.x = this->pos.x - lookAtPos.x;
-		lookAtPos.y = this->pos.y - lookAtPos.y;
-		lookAtPos.z = this->pos.z - lookAtPos.z;
+		lookAtPos.x = myPosVector.x - lookAtPos.x;
+		lookAtPos.y = myPosVector.y - lookAtPos.y;
+		lookAtPos.z = myPosVector.z - lookAtPos.z;
 
 		float pitch = 0.0f;
 		if (lookAtPos.y != 0.0f)
@@ -133,30 +131,24 @@ namespace Snow
 		if (lookAtPos.z > 0)
 			yaw += glm::pi<float>();
 
-		this->SetRotation(pitch, yaw, 0.0f);
+		SetRotation(pitch, yaw, 0.0f);
 	}
 
 	void Camera::UpdateViewMatrix() //Updates view matrix and also updates the movement vectors
 	{
 		//Calculate camera rotation matrix
-		glm::mat4 camRotationMatrix = glm::mat4(1.f); 
-		camRotationMatrix = glm::rotate(camRotationMatrix, rot.x, { 1.f, 0.f, 0.f });
-		camRotationMatrix = glm::rotate(camRotationMatrix, rot.y, { 0.f, 1.f, 0.f });
-		camRotationMatrix = glm::rotate(camRotationMatrix, rot.z, { 0.f, 0.f, 1.f });
+		glm::mat4 camRotationMatrix = glm::toMat4(glm::quat(glm::vec3(myRotVector)));
 		
 		//Calculate unit vector of cam target based off camera forward value transformed by cam rotation matrix
 		glm::vec4 camTarget = camRotationMatrix * DEFAULT_FORWARD_VECTOR_GLM;
 		
 		//Adjust cam target to be offset by the camera's current position
-		camTarget += posVector;
+		camTarget += myPosVector;
 		
 		//Calculate up direction based on current rotation
-		glm::vec4 upDir = camRotationMatrix * DEFAULT_UP_VECTOR_GLM;
-
-		glm::vec3 camTarg = glm::vec3(camTarget.x, camTarget.y, camTarget.z);
-		glm::vec3 up = glm::vec3(upDir.x, upDir.y, upDir.z);
+		glm::vec4 up = camRotationMatrix * DEFAULT_UP_VECTOR_GLM;
 
 		//Rebuild view matrix
-		this->viewMatrix = glm::lookAtLH(pos, camTarg, up);
+		myViewMatrix = glm::lookAtLH(glm::vec3(myPosVector), glm::vec3(camTarget), glm::vec3(up));
 	}
 }
