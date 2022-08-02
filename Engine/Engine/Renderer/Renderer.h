@@ -28,7 +28,7 @@ namespace Snow
 		ConstantBuffer<FrameBuffer> myFrameBuffer;
 		ConstantBuffer<ObjectBuffer> myObjectBuffer;
 
-		Camera myMainCamera;
+		Camera* myMainCamera;
 
 		DX11 myGraphicsAPI;
 		bool myVSyncEnabled = true;

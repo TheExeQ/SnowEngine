@@ -1,4 +1,5 @@
 #pragma once
+#include "Engine/Events/Event.h"
 #include <iostream>
 
 namespace Snow
@@ -13,7 +14,7 @@ namespace Snow
 		virtual void OnDetach() {}
 		virtual void OnUpdate() {}
 		virtual void OnImGuiRender() {}
-		virtual void OnEvent() {}
+		virtual void OnEvent(Event& aEvent) {}
 
 		inline const std::string& GetName() const { return m_DebugName; }
 	protected:

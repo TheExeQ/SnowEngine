@@ -64,7 +64,7 @@ namespace Snow
 		{
 			if (myEvent.GetEventType() == T::GetStaticType())
 			{
-				myEvent.Handled |= aFunc(static_cast<T&>(myEvent));
+				myEvent.myHandled |= aFunc(static_cast<T&>(myEvent));
 				return true;
 			}
 			return false;

@@ -10,9 +10,6 @@ namespace Snow
 		if (!CreateShaders()) { return false; }
 		if (!CreateConstantBuffers()) { return false; }
 
-		myMainCamera.SetProjectionValues(90.f, 16.f / 9.f, 0.1f, 1000.f);
-		myMainCamera.SetPosition(0.f, 0.f, -2.f);
-
 		return true;
 	}
 
@@ -91,44 +88,47 @@ namespace Snow
 		DX11::Context->RSSetState(DX11::Get().myRasterizerState.Get());
 		DX11::Context->PSSetSamplers(0, 1, DX11::Get().mySamplerState.GetAddressOf());
 
-		auto objectsToRender = Engine::GetActiveScene()->RenderScene(myMainCamera);
-
-		for (const auto& object : objectsToRender)
+		if (myMainCamera)
 		{
-			auto objMatrix = glm::mat4(1.f);
-			objMatrix = glm::translate(objMatrix, object.first->position);
-			objMatrix = glm::rotate(objMatrix, object.first->rotation.x, { 1.f, 0.f, 0.f });
-			objMatrix = glm::rotate(objMatrix, object.first->rotation.y, { 0.f, 1.f, 0.f });
-			objMatrix = glm::rotate(objMatrix, object.first->rotation.z, { 0.f, 0.f, 1.f });
-			objMatrix = glm::scale(objMatrix, object.first->scale);
+			auto objectsToRender = Engine::GetActiveScene()->RenderScene(myMainCamera);
 
-			myFrameBuffer.myData.ViewMatrix = myMainCamera.GetViewMatrix();
-			myFrameBuffer.myData.ProjectionMatrix = myMainCamera.GetProjectionMatrix();
-			myFrameBuffer.ApplyChanges();
-
-			myObjectBuffer.myData.WorldMatrix = objMatrix;
-			myObjectBuffer.ApplyChanges();
-
-			DX11::Context->PSSetShaderResources(0, 1, object.second->material.myAlbedo.myTextureView.GetAddressOf());
-			for (auto mesh : object.second->model.myMeshes)
+			for (const auto& object : objectsToRender)
 			{
-				DX11::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-				DX11::Context->IASetInputLayout(myVertexShader.GetInputLayout());
+				auto objMatrix = glm::mat4(1.f);
+				objMatrix = glm::translate(objMatrix, object.first->position);
+				objMatrix = glm::rotate(objMatrix, object.first->rotation.x, { 1.f, 0.f, 0.f });
+				objMatrix = glm::rotate(objMatrix, object.first->rotation.y, { 0.f, 1.f, 0.f });
+				objMatrix = glm::rotate(objMatrix, object.first->rotation.z, { 0.f, 0.f, 1.f });
+				objMatrix = glm::scale(objMatrix, object.first->scale);
 
-				DX11::Context->VSSetShader(myVertexShader.GetShader(), nullptr, 0);
-				DX11::Context->PSSetShader(myPixelShader.GetShader(), nullptr, 0);
+				myFrameBuffer.myData.ViewMatrix = myMainCamera->GetViewMatrix();
+				myFrameBuffer.myData.ProjectionMatrix = myMainCamera->GetProjectionMatrix();
+				myFrameBuffer.ApplyChanges();
 
-				DX11::Context->VSSetConstantBuffers(0, 1, myFrameBuffer.GetAddressOf());
-				DX11::Context->VSSetConstantBuffers(1, 1, myObjectBuffer.GetAddressOf());
+				myObjectBuffer.myData.WorldMatrix = objMatrix;
+				myObjectBuffer.ApplyChanges();
 
-				UINT offset = 0;
+				DX11::Context->PSSetShaderResources(0, 1, object.second->material.myAlbedo.myTextureView.GetAddressOf());
+				for (auto mesh : object.second->model.myMeshes)
+				{
+					DX11::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+					DX11::Context->IASetInputLayout(myVertexShader.GetInputLayout());
 
-				DX11::Context->IASetVertexBuffers(0, 1, mesh.myVertexBuffer.GetAddressOf(), mesh.myVertexBuffer.StridePtr(), &offset);
-				DX11::Context->IASetIndexBuffer(mesh.myIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-				DX11::Context->DrawIndexed(mesh.myIndexBuffer.BufferSize(), 0, 0);
+					DX11::Context->VSSetShader(myVertexShader.GetShader(), nullptr, 0);
+					DX11::Context->PSSetShader(myPixelShader.GetShader(), nullptr, 0);
+
+					DX11::Context->VSSetConstantBuffers(0, 1, myFrameBuffer.GetAddressOf());
+					DX11::Context->VSSetConstantBuffers(1, 1, myObjectBuffer.GetAddressOf());
+
+					UINT offset = 0;
+
+					DX11::Context->IASetVertexBuffers(0, 1, mesh.myVertexBuffer.GetAddressOf(), mesh.myVertexBuffer.StridePtr(), &offset);
+					DX11::Context->IASetIndexBuffer(mesh.myIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+					DX11::Context->DrawIndexed(mesh.myIndexBuffer.BufferSize(), 0, 0);
+				}
 			}
 		}
-		
+
 		if (Engine::Get().GetRunMode() == EngineRunMode::Editor)
 		{
 			DX11::Context->OMSetRenderTargets(1, DX11::Get().myRenderTargetView.GetAddressOf(), DX11::Get().myDepthStencilView.Get());

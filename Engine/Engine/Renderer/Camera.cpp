@@ -139,16 +139,22 @@ namespace Snow
 	void Camera::UpdateViewMatrix() //Updates view matrix and also updates the movement vectors
 	{
 		//Calculate camera rotation matrix
-		glm::mat4 camRotationMatrix2 = glm::eulerAngleXYZ(this->rot.x, this->rot.y, this->rot.z);
+		glm::mat4 camRotationMatrix = glm::mat4(1.f); 
+		camRotationMatrix = glm::rotate(camRotationMatrix, rot.x, { 1.f, 0.f, 0.f });
+		camRotationMatrix = glm::rotate(camRotationMatrix, rot.y, { 0.f, 1.f, 0.f });
+		camRotationMatrix = glm::rotate(camRotationMatrix, rot.z, { 0.f, 0.f, 1.f });
+		
 		//Calculate unit vector of cam target based off camera forward value transformed by cam rotation matrix
-		glm::vec4 camTarget2 = camRotationMatrix2 * DEFAULT_FORWARD_VECTOR_GLM;
+		glm::vec4 camTarget = camRotationMatrix * DEFAULT_FORWARD_VECTOR_GLM;
+		
 		//Adjust cam target to be offset by the camera's current position
-		camTarget2 += posVector;
+		camTarget += posVector;
+		
 		//Calculate up direction based on current rotation
-		glm::vec4 upDir2 = camRotationMatrix2 * DEFAULT_UP_VECTOR_GLM;
+		glm::vec4 upDir = camRotationMatrix * DEFAULT_UP_VECTOR_GLM;
 
-		glm::vec3 camTarg = glm::vec3(camTarget2.x, camTarget2.y, camTarget2.z);
-		glm::vec3 up = glm::vec3(upDir2.x, upDir2.y, upDir2.z);
+		glm::vec3 camTarg = glm::vec3(camTarget.x, camTarget.y, camTarget.z);
+		glm::vec3 up = glm::vec3(upDir.x, upDir.y, upDir.z);
 
 		//Rebuild view matrix
 		this->viewMatrix = glm::lookAtLH(pos, camTarg, up);

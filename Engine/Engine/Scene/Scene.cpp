@@ -68,7 +68,7 @@ namespace Snow
 
 	}
 
-	std::vector<std::pair<const TransformComponent*, const StaticMeshComponent*>> Scene::RenderScene(const Camera& aCamera) const
+	std::vector<std::pair<const TransformComponent*, const StaticMeshComponent*>> Scene::RenderScene(const Camera* aCamera) const
 	{
 		std::vector<std::pair<const TransformComponent*, const StaticMeshComponent*>> entitiesToRender;
 		myRegistry.each([&](entt::entity entity)

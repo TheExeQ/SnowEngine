@@ -37,6 +37,7 @@ namespace Snow
 
 		static WindowContainer* GetWindowContainer() { return &Get().myWindowContainer; };
 		static Scene* GetActiveScene() { return &Get().myActiveScene; }
+		static void SetActiveCamera(Camera* aCamera) { Get().myRenderer.myMainCamera = aCamera; }
 
 	private:
 		friend class SceneViewportPanel;

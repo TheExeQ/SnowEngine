@@ -1,8 +1,10 @@
 #pragma once
+#include "Engine/Editor/EditorCamera.h"
+#include "Engine/Scene/SceneSerializer.h"
+
+// Panels
 #include "Panels/SceneHierarchyPanel.h"
 #include "Engine/Editor/SceneViewportPanel.h"
-
-#include "Engine/Scene/SceneSerializer.h"
 
 #include <Engine/Core/Layer.h>
 #include <Engine/Scene/Entity.h>
@@ -20,6 +22,7 @@ namespace Snow
 	private:
 		void RenderDockspace();
 
+		EditorCamera myEditorCamera;
 		std::string myLastLoadedScene = "";
 
 		// Panels

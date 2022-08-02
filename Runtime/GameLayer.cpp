@@ -17,27 +17,27 @@ namespace Snow
 
 	void GameLayer::OnUpdate()
 	{
-		if (InputManager::Get()->IsKeyDown(Key::W))
+		if (InputManager::IsKeyDown(Key::W))
 		{
 			myEntity.GetComponent<TransformComponent>()->position.z -= 1.f * Time::GetDeltaTime();
 		}
-		if (InputManager::Get()->IsKeyDown(Key::A))
+		if (InputManager::IsKeyDown(Key::A))
 		{
 			myEntity.GetComponent<TransformComponent>()->position.x += 1.f * Time::GetDeltaTime();
 		}
-		if (InputManager::Get()->IsKeyDown(Key::S))
+		if (InputManager::IsKeyDown(Key::S))
 		{
 			myEntity.GetComponent<TransformComponent>()->position.z += 1.f * Time::GetDeltaTime();
 		}
-		if (InputManager::Get()->IsKeyDown(Key::D))
+		if (InputManager::IsKeyDown(Key::D))
 		{
 			myEntity.GetComponent<TransformComponent>()->position.x -= 1.f * Time::GetDeltaTime();
 		}
-		if (InputManager::Get()->IsKeyDown(Key::SPACE))
+		if (InputManager::IsKeyDown(Key::SPACE))
 		{
 			myEntity.GetComponent<TransformComponent>()->position.y += 1.f * Time::GetDeltaTime();
 		}
-		if (InputManager::Get()->IsKeyDown(Key::CONTROL))
+		if (InputManager::IsKeyDown(Key::CONTROL))
 		{
 			myEntity.GetComponent<TransformComponent>()->position.y -= 1.f * Time::GetDeltaTime();
 		}

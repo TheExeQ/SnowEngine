@@ -14,6 +14,8 @@ namespace Snow
 	{
 		std::cout << "Editor Layer Attached" << std::endl;
 		
+		Engine::SetActiveCamera(&myEditorCamera);
+
 		mySceneHierarchyPanel.Init();
 		mySceneViewportPanel.Init();
 	}
@@ -28,10 +30,7 @@ namespace Snow
 
 	void EditorLayer::OnUpdate()
 	{
-		if (InputManager::Get()->IsKeyPressed(Key::SPACE))
-		{
-			std::cout << "Space pressed!" << std::endl;
-		}
+		myEditorCamera.UpdateMovement();
 	}
 
 	void EditorLayer::RenderDockspace()
