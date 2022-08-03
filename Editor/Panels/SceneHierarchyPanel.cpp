@@ -40,7 +40,7 @@ namespace Snow {
 			ImGui::End();
 
 			ImGui::Begin("Properties");
-			if (myContext->myRegistry.valid(mySelectionContext.GetHandle()))
+			if (myContext->myRegistry.valid(mySelectionContext))
 			{
 				DrawComponents(mySelectionContext);
 			}

@@ -59,7 +59,7 @@ namespace Snow
 	void SceneSerializer::SerializeEntity(YAML::Emitter& outEmitter, Entity aEntity)
 	{
 		outEmitter << YAML::BeginMap;
-		outEmitter << YAML::Key << "Entity" << YAML::Value << (uint32_t)aEntity.GetHandle();
+		outEmitter << YAML::Key << "Entity" << YAML::Value << (uint32_t)aEntity;
 		
 		if (aEntity.HasComponent<TagComponent>())
 		{
