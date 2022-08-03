@@ -4,6 +4,7 @@
 #include "Engine/Renderer/Material.h"
 
 #include <glm/glm.hpp>
+#include <entt/entt.hpp>
 
 namespace Snow
 {
@@ -14,7 +15,7 @@ namespace Snow
 
 	struct RelationshipComponent // #TODO: Not yet implemented support for, tbc.
 	{
-		entt::entity ParentHandle = entt::null;
+		entt::entity Parent = entt::null;
 		std::vector<entt::entity> Children;
 	};
 

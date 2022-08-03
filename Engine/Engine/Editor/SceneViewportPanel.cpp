@@ -51,7 +51,7 @@ namespace Snow
 
 			auto comp = aSelectedEntity.GetComponent<TransformComponent>();
 			auto oldRot = comp->rotation;
-			glm::mat4 entityTransform = comp->GetTransform();
+			glm::mat4 entityTransform = aSelectedEntity.GetWorldTransform();
 		
 			ImGuizmo::Manipulate(glm::value_ptr(viewMat), glm::value_ptr(projectionMat), myGizmoOperation, myGizmoMode, glm::value_ptr(entityTransform));
 

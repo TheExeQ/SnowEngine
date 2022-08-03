@@ -1,6 +1,8 @@
 #pragma once
 #include "entt/entt.hpp"
 #include "Components.h"
+
+#include <glm/glm.hpp>
 #include <vector>
 #include <utility>
 
@@ -21,6 +23,9 @@ namespace Snow
 
 		void LoadScene(const char* aFilePath);
 		
+		void ParentEntity(Entity aChild, Entity aParent);
+		void UnparentEntity(Entity aEntity);
+
 		Entity CreateEntity(const char* aName);
 		void DestroyEntity(Entity aEntity);
 
@@ -41,7 +46,11 @@ namespace Snow
 		friend class SceneHierarchyPanel;
 		friend class SceneSerializer;
 
-		std::vector<std::pair<const TransformComponent*, const StaticMeshComponent*>> RenderScene(Camera* aCamera) const; // Return entitys to render
+		void ConvertToWorldSpace(Entity aEntity);
+		void ConvertToLocalSpace(Entity aEntity);
+		glm::mat4 GetWorldSpaceTransformMatrix(Entity aEntity);
+
+		std::vector<Entity> RenderScene(Camera* aCamera); // Return entitys to render
 
 		std::string mySceneName = "Untitled";
 		entt::registry myRegistry;

@@ -1,5 +1,7 @@
 #include "Renderer.h"
 #include "Engine/Engine.h"
+#include "Engine/Scene/Entity.h"
+
 #include <iostream>
 
 namespace Snow
@@ -91,9 +93,11 @@ namespace Snow
 		auto objectsToRender = Engine::GetActiveScene()->RenderScene(myMainCamera);
 		if (myMainCamera)
 		{
-			for (const auto& object : objectsToRender)
+			for (auto& object : objectsToRender)
 			{
-				auto objMatrix = object.first->GetTransform();
+				const auto& meshComp = object.GetComponent<StaticMeshComponent>();
+
+				auto objMatrix = object.GetWorldTransform();
 
 				myFrameBuffer.myData.ViewMatrix = myMainCamera->GetViewMatrix();
 				myFrameBuffer.myData.ProjectionMatrix = myMainCamera->GetProjectionMatrix();
@@ -102,8 +106,8 @@ namespace Snow
 				myObjectBuffer.myData.WorldMatrix = objMatrix;
 				myObjectBuffer.ApplyChanges();
 
-				DX11::Context->PSSetShaderResources(0, 1, object.second->material.myAlbedo.myTextureView.GetAddressOf());
-				for (auto mesh : object.second->model.myMeshes)
+				DX11::Context->PSSetShaderResources(0, 1, meshComp->material.myAlbedo.myTextureView.GetAddressOf());
+				for (auto mesh : meshComp->model.myMeshes)
 				{
 					DX11::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 					DX11::Context->IASetInputLayout(myVertexShader.GetInputLayout());

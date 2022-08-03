@@ -13,6 +13,31 @@ namespace Snow
 		Entity(entt::entity aEntityHandle, Scene* aScene);
 		Entity(const Entity& aEntity);
 
+		inline std::vector<entt::entity> Children()
+		{
+			return GetComponent<RelationshipComponent>()->Children;
+		}
+
+		inline entt::entity Parent()
+		{
+			return GetComponent<RelationshipComponent>()->Parent;
+		}
+
+		inline bool HasParent()
+		{
+			return myScene->myRegistry.valid(GetComponent<RelationshipComponent>()->Parent);
+		}
+
+		inline glm::mat4 Transform()
+		{
+			return GetComponent<TransformComponent>()->GetTransform();
+		}
+
+		inline glm::mat4 GetWorldTransform()
+		{
+			return myScene->GetWorldSpaceTransformMatrix(*this);
+		}
+
 		inline bool IsValid() 
 		{
 			if (!myScene) { return false; }

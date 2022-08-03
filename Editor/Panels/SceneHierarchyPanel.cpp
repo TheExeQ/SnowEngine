@@ -16,13 +16,17 @@ namespace Snow {
 	void SceneHierarchyPanel::OnImGuiRender()
 	{
 		ImGui::Begin("Scene Hierarchy");
+		ImRect windowRect = { ImGui::GetWindowContentRegionMin(), ImGui::GetWindowContentRegionMax() };
 
 		if (myContext);
 		{
 			myContext->myRegistry.each([&](auto entityID)
 				{
 					Entity entity(entityID, myContext);
-					DrawEntityNode(entity);
+					if (!entity.HasParent())
+					{
+						DrawEntityNode(entity);
+					}
 				});
 
 			if (ImGui::IsMouseDown(0) && ImGui::IsWindowHovered())
@@ -35,6 +39,19 @@ namespace Snow {
 					myContext->CreateEntity("Empty Entity");
 
 				ImGui::EndPopup();
+			}
+
+			if (ImGui::BeginDragDropTargetCustom(windowRect, ImGui::GetCurrentWindow()->ID))
+			{
+				const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("scene_entity_hierarchy", ImGuiDragDropFlags_AcceptNoDrawDefaultRect);
+
+				if (payload)
+				{
+					Entity& entity = *(Entity*)payload->Data;
+					myContext->UnparentEntity(entity);
+				}
+
+				ImGui::EndDragDropTarget();
 			}
 
 			ImGui::End();
@@ -70,12 +87,43 @@ namespace Snow {
 			ImGui::EndPopup();
 		}
 
-		if (opened)
+		// Drag & Drop
+		//------------
+
+		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 		{
-			// Add nodes for children of entity
-			ImGui::TreePop();
+			ImGui::Text(entity.GetComponent<TagComponent>()->name.c_str());
+			ImGui::SetDragDropPayload("scene_entity_hierarchy", &entity, sizeof(Entity));
+			ImGui::EndDragDropSource();
 		}
 
+		if (ImGui::BeginDragDropTarget())
+		{
+			const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("scene_entity_hierarchy", ImGuiDragDropFlags_AcceptNoDrawDefaultRect);
+
+			if (payload)
+			{
+				Entity& droppedEntity = *(Entity*)payload->Data;
+				myContext->ParentEntity(droppedEntity, entity);
+			}
+
+			ImGui::EndDragDropTarget();
+		}
+
+		if (opened)
+		{
+			for (auto child : entity.Children())
+			{
+				Entity e(child, myContext);
+				if (e.IsValid())
+				{
+					DrawEntityNode(e);
+				}
+			}
+			
+			ImGui::TreePop();
+		}
+		
 		if (entityDeleted)
 		{
 			myContext->DestroyEntity(entity);
