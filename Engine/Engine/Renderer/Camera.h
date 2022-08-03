@@ -19,10 +19,7 @@ namespace Snow
 		const glm::mat4& GetViewMatrix() const;
 		const glm::mat4& GetProjectionMatrix() const;
 
-		const glm::vec4& GetPositionVec4() const;
 		const glm::vec3& GetPosition() const;
-		
-		const glm::vec4& GetRotationVec4() const;
 		const glm::vec3& GetRotation() const;
 
 		void SetIsPrimary(bool aChoise);

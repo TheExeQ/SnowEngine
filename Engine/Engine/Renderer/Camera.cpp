@@ -23,8 +23,7 @@ namespace Snow
 
 	void Camera::SetProjectionValues(float fovDegrees, float aspectRatio, float nearZ, float farZ)
 	{
-		float fovRadians = (fovDegrees / 360.0f) * glm::two_pi<float>();
-		myProjectionMatrix = glm::perspective(fovRadians, aspectRatio, nearZ, farZ);
+		myProjectionMatrix = glm::perspective(glm::radians(fovDegrees), aspectRatio, nearZ, farZ);
 
 		myFov = fovDegrees;
 		myNearPlane = nearZ;
@@ -41,19 +40,9 @@ namespace Snow
 		return myProjectionMatrix;
 	}
 
-	const glm::vec4& Camera::GetPositionVec4() const
-	{
-		return myPosVector;
-	}
-
 	const glm::vec3& Camera::GetPosition() const
 	{
 		return myPosVector;
-	}
-
-	const glm::vec4& Camera::GetRotationVec4() const
-	{
-		return myRotVector;
 	}
 
 	const glm::vec3& Camera::GetRotation() const

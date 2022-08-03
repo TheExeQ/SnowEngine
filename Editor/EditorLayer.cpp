@@ -31,7 +31,7 @@ namespace Snow
 
 	void EditorLayer::OnUpdate()
 	{
-		std::cout << "FPS: " << Time::GetFPS() << std::endl;
+		//std::cout << "FPS: " << Time::GetFPS() << std::endl;
 		myEditorCamera.UpdateMovement();
 	}
 
