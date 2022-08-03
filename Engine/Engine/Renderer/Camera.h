@@ -25,6 +25,8 @@ namespace Snow
 		const glm::vec4& GetRotationVec4() const;
 		const glm::vec3& GetRotation() const;
 
+		void SetIsPrimary(bool aChoise);
+		bool GetIsPrimary() const { return myIsPrimary; };
 		float GetFOV() const { return myFov; };
 		float GetNear() const { return myNearPlane; };
 		float GetFar() const { return myFarPlane; };
@@ -46,6 +48,8 @@ namespace Snow
 		glm::vec4 myRotVector;
 		glm::mat4 myViewMatrix;
 		glm::mat4 myProjectionMatrix;
+
+		bool myIsPrimary = false;
 
 		float myFov = 90.f;
 		float myNearPlane = 0.1f;

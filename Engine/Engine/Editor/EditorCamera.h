@@ -6,6 +6,7 @@ namespace Snow
 	class EditorCamera : public Camera
 	{
 	public:
+		EditorCamera() { myIsPrimary = true; };
 		void UpdateMovement();
 		
 	private:

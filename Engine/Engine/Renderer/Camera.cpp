@@ -1,10 +1,13 @@
 #include "Camera.h"
+#include "Engine/Engine.h"
+#include "Engine/Scene/Entity.h"
+#include "Engine/Scene/Scene.h"
 
 namespace Snow
 {
 	Camera::Camera()
 	{
-		SetProjectionValues(90.f, 16 / 9, 0.1f, 1000.f);
+		SetProjectionValues(90.f, 16.f / 9.f, 0.1f, 1000.f);
 		myPosVector = glm::vec4(0.f, 0.f, 0.f, 0.f);
 		myRotVector = glm::vec4(0.f, 0.f, 0.f, 0.f);
 		UpdateViewMatrix();
@@ -56,6 +59,18 @@ namespace Snow
 	const glm::vec3& Camera::GetRotation() const
 	{
 		return myRotVector;
+	}
+
+	void Camera::SetIsPrimary(bool aChoise)
+	{
+		auto cameraEntities = Engine::GetActiveScene()->myRegistry.view<CameraComponent>();
+		for (auto entity : cameraEntities)
+		{
+			Entity camEntity(entity, Engine::GetActiveScene());
+			camEntity.GetComponent<CameraComponent>()->camera.myIsPrimary = false;
+		}
+		
+		myIsPrimary = aChoise;
 	}
 
 	void Camera::SetPosition(const glm::vec3& pos)

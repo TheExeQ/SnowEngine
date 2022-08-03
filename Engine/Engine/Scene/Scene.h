@@ -37,6 +37,7 @@ namespace Snow
 	private:
 		friend class Renderer;
 		friend class Entity;
+		friend class Camera;
 		friend class SceneHierarchyPanel;
 		friend class SceneSerializer;
 

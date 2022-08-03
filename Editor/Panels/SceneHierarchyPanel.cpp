@@ -283,10 +283,16 @@ namespace Snow {
 		DrawComponent<CameraComponent>("Camera Component", entity, [](auto component)
 			{
 				bool changesMade = false;
+				bool primary = component->camera.GetIsPrimary();
 				float fov = component->camera.GetFOV();
 				float nearPlane = component->camera.GetNear();
 				float farPlane = component->camera.GetFar();
 				
+				if (ImGui::Checkbox("Primary", &primary))
+				{
+					changesMade = true;
+				}
+
 				if (ImGui::DragFloat("FOV", &fov))
 				{
 					changesMade = true;
@@ -305,6 +311,7 @@ namespace Snow {
 				if (changesMade)
 				{
 					component->camera.SetProjectionValues(fov, 16.f/9.f, nearPlane, farPlane);
+					component->camera.SetIsPrimary(primary);
 				}
 			});
 	}

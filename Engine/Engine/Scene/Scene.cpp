@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "SceneSerializer.h"
 
+#include "Engine/Engine.h"
 #include "Engine/Renderer/Camera.h"
 
 namespace Snow
@@ -72,29 +73,32 @@ namespace Snow
 
 	std::vector<std::pair<const TransformComponent*, const StaticMeshComponent*>> Scene::RenderScene(Camera* aCamera) const
 	{
-		if (!aCamera)
+		if (!aCamera || !aCamera->GetIsPrimary())
 		{
-			myRegistry.each([&](entt::entity entity)
-				{
-					auto comp = myRegistry.try_get<CameraComponent>(entity);
-					if (comp)
-					{
-						auto position = myRegistry.try_get<TransformComponent>(entity)->position;
-						//aCamera = &comp->camera;
-						//aCamera->SetPosition(position.x, position.y, position.z);
-					}
-				});
-		}
-
-		std::vector<std::pair<const TransformComponent*, const StaticMeshComponent*>> entitiesToRender;
-		myRegistry.each([&](entt::entity entity)
+			auto cameraEntities = myRegistry.view<CameraComponent>();
+			
+			for (auto entity : cameraEntities)
 			{
-				auto [transform, staticMesh] = myRegistry.try_get<TransformComponent, StaticMeshComponent>(entity);
-				if (transform && staticMesh)
+				if (myRegistry.get<CameraComponent>(entity).camera.GetIsPrimary())
 				{
-					entitiesToRender.push_back(std::pair<const TransformComponent*, const StaticMeshComponent*>(transform, staticMesh));
+					Entity primaryCameraEntity(entity, Engine::GetActiveScene());
+					auto pos = primaryCameraEntity.GetComponent<TransformComponent>()->position;
+					auto& camera = primaryCameraEntity.GetComponent<CameraComponent>()->camera;
+					camera.SetPosition(pos);
+					Engine::SetActiveCamera(&camera);
 				}
-			});
+			}
+		}
+		
+		std::vector<std::pair<const TransformComponent*, const StaticMeshComponent*>> entitiesToRender;
+		auto entitesWithComponents = myRegistry.view<TransformComponent, StaticMeshComponent>();
+		
+		for (auto entity : entitesWithComponents)
+		{
+			auto [transform, staticMesh] = myRegistry.get<TransformComponent, StaticMeshComponent>(entity);
+			entitiesToRender.push_back(std::pair<const TransformComponent*, const StaticMeshComponent*>(&transform, &staticMesh));
+		}
+		
 		return entitiesToRender;
 	}
 }

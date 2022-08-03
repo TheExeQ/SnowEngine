@@ -26,17 +26,19 @@ namespace Snow
 		void PushLayer(Layer* aLayer);
 		void PushOverlay(Layer* aLayer);
 
-		void EnableVSync() { myRenderer.myVSyncEnabled = true; };
-		void DisableVSync() { myRenderer.myVSyncEnabled = false; };
+		static void EnableVSync() { Get().myRenderer.myVSyncEnabled = true; };
+		static void DisableVSync() { Get().myRenderer.myVSyncEnabled = false; };
 
 		void SetRunMode(EngineRunMode aMode) { myRunMode = aMode; };
 		EngineRunMode GetRunMode() { return myRunMode; };
-		bool IsRunning() const { return myIsRunning; };
+		bool IsRunning() { return myIsRunning; };
 
 		static Engine& Get() { return *myInstance; };
 
 		static WindowContainer* GetWindowContainer() { return &Get().myWindowContainer; };
 		static Scene* GetActiveScene() { return &Get().myActiveScene; }
+		
+		static const Camera* GetActiveCamera() { return Get().myRenderer.myMainCamera; }
 		static void SetActiveCamera(Camera* aCamera) { Get().myRenderer.myMainCamera = aCamera; }
 
 	private:

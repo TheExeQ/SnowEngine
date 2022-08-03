@@ -106,6 +106,7 @@ namespace Snow
 			outEmitter << YAML::BeginMap;
 			auto comp = aEntity.GetComponent<CameraComponent>();
 
+			outEmitter << YAML::Key << "Primary" << YAML::Value << comp->camera.myIsPrimary;
 			outEmitter << YAML::Key << "FOV" << YAML::Value << comp->camera.myFov;
 			outEmitter << YAML::Key << "Near" << YAML::Value << comp->camera.myNearPlane;
 			outEmitter << YAML::Key << "Far" << YAML::Value << comp->camera.myFarPlane;
@@ -185,10 +186,12 @@ namespace Snow
 
 				if (ent["CameraComponent"])
 				{
+					auto primary = ent["CameraComponent"]["Primary"];
 					auto fov = ent["CameraComponent"]["FOV"];
 					auto nearPlane = ent["CameraComponent"]["Near"];
 					auto farPlane = ent["CameraComponent"]["Far"];
 					auto comp = DeserializedEntity.AddComponent<CameraComponent>();
+					comp->camera.myIsPrimary = primary.as<bool>();
 					comp->camera.myFov = fov.as<float>();
 					comp->camera.myNearPlane = nearPlane.as<float>();
 					comp->camera.myFarPlane = farPlane.as<float>();

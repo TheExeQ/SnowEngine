@@ -7,4 +7,10 @@ namespace Snow
 	{
 
 	}
+
+	Entity::Entity(Scene* aScene)
+		: myScene(aScene)
+	{
+
+	}
 }

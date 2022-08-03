@@ -9,6 +9,7 @@ namespace Snow
 	{
 	public:
 		Entity() {};
+		Entity(Scene* aScene);
 		Entity(entt::entity aEntityHandle, Scene* aScene);
 
 		inline bool IsValid() 

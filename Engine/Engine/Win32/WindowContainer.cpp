@@ -12,7 +12,7 @@ namespace Snow
 	void WindowContainer::OnResize(UINT flag, int width, int height)
 	{
 		// Handle resizing
-
+		
 		RECT windowRect;
 
 		myWindowWidth = width;
@@ -44,7 +44,10 @@ namespace Snow
 			DX11::Get().CreateRenderTargetView();
 			DX11::Get().CreateDepthStencil();
 			
-			SceneViewportPanel::Get().OnResize();
+			if (Engine::Get().GetRunMode() == EngineRunMode::Editor)
+			{
+				SceneViewportPanel::Get().OnResize();
+			}
 
 			std::cout << "Window successfully resized" << std::endl;
 		}
@@ -64,8 +67,11 @@ namespace Snow
 			int width = LOWORD(lParam);  // Macro to get the low-order word.
 			int height = HIWORD(lParam); // Macro to get the high-order word.
 
-			// Respond to the message:
-			Engine::GetWindowContainer()->OnResize((UINT)wParam, width, height);
+			if (width != 0 && height != 0)
+			{
+				// Respond to the message:
+				Engine::GetWindowContainer()->OnResize((UINT)wParam, width, height);
+			}
 			break;
 		}
 
