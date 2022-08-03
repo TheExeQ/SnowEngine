@@ -9,8 +9,9 @@ namespace Snow
 	{
 	public:
 		Entity() {};
-		Entity(Scene* aScene);
+		Entity(entt::entity aEntityHandle);
 		Entity(entt::entity aEntityHandle, Scene* aScene);
+		Entity(const Entity& aEntity);
 
 		inline bool IsValid() 
 		{
@@ -19,11 +20,6 @@ namespace Snow
 			{
 				return myScene->myRegistry.valid(myEntityHandle);
 			}
-		}
-
-		inline entt::entity GetHandle() 
-		{
-			return myEntityHandle;
 		}
 
 		template<typename T, typename... Args>
@@ -53,6 +49,7 @@ namespace Snow
 			return (myScene->myRegistry.valid(myEntityHandle)) ? myScene->myRegistry.all_of<T>(myEntityHandle) : false;
 		}
 
+		operator entt::entity() const { return myEntityHandle; }
 		operator uint32_t() const { return (uint32_t)myEntityHandle; }
 
 		bool operator==(const Entity& other) const

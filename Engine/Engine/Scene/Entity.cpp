@@ -1,4 +1,5 @@
 #include "Entity.h"
+#include <Engine/Engine.h>
 
 namespace Snow
 {
@@ -8,9 +9,15 @@ namespace Snow
 
 	}
 
-	Entity::Entity(Scene* aScene)
-		: myScene(aScene)
+	Entity::Entity(entt::entity aEntityHandle)
+		: myEntityHandle(aEntityHandle)
 	{
+		myScene = Engine::GetActiveScene();
+	}
 
+	Entity::Entity(const Entity& aEntity)
+	{
+		myEntityHandle = aEntity.myEntityHandle;
+		myScene = aEntity.myScene;
 	}
 }

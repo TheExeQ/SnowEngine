@@ -12,6 +12,12 @@ namespace Snow
 		std::string name;
 	};
 
+	struct RelationshipComponent // #TODO: Not yet implemented support for, tbc.
+	{
+		entt::entity ParentHandle = entt::null;
+		std::vector<entt::entity> Children;
+	};
+
 	struct TransformComponent
 	{
 		glm::vec3 position = { 0.f, 0.f, 0.f };

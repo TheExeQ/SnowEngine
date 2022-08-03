@@ -33,7 +33,7 @@ namespace Snow
 
 	void Scene::DestroyEntity(Entity aEntity)
 	{
-		myRegistry.destroy(aEntity.GetHandle());
+		myRegistry.destroy(aEntity);
 	}
 
 	void Scene::OnRuntimeStart()

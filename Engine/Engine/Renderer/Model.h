@@ -8,7 +8,7 @@
 
 namespace Snow
 {
-	class Model
+	class Model  // #TODO: Store a vector of all models so already loaded models don't get reloaded.
 	{
 	public:
 		bool Initialize(const char* aFilepath);

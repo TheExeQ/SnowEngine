@@ -8,7 +8,7 @@ using namespace Microsoft::WRL;
 
 namespace Snow
 {
-	class Texture
+	class Texture // #TODO: Store a vector of all textures so already loaded textures don't get reloaded.
 	{
 	public:
 		Texture() {};

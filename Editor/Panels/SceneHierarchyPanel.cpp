@@ -248,7 +248,7 @@ namespace Snow {
 		DrawComponent<StaticMeshComponent>("Static Mesh", entity, [](auto component)
 			{
 
-				// TODO: Change so this doesn't take ref to filepath, instead a copy and update component filepath on button reload click.
+				// #TODO: Change so this doesn't take ref to filepath, instead a copy and update component filepath on button reload click.
 
 				auto& meshFilepath = component->model.myFilePath;
 
