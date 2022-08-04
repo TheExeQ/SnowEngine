@@ -3,12 +3,13 @@
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
+#include <unordered_map>
 #include <vector>
 #include <string>
 
 namespace Snow
 {
-	class Model  // #TODO: Store a vector of all models so already loaded models don't get reloaded.
+	class Model  // #TODO: Move myModels map to asset class that handles loading and caching
 	{
 	public:
 		bool Initialize(const char* aFilepath);
@@ -24,5 +25,7 @@ namespace Snow
 
 		std::string myFilePath = "";
 		std::vector<Mesh> myMeshes;
+
+		inline static std::unordered_map<std::string, Ref<Model>> myModels;
 	};
 }

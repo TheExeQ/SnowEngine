@@ -1,6 +1,5 @@
 #include "Model.h"
 #include "Engine/Core/Random.h"
-#include "MeshFactory.h"
 #include "Engine/Debug/Log.h"
 
 namespace Snow
@@ -22,13 +21,22 @@ namespace Snow
 
 	bool Model::LoadModel(const char* aFilepath)
 	{
+		auto it = myModels.find(std::string(aFilepath));
+		if (it != myModels.end())
+		{
+			myFilePath = it->second->myFilePath;
+			myMeshes = it->second->myMeshes;
+			CORE_LOG_INFO("Model reused!");
+			return true;
+		}
+
 		Assimp::Importer importer;
 
 		const aiScene* scene = importer.ReadFile(aFilepath, aiProcess_Triangulate | aiProcess_ConvertToLeftHanded);
 
 		if (!scene)
 		{
-			CORE_LOG_WARN("Failed to load model: %s", aFilepath);
+			CORE_LOG_WARN(std::string("Failed to load model: ") + std::string(aFilepath));
 			return false;
 		}
 
@@ -36,6 +44,7 @@ namespace Snow
 
 		ProcessNode(scene->mRootNode, scene);
 		myFilePath = aFilepath;
+		myModels[std::string(aFilepath)] = CreateRef<Model>(*this);
 		return true;
 	}
 

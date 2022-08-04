@@ -1,6 +1,5 @@
 #include "EditorLayer.h"
 #include <Engine/Engine.h>
-#include <Engine/Renderer/MeshFactory.h>
 #include <Engine/Input/Input.h>
 #include <Engine/Debug/Log.h>
 
@@ -34,11 +33,6 @@ namespace Snow
 	{
 		//std::cout << "FPS: " << Time::GetFPS() << std::endl;
 		myEditorCamera->UpdateMovement();
-
-		if (InputManager::IsKeyPressed(Key::SPACE))
-		{
-			LOG_INFO("test");
-		}
 	}
 
 	void EditorLayer::RenderDockspace()

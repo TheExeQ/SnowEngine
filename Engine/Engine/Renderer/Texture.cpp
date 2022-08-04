@@ -1,20 +1,46 @@
 #include "Texture.h"
 #include "Engine/Core/DX11.h"
+#include "Engine/Debug/Log.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
-#include "Engine/Debug/Log.h"
 
 namespace Snow
 {
-	void Texture::LoadTexture(const char* aFileName)
+	bool Texture::LoadTexture(const char* aFilepath)
 	{
-		LoadTextureFromFile(aFileName);
-		myFilePath = aFileName;
+		auto it = myTextures.find(std::string(aFilepath));
+		if (it != myTextures.end())
+		{
+			myWidth = it->second->myWidth;
+			myHeight = it->second->myHeight;
+			myFilePath = it->second->myFilePath;
+			myTexture = it->second->myTexture;
+			myTextureView = it->second->myTextureView;
+			CORE_LOG_INFO("Texture reused!");
+			return true;
+		}
+		
+		LoadTextureFromFile(aFilepath);
+		myFilePath = aFilepath;
+		myTextures[std::string(aFilepath)] = CreateRef<Texture>(*this);
 	}
 
-	void Texture::LoadTexture(const Color* colorData, UINT width, UINT height)
+	bool Texture::LoadTexture(const Color* colorData, UINT width, UINT height)
 	{
+		auto name = std::string(std::to_string(colorData->GetR()) + std::to_string(colorData->GetG()) + std::to_string(colorData->GetB()));
+		auto it = myTextures.find(name);
+		if (it != myTextures.end())
+		{
+			myWidth = it->second->myWidth;
+			myHeight = it->second->myHeight;
+			myFilePath = it->second->myFilePath;
+			myTexture = it->second->myTexture;
+			myTextureView = it->second->myTextureView;
+			CORE_LOG_INFO("Texture reused!");
+			return true;
+		}
+
 		CD3D11_TEXTURE2D_DESC textureDesc(DXGI_FORMAT_R8G8B8A8_UNORM, width, height);
 		ID3D11Texture2D* pTexture = nullptr;
 		D3D11_SUBRESOURCE_DATA initialData{};
@@ -37,13 +63,14 @@ namespace Snow
 		}
 
 		pTexture->Release();
+		myTextures[std::string(name)] = CreateRef<Texture>(*this);
 	}
 
-	bool Texture::LoadTextureFromFile(const char* filename)
+	bool Texture::LoadTextureFromFile(const char* aFilepath)
 	{
 		int image_width = 0;
 		int image_height = 0;
-		unsigned char* image_data = stbi_load(filename, &image_width, &image_height, NULL, 4);
+		unsigned char* image_data = stbi_load(aFilepath, &image_width, &image_height, NULL, 4);
 		if (image_data == NULL)
 			return false;
 
@@ -66,7 +93,7 @@ namespace Snow
 		HRESULT hr = DX11::Device->CreateTexture2D(&desc, nullptr, &pTexture);
 		if (FAILED(hr))
 		{
-			CORE_LOG_ERROR("Failed to create shader resource view from texture generated from %s", filename);
+			CORE_LOG_ERROR(std::string("Failed to create shader resource view from texture generated from ") + std::string(aFilepath));
 		}
 		myTexture = static_cast<ID3D11Texture2D*>(pTexture);
 
@@ -82,7 +109,7 @@ namespace Snow
 		hr = DX11::Device->CreateShaderResourceView(pTexture, &srvDesc, &myTextureView);
 		if (FAILED(hr))
 		{
-			CORE_LOG_ERROR("Failed to create shader resource view from texture generated from %s", filename);
+			CORE_LOG_ERROR(std::string("Failed to create shader resource view from texture generated from ") + std::string(aFilepath));
 		}
 
 		pTexture->Release();

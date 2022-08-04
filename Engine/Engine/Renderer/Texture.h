@@ -1,30 +1,36 @@
 #pragma once
+#include "Engine/Core/Base.h"
+#include "Engine/Core/Color.h"
+
 #include <d3d11.h>
 #include <wrl/client.h>
 #include <string>
-#include "Engine/Renderer/Color.h"
+#include <unordered_map>
 
 using namespace Microsoft::WRL;
 
 namespace Snow
 {
-	class Texture // #TODO: Store a vector of all textures so already loaded textures don't get reloaded.
+	class Texture // #TODO: Move myTextures map to asset class that handles loading and caching
 	{
 	public:
 		Texture() {};
-		void LoadTexture(const Color* colorData, UINT width, UINT height);
-		void LoadTexture(const char* aFileName);
+		bool LoadTexture(const char* aFilepath);
+		bool LoadTexture(const Color* colorData, UINT width, UINT height);
 
 	private:
 		friend class Renderer;
 		friend class SceneHierarchyPanel;
 		friend class SceneSerializer;
-		bool LoadTextureFromFile(const char* filename);
+		bool LoadTextureFromFile(const char* aFilepath);
 
+		float myWidth = 0.0f;
+		float myHeight = 0.0f;
+		
 		std::string myFilePath = "";
 		ComPtr<ID3D11Resource> myTexture = nullptr;
 		ComPtr<ID3D11ShaderResourceView> myTextureView = nullptr;
-		float myWidth = 0.0f;
-		float myHeight = 0.0f;
+
+		inline static std::unordered_map<std::string, Ref<Texture>> myTextures;
 	};
 }

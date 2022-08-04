@@ -1,4 +1,11 @@
-[22:31:08] [info] ENGINE: Successfully initialized Win32 window!
-[22:31:08] [info] ENGINE: Successfully initialized DirectX!
-[22:31:08] [info] GAME: Editor Layer Attached
-[22:31:10] [info] ENGINE: Window successfully resized
+[00:13:20] [info] ENGINE: Successfully initialized Win32 window!
+[00:13:21] [info] ENGINE: Successfully initialized DirectX!
+[00:13:21] [info] GAME: Editor Layer Attached
+[00:13:24] [info] ENGINE: Texture reused!
+[00:13:24] [info] ENGINE: Model reused!
+[00:13:25] [info] ENGINE: Texture reused!
+[00:13:25] [info] ENGINE: Model reused!
+[00:13:25] [info] ENGINE: Window successfully resized
+[00:13:28] [info] ENGINE: Model reused!
+[00:13:32] [info] ENGINE: Model reused!
+[00:13:32] [info] ENGINE: Texture reused!
