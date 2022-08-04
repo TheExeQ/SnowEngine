@@ -11,27 +11,27 @@ namespace Snow
 	{
 		std::cout << "Game Layer Attached" << std::endl;
 
-		Engine::GetActiveScene()->LoadScene("../Assets/Scenes/test.scene");
-		myEntity = Entity(entt::entity(1), Engine::GetActiveScene());
+		Engine::GetActiveScene()->LoadScene("../Assets/Scenes/gametest.scene");
+		myEntity = Entity(UUID(1748500495750464391), Engine::GetActiveScene());
 	}
 
 	void GameLayer::OnUpdate()
 	{
 		if (InputManager::IsKeyDown(Key::W))
 		{
-			myEntity.GetComponent<TransformComponent>()->position.z -= 1.f * Time::GetDeltaTime();
+			myEntity.GetComponent<TransformComponent>()->position.z += 1.f * Time::GetDeltaTime();
 		}
 		if (InputManager::IsKeyDown(Key::A))
 		{
-			myEntity.GetComponent<TransformComponent>()->position.x += 1.f * Time::GetDeltaTime();
+			myEntity.GetComponent<TransformComponent>()->position.x -= 1.f * Time::GetDeltaTime();
 		}
 		if (InputManager::IsKeyDown(Key::S))
 		{
-			myEntity.GetComponent<TransformComponent>()->position.z += 1.f * Time::GetDeltaTime();
+			myEntity.GetComponent<TransformComponent>()->position.z -= 1.f * Time::GetDeltaTime();
 		}
 		if (InputManager::IsKeyDown(Key::D))
 		{
-			myEntity.GetComponent<TransformComponent>()->position.x -= 1.f * Time::GetDeltaTime();
+			myEntity.GetComponent<TransformComponent>()->position.x += 1.f * Time::GetDeltaTime();
 		}
 		if (InputManager::IsKeyDown(Key::SPACE))
 		{

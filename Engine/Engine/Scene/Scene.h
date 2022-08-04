@@ -1,7 +1,7 @@
 #pragma once
-#include "entt/entt.hpp"
 #include "Components.h"
 
+#include <entt/entt.hpp>
 #include <glm/glm.hpp>
 #include <vector>
 #include <utility>
@@ -23,6 +23,8 @@ namespace Snow
 
 		void LoadScene(const char* aFilePath);
 		
+		Entity GetEntityFromUUID(UUID aID);
+
 		void ParentEntity(Entity aChild, Entity aParent);
 		void UnparentEntity(Entity aEntity);
 

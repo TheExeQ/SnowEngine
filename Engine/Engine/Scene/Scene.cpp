@@ -26,45 +26,67 @@ namespace Snow
 		serializer.Deserialize(aFilePath);
 	}
 
+	Snow::Entity Scene::GetEntityFromUUID(UUID aID)
+	{
+		auto view = myRegistry.view<IDComponent>();
+		for (entt::entity entity : view)
+		{
+			if (view.get<IDComponent>(entity).uuid == aID)
+			{
+				return Entity(entity);
+			}
+		}
+		return Entity();
+	}
+
 	void Scene::ParentEntity(Entity aChild, Entity aParent)
 	{
+		if (!aChild.IsValid() || !aParent.IsValid()) { return; }
+		
 		UnparentEntity(aChild);
 		
 		const auto& childRelationShip = aChild.GetComponent<RelationshipComponent>();
 		const auto& parentRelationShip = aParent.GetComponent<RelationshipComponent>();
 		
-		childRelationShip->Parent = aParent;
-		parentRelationShip->Children.push_back(aChild);
+		childRelationShip->Parent = aParent.GetUUID();
+		parentRelationShip->Children.push_back(aChild.GetUUID());
 
 		ConvertToLocalSpace(aChild);
 	}
 
 	void Scene::UnparentEntity(Entity aEntity)
 	{
+		if (!aEntity.IsValid()) { return; }
+		
 		const auto& entityRelationShip = aEntity.GetComponent<RelationshipComponent>();
 		if (aEntity.HasParent())
 		{
-			auto& parentChildren = myRegistry.get<RelationshipComponent>(aEntity.Parent()).Children;
-			parentChildren.erase(std::remove(parentChildren.begin(), parentChildren.end(), (entt::entity)aEntity), parentChildren.end());
+			auto& parentChildren = myRegistry.get<RelationshipComponent>((entt::entity)Entity(aEntity.ParentUUID())).Children;
+			parentChildren.erase(std::remove(parentChildren.begin(), parentChildren.end(), aEntity.GetUUID()), parentChildren.end());
 		}
 
 		ConvertToWorldSpace(aEntity);
 
-		entityRelationShip->Parent = entt::null;
+		entityRelationShip->Parent = 0;
 	}
 
 	Entity Scene::CreateEntity(const char* aName)
 	{
 		Entity entity(myRegistry.create());
 		entity.AddComponent<TagComponent>()->name = aName;
-		entity.AddComponent<TransformComponent>();
+		entity.AddComponent<IDComponent>();
 		entity.AddComponent<RelationshipComponent>();
+		entity.AddComponent<TransformComponent>();
 		return entity;
 	}
 
 	void Scene::DestroyEntity(Entity aEntity)
 	{
 		UnparentEntity(aEntity);
+		for (auto child : aEntity.ChildrenUUIDs())
+		{
+			UnparentEntity(Entity(child));
+		}
 		myRegistry.destroy(aEntity);
 	}
 
@@ -105,7 +127,7 @@ namespace Snow
 
 	void Scene::ConvertToWorldSpace(Entity aEntity)
 	{
-		Entity parent(aEntity.Parent());
+		Entity parent(aEntity.ParentUUID());
 
 		if (!parent.IsValid())
 			return;
@@ -117,7 +139,7 @@ namespace Snow
 
 	void Scene::ConvertToLocalSpace(Entity aEntity)
 	{
-		Entity parent(aEntity.Parent());
+		Entity parent(aEntity.ParentUUID());
 
 		if (!parent.IsValid())
 			return;
@@ -135,7 +157,7 @@ namespace Snow
 	{
 		glm::mat4 transform(1.0f);
 
-		Entity parent(aEntity.Parent());
+		Entity parent(aEntity.ParentUUID());
 		if (parent.IsValid())
 			transform = GetWorldSpaceTransformMatrix(parent);
 
@@ -144,7 +166,7 @@ namespace Snow
 
 	std::vector<Entity> Scene::RenderScene(Ref<Camera> aCamera)
 	{
-		if (!aCamera || !aCamera->GetIsPrimary())
+		if (!aCamera || !aCamera->GetIsPrimary()) // #TODO: fix so camera position updates from entity transform (Currently movement of camera in runtime doesn't work)
 		{
 			auto cameraEntities = myRegistry.view<CameraComponent>();
 			

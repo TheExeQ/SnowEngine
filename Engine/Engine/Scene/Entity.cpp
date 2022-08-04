@@ -20,4 +20,23 @@ namespace Snow
 		myEntityHandle = aEntity.myEntityHandle;
 		myScene = aEntity.myScene;
 	}
+
+	Entity::Entity(UUID aID)
+	{
+		myScene = Engine::GetActiveScene();
+
+		myEntityHandle = (entt::entity)myScene->GetEntityFromUUID(aID);
+	}
+
+	Entity::Entity(UUID aID, Ref<Scene> aScene)
+		: myScene(aScene)
+	{
+		myEntityHandle = (entt::entity)myScene->GetEntityFromUUID(aID);
+	}
+
+	Entity::Entity(Ref<Scene> aScene)
+		: myScene(aScene)
+	{
+
+	}
 }

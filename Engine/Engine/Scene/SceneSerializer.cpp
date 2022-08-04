@@ -58,8 +58,15 @@ namespace Snow
 
 	void SceneSerializer::SerializeEntity(YAML::Emitter& outEmitter, Entity aEntity)
 	{
+		auto idComp = aEntity.GetComponent<IDComponent>();
 		outEmitter << YAML::BeginMap;
-		outEmitter << YAML::Key << "Entity" << YAML::Value << (uint32_t)aEntity;
+		outEmitter << YAML::Key << "Entity" << YAML::Value << (uint64_t)idComp->uuid;
+		
+		if (aEntity.HasComponent<RelationshipComponent>())
+		{
+			auto comp = aEntity.GetComponent<RelationshipComponent>();
+			outEmitter << YAML::Key << "Parent" << YAML::Value << (uint64_t)comp->Parent;
+		}
 		
 		if (aEntity.HasComponent<TagComponent>())
 		{
@@ -72,12 +79,18 @@ namespace Snow
 
 		if (aEntity.HasComponent<TransformComponent>())
 		{
+			auto comp = aEntity.GetComponent<TransformComponent>();
+			glm::vec3 worldPosition;
+			glm::vec3 worldRotation;
+			glm::vec3 worldScale;
+			
+			Math::DecomposeTransform(myScene->GetWorldSpaceTransformMatrix(aEntity), worldPosition, worldRotation, worldScale);
+
 			outEmitter << YAML::Key << "TransformComponent";
 			outEmitter << YAML::BeginMap;
-			auto comp = aEntity.GetComponent<TransformComponent>();
-			outEmitter << YAML::Key << "Position" << YAML::Value << comp->position;
-			outEmitter << YAML::Key << "Rotation" << YAML::Value << comp->rotation;
-			outEmitter << YAML::Key << "Scale" << YAML::Value << comp->scale;
+			outEmitter << YAML::Key << "Position" << YAML::Value << worldPosition;
+			outEmitter << YAML::Key << "Rotation" << YAML::Value << worldRotation;
+			outEmitter << YAML::Key << "Scale" << YAML::Value << worldScale;
 			outEmitter << YAML::EndMap;
 		}
 
@@ -154,13 +167,20 @@ namespace Snow
 		auto entities = data["Entities"];
 		if (entities)
 		{
+			std::vector<std::pair<Entity, uint64_t>> childEntities;
+			
 			for (auto ent : entities)
 			{
-				Entity DeserializedEntity;
+				Entity DeserializedEntity(myScene);
 				if (ent["TagComponent"])
 				{
 					auto tag = ent["TagComponent"]["Tag"];
 					DeserializedEntity = myScene->CreateEntity(tag.as<std::string>().c_str());
+					DeserializedEntity.GetComponent<IDComponent>()->uuid = ent["Entity"].as<uint64_t>();
+					if (ent["Parent"].as<uint64_t>())
+					{
+						childEntities.push_back(std::pair<Entity, uint64_t>(DeserializedEntity, ent["Parent"].as<uint64_t>()));
+					}
 				}
 				else { continue; }
 
@@ -196,6 +216,11 @@ namespace Snow
 					comp->camera->myNearPlane = nearPlane.as<float>();
 					comp->camera->myFarPlane = farPlane.as<float>();
 				}
+			}
+			
+			for (auto entity : childEntities)
+			{
+				myScene->ParentEntity(entity.first, Entity(entity.second, myScene));
 			}
 		}
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/Core/Base.h"
+#include "Engine/Core/UUID.h"
 #include "Engine/Renderer/Camera.h"
 #include "Engine/Renderer/Model.h"
 #include "Engine/Renderer/Material.h"
@@ -14,10 +15,15 @@ namespace Snow
 		std::string name;
 	};
 
+	struct IDComponent
+	{
+		UUID uuid = UUID();
+	};
+
 	struct RelationshipComponent // #TODO: Not yet implemented support for, tbc.
 	{
-		entt::entity Parent = entt::null;
-		std::vector<entt::entity> Children;
+		UUID Parent = 0;
+		std::vector<UUID> Children;
 	};
 
 	struct TransformComponent

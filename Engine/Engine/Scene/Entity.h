@@ -11,25 +11,33 @@ namespace Snow
 	{
 	public:
 		Entity() {};
+		Entity(UUID aID);
+		Entity(UUID aID, Ref<Scene> aScene);
 		Entity(entt::entity aEntityHandle);
 		Entity(entt::entity aEntityHandle, Ref<Scene> aScene);
+		Entity(Ref<Scene> aScene);
 		Entity(const Entity& aEntity);
 
-		inline std::vector<entt::entity> Children()
+		inline UUID GetUUID()
+		{
+			return GetComponent<IDComponent>()->uuid;
+		}
+		
+		inline std::vector<UUID> ChildrenUUIDs()
 		{
 			return GetComponent<RelationshipComponent>()->Children;
 		}
 
-		inline entt::entity Parent()
+		inline UUID ParentUUID()
 		{
-			return GetComponent<RelationshipComponent>()->Parent;
+			return GetComponent<RelationshipComponent>()->Parent; 
 		}
 
 		inline bool HasParent()
 		{
-			return myScene->myRegistry.valid(GetComponent<RelationshipComponent>()->Parent);
+			return ParentUUID();
 		}
-
+		
 		inline glm::mat4 Transform()
 		{
 			return GetComponent<TransformComponent>()->GetTransform();
