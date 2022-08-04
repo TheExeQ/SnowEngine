@@ -61,9 +61,16 @@ namespace Snow
 				glm::vec3 newPos;
 				glm::vec3 newRot;
 				glm::vec3 newScale;
-				
+
+				if (aSelectedEntity.HasParent())
+				{
+					Entity parent(aSelectedEntity.ParentUUID());
+					glm::mat4 parentTransform = Engine::GetActiveScene()->GetWorldSpaceTransformMatrix(parent);
+					entityTransform = glm::inverse(parentTransform) * entityTransform;
+				}
+
 				Snow::Math::DecomposeTransform(entityTransform, newPos, newRot, newScale);
-				
+
 				glm::vec3 deltaRot = newRot - oldRot;
 
 				comp->position = newPos;

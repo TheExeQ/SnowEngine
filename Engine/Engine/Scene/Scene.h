@@ -31,6 +31,9 @@ namespace Snow
 		Entity CreateEntity(const char* aName);
 		void DestroyEntity(Entity aEntity);
 
+		glm::mat4 GetWorldSpaceTransformMatrix(Entity aEntity);
+		glm::mat4 GetLocalSpaceTransformMatrix(Entity aEntity);
+		
 		void OnRuntimeStart();
 		void OnRuntimeStop();
 
@@ -50,7 +53,6 @@ namespace Snow
 
 		void ConvertToWorldSpace(Entity aEntity);
 		void ConvertToLocalSpace(Entity aEntity);
-		glm::mat4 GetWorldSpaceTransformMatrix(Entity aEntity);
 
 		std::vector<Entity> RenderScene(Ref<Camera> aCamera); // Return entitys to render
 

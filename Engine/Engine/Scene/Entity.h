@@ -38,7 +38,7 @@ namespace Snow
 			return ParentUUID();
 		}
 		
-		inline glm::mat4 Transform()
+		inline glm::mat4 GetTransform()
 		{
 			return GetComponent<TransformComponent>()->GetTransform();
 		}

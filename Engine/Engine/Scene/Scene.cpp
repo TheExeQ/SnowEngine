@@ -144,7 +144,7 @@ namespace Snow
 		if (!parent.IsValid())
 			return;
 
-		glm::mat4 transform = aEntity.Transform();
+		glm::mat4 transform = aEntity.GetTransform();
 		glm::mat4 parentTransform = GetWorldSpaceTransformMatrix(parent);
 		
 		glm::mat4 localTransform = glm::inverse(parentTransform) * transform;
@@ -161,7 +161,21 @@ namespace Snow
 		if (parent.IsValid())
 			transform = GetWorldSpaceTransformMatrix(parent);
 
-		return transform * aEntity.Transform();
+		return transform * aEntity.GetTransform();
+	}
+
+	glm::mat4 Scene::GetLocalSpaceTransformMatrix(Entity aEntity)
+	{
+		Entity parent(aEntity.ParentUUID());
+
+		glm::mat4 transform = aEntity.GetTransform();
+		
+		if (!parent.IsValid())
+			return transform;
+
+		glm::mat4 parentTransform = GetWorldSpaceTransformMatrix(parent);
+
+		return glm::inverse(parentTransform) * transform;
 	}
 
 	std::vector<Entity> Scene::RenderScene(Ref<Camera> aCamera)
