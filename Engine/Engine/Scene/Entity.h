@@ -1,7 +1,9 @@
 #pragma once
-#include "entt/entt.hpp"
+#include "Engine/Core/Base.h"
 #include "Components.h"
 #include "Scene.h"
+
+#include <entt/entt.hpp>
 
 namespace Snow
 {
@@ -10,7 +12,7 @@ namespace Snow
 	public:
 		Entity() {};
 		Entity(entt::entity aEntityHandle);
-		Entity(entt::entity aEntityHandle, Scene* aScene);
+		Entity(entt::entity aEntityHandle, Ref<Scene> aScene);
 		Entity(const Entity& aEntity);
 
 		inline std::vector<entt::entity> Children()
@@ -89,6 +91,6 @@ namespace Snow
 
 	private:
 		entt::entity myEntityHandle = entt::null;
-		Scene* myScene = NULL;
+		Ref<Scene> myScene = nullptr;
 	};
 }

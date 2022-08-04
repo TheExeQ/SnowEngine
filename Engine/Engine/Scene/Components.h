@@ -1,4 +1,5 @@
 #pragma once
+#include "Engine/Core/Base.h"
 #include "Engine/Renderer/Camera.h"
 #include "Engine/Renderer/Model.h"
 #include "Engine/Renderer/Material.h"
@@ -37,7 +38,7 @@ namespace Snow
 
 	struct CameraComponent
 	{
-		Camera camera;
+		Ref<Camera> camera = CreateRef<Camera>();
 	};
 
 	struct StaticMeshComponent

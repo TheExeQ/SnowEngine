@@ -6,6 +6,7 @@
 #include "Panels/SceneHierarchyPanel.h"
 #include "Engine/Editor/SceneViewportPanel.h"
 
+#include <Engine/Core/Base.h>
 #include <Engine/Core/Layer.h>
 #include <Engine/Scene/Entity.h>
 #include <string>
@@ -22,7 +23,7 @@ namespace Snow
 	private:
 		void RenderDockspace();
 
-		EditorCamera myEditorCamera;
+		Ref<EditorCamera> myEditorCamera;
 		std::string myLastLoadedScene = "";
 
 		// Panels

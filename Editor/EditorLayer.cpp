@@ -15,7 +15,8 @@ namespace Snow
 	{
 		std::cout << "Editor Layer Attached" << std::endl;
 		
-		Engine::SetActiveCamera(&myEditorCamera);
+		myEditorCamera = CreateRef<EditorCamera>();
+		Engine::SetActiveCamera(myEditorCamera);
 
 		mySceneHierarchyPanel.Init();
 		mySceneViewportPanel.Init();
@@ -32,7 +33,7 @@ namespace Snow
 	void EditorLayer::OnUpdate()
 	{
 		//std::cout << "FPS: " << Time::GetFPS() << std::endl;
-		myEditorCamera.UpdateMovement();
+		myEditorCamera->UpdateMovement();
 	}
 
 	void EditorLayer::RenderDockspace()

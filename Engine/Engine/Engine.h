@@ -1,10 +1,10 @@
 #pragma once
 #include <windows.h>
+#include "Core/Base.h"
+#include "Core/LayerStack.h"
 #include "Win32/WindowContainer.h"
 #include "Renderer/Renderer.h"
 #include "imgui/ImGuiLayer.h"
-#include "Core/LayerStack.h"
-#include "Core/Time.h"
 #include "Scene/Scene.h"
 
 namespace Snow
@@ -36,10 +36,10 @@ namespace Snow
 		static Engine& Get() { return *myInstance; };
 
 		static WindowContainer* GetWindowContainer() { return &Get().myWindowContainer; };
-		static Scene* GetActiveScene() { return &Get().myActiveScene; }
+		static Ref<Scene> GetActiveScene() { return Get().myActiveScene; }
 		
-		static const Camera* GetActiveCamera() { return Get().myRenderer.myMainCamera; }
-		static void SetActiveCamera(Camera* aCamera) { Get().myRenderer.myMainCamera = aCamera; }
+		static const Ref<Camera> GetActiveCamera() { return Get().myRenderer.myMainCamera; }
+		static void SetActiveCamera(Ref<Camera> aCamera) { Get().myRenderer.myMainCamera = aCamera; }
 
 	private:
 		friend class SceneViewportPanel;
@@ -51,7 +51,7 @@ namespace Snow
 		ImGuiLayer myImGuiLayer;
 		Time myTime;
 
-		Scene myActiveScene;
+		Ref<Scene> myActiveScene;
 
 		bool myIsRunning = true;
 		EngineRunMode myRunMode = EngineRunMode::Game;

@@ -1,6 +1,8 @@
 #pragma once
+#include "Engine/Core/Base.h"
 #include "Scene.h"
 #include "Entity.h"
+
 #include <yaml-cpp/yaml.h>
 
 namespace Snow
@@ -8,7 +10,7 @@ namespace Snow
 	class SceneSerializer
 	{
 	public:
-		SceneSerializer(Scene* aScene) { myScene = aScene; };
+		SceneSerializer(Ref<Scene> aScene) { myScene = aScene; };
 		~SceneSerializer() = default;
 
 		void Serialize(const char* aFileName);
@@ -17,6 +19,6 @@ namespace Snow
 	private:
 		void SerializeEntity(YAML::Emitter& outEmitter, Entity aEntity);
 			
-		Scene* myScene;
+		Ref<Scene> myScene;
 	};
 }

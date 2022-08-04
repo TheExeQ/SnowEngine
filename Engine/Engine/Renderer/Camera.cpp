@@ -56,7 +56,7 @@ namespace Snow
 		for (auto entity : cameraEntities)
 		{
 			Entity camEntity(entity, Engine::GetActiveScene());
-			camEntity.GetComponent<CameraComponent>()->camera.myIsPrimary = false;
+			camEntity.GetComponent<CameraComponent>()->camera->myIsPrimary = false;
 		}
 		
 		myIsPrimary = aChoise;

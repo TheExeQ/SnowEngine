@@ -1,4 +1,5 @@
 #pragma once
+#include "Engine/Core/Base.h"
 #include "Engine/Core/DX11.h"
 #include "Shaders.h"
 #include "Vertex.h"
@@ -28,7 +29,7 @@ namespace Snow
 		ConstantBuffer<FrameBuffer> myFrameBuffer;
 		ConstantBuffer<ObjectBuffer> myObjectBuffer;
 
-		Camera* myMainCamera = nullptr;
+		Ref<Camera> myMainCamera = nullptr;
 
 		DX11 myGraphicsAPI;
 		bool myVSyncEnabled = true;

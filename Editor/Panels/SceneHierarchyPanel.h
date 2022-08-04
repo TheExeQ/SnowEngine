@@ -1,4 +1,5 @@
 #pragma once
+#include <Engine/Core/Base.h>
 #include <Engine/Scene/Entity.h>
 
 namespace Snow
@@ -17,7 +18,7 @@ namespace Snow
 		void DrawEntityNode(Entity entity);
 		void DrawComponents(Entity entity);
 
-		Scene* myContext = nullptr;
+		Ref<Scene> myContext = nullptr;
 		Entity mySelectionContext;
 	};
 }

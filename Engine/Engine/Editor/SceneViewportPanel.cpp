@@ -1,7 +1,8 @@
 #include "SceneViewportPanel.h"
 #include "EditorCamera.h"
-#include "Engine/Core/DX11.h"
 #include "Engine/Engine.h"
+#include "Engine/Core/Base.h"
+#include "Engine/Core/DX11.h"
 #include "Engine/Math/Math.h"
 
 #include <glm/gtx/matrix_decompose.hpp>
@@ -45,7 +46,7 @@ namespace Snow
 			auto size = ImGui::GetWindowSize();
 			ImGuizmo::SetRect(pos.x, pos.y, size.x, size.y);
 		
-			Camera* camera = Engine::Get().myRenderer.myMainCamera;
+			Ref<Camera> camera = Engine::Get().myRenderer.myMainCamera;
 			glm::mat4 projectionMat = camera->GetProjectionMatrix();
 			glm::mat4 viewMat = camera->GetViewMatrix();
 

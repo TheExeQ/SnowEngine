@@ -50,7 +50,7 @@ namespace Snow
 		void ConvertToLocalSpace(Entity aEntity);
 		glm::mat4 GetWorldSpaceTransformMatrix(Entity aEntity);
 
-		std::vector<Entity> RenderScene(Camera* aCamera); // Return entitys to render
+		std::vector<Entity> RenderScene(Ref<Camera> aCamera); // Return entitys to render
 
 		std::string mySceneName = "Untitled";
 		entt::registry myRegistry;

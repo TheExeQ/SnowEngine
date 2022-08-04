@@ -3,7 +3,7 @@
 
 namespace Snow
 {
-	Entity::Entity(entt::entity aEntityHandle, Scene* aScene)
+	Entity::Entity(entt::entity aEntityHandle, Ref<Scene> aScene)
 		: myEntityHandle(aEntityHandle), myScene(aScene)
 	{
 

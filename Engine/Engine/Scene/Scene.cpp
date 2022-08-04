@@ -22,7 +22,7 @@ namespace Snow
 
 	void Scene::LoadScene(const char* aFilePath)
 	{
-		SceneSerializer serializer(this);
+		SceneSerializer serializer(Engine::GetActiveScene());
 		serializer.Deserialize(aFilePath);
 	}
 
@@ -55,7 +55,7 @@ namespace Snow
 
 	Entity Scene::CreateEntity(const char* aName)
 	{
-		Entity entity(myRegistry.create(), this);
+		Entity entity(myRegistry.create());
 		entity.AddComponent<TagComponent>()->name = aName;
 		entity.AddComponent<TransformComponent>();
 		entity.AddComponent<RelationshipComponent>();
@@ -105,7 +105,7 @@ namespace Snow
 
 	void Scene::ConvertToWorldSpace(Entity aEntity)
 	{
-		Entity parent(aEntity.Parent(), this);
+		Entity parent(aEntity.Parent());
 
 		if (!parent.IsValid())
 			return;
@@ -117,7 +117,7 @@ namespace Snow
 
 	void Scene::ConvertToLocalSpace(Entity aEntity)
 	{
-		Entity parent(aEntity.Parent(), this);
+		Entity parent(aEntity.Parent());
 
 		if (!parent.IsValid())
 			return;
@@ -135,14 +135,14 @@ namespace Snow
 	{
 		glm::mat4 transform(1.0f);
 
-		Entity parent(aEntity.Parent(), this);
+		Entity parent(aEntity.Parent());
 		if (parent.IsValid())
 			transform = GetWorldSpaceTransformMatrix(parent);
 
 		return transform * aEntity.Transform();
 	}
 
-	std::vector<Entity> Scene::RenderScene(Camera* aCamera)
+	std::vector<Entity> Scene::RenderScene(Ref<Camera> aCamera)
 	{
 		if (!aCamera || !aCamera->GetIsPrimary())
 		{
@@ -150,13 +150,13 @@ namespace Snow
 			
 			for (auto entity : cameraEntities)
 			{
-				if (myRegistry.get<CameraComponent>(entity).camera.GetIsPrimary())
+				if (myRegistry.get<CameraComponent>(entity).camera->GetIsPrimary())
 				{
 					Entity primaryCameraEntity(entity, Engine::GetActiveScene());
 					auto pos = primaryCameraEntity.GetComponent<TransformComponent>()->position;
 					auto& camera = primaryCameraEntity.GetComponent<CameraComponent>()->camera;
-					camera.SetPosition(pos);
-					Engine::SetActiveCamera(&camera);
+					camera->SetPosition(pos);
+					Engine::SetActiveCamera(camera);
 				}
 			}
 		}
@@ -166,7 +166,7 @@ namespace Snow
 		
 		for (auto entity : entitesWithComponents)
 		{
-			entitiesToRender.push_back(Entity(entity, this));
+			entitiesToRender.push_back(Entity(entity));
 		}
 		
 		return entitiesToRender;

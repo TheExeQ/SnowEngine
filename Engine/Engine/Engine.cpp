@@ -16,6 +16,8 @@ namespace Snow
 			return false;
 		}
 
+		myActiveScene = CreateRef<Scene>();
+
 		auto result = myWindowContainer.Initialize(hInstance, aWidth, aHeight, aWindowTitle, aWindowClass);
 		if (!result)
 		{
