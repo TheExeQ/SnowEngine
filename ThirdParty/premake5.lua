@@ -38,6 +38,7 @@ project "ThirdParty"
 		{
 			"PLATFORM_WINDOWS",
 			"NOMINMAX",
+			"SPDLOG_COMPILED_LIB",
 		}
 		
 	filter "configurations:Debug"

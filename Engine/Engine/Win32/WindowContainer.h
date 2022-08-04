@@ -5,8 +5,6 @@
 
 namespace Snow
 {
-	void PrintCSBackupAPIErrorMessage(DWORD dwErr);
-
 	class WindowContainer
 	{
 	public:

@@ -1,6 +1,6 @@
 #include "Mesh.h"
 #include "Engine/Core/DX11.h"
-#include <iostream>
+#include "Engine/Debug/Log.h"
 
 namespace Snow
 {
@@ -11,13 +11,13 @@ namespace Snow
 		hr = myVertexBuffer.Initialize(DX11::Device.Get(), aVertices.data(), aVertices.size());
 		if (FAILED(hr))
 		{
-			std::cout << "Failed to initialize vertex buffer" << std::endl;
+			CORE_LOG_ERROR("Failed to initialize vertex buffer");
 		}
 
 		hr = myIndexBuffer.Initialize(DX11::Device.Get(), aIndices.data(), aIndices.size());
 		if (FAILED(hr))
 		{
-			std::cout << "Failed to initialize index buffer" << std::endl;
+			CORE_LOG_ERROR("Failed to initialize index buffer");
 		}
 	}
 

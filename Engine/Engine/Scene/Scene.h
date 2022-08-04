@@ -22,6 +22,7 @@ namespace Snow
 		void SetName(const std::string& aName) { mySceneName = aName; };
 
 		void LoadScene(const char* aFilePath);
+		void ClearScene();
 		
 		Entity GetEntityFromUUID(UUID aID);
 

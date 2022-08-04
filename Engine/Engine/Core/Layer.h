@@ -1,6 +1,6 @@
 #pragma once
 #include "Engine/Events/Event.h"
-#include <iostream>
+#include "Engine/Debug/Log.h"
 
 namespace Snow
 {

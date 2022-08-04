@@ -2,9 +2,9 @@
 #include <Engine/Engine.h>
 #include <Engine/Renderer/MeshFactory.h>
 #include <Engine/Input/Input.h>
-#include <imgui/imgui.h>
-#include <iostream>
+#include <Engine/Debug/Log.h>
 
+#include <imgui/imgui.h>
 #include <windows.h>
 #include <filesystem>
 #include <sstream>
@@ -13,7 +13,7 @@ namespace Snow
 {
 	void EditorLayer::OnAttach()
 	{
-		std::cout << "Editor Layer Attached" << std::endl;
+		LOG_INFO("Editor Layer Attached");
 		
 		myEditorCamera = CreateRef<EditorCamera>();
 		Engine::SetActiveCamera(myEditorCamera);
@@ -34,6 +34,11 @@ namespace Snow
 	{
 		//std::cout << "FPS: " << Time::GetFPS() << std::endl;
 		myEditorCamera->UpdateMovement();
+
+		if (InputManager::IsKeyPressed(Key::SPACE))
+		{
+			LOG_INFO("test");
+		}
 	}
 
 	void EditorLayer::RenderDockspace()
@@ -98,6 +103,10 @@ namespace Snow
 
 				std::wstring fileNameStr;
 				
+				if (ImGui::MenuItem("New", NULL))
+				{
+					Engine::GetActiveScene()->ClearScene();
+				};
 				if (ImGui::MenuItem("Open...", NULL))
 				{
 					if (GetOpenFileName(&ofn))
@@ -126,7 +135,6 @@ namespace Snow
 						SceneSerializer serializer(Engine::GetActiveScene());
 						serializer.Serialize(std::string(fileNameStr.begin(), fileNameStr.end()).c_str());
 						std::filesystem::current_path(originalPath);
-						std::cout << std::filesystem::current_path() << std::endl;
 					}
 				};
 				ImGui::EndMenu();

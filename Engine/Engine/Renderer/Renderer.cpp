@@ -2,7 +2,7 @@
 #include "Engine/Engine.h"
 #include "Engine/Scene/Entity.h"
 
-#include <iostream>
+#include "Engine/Debug/Log.h"
 
 namespace Snow
 {
@@ -42,28 +42,28 @@ namespace Snow
 		hr = myFrameBuffer.Init(DX11::Device.Get(), DX11::Context.Get());
 		if (FAILED(hr))
 		{
-			std::cout << "Failed to create constant buffer" << std::endl;
+			CORE_LOG_ERROR("Failed to create constant buffer");
 			return false;
 		}
 
 		hr = myFrameBuffer.ApplyChanges();
 		if (FAILED(hr))
 		{
-			std::cout << "Failed to update constant buffer" << std::endl;
+			CORE_LOG_WARN("Failed to update constant buffer");
 			return false;
 		}
 
 		hr = myObjectBuffer.Init(DX11::Device.Get(), DX11::Context.Get());
 		if (FAILED(hr))
 		{
-			std::cout << "Failed to create constant buffer" << std::endl;
+			CORE_LOG_ERROR("Failed to create constant buffer");
 			return false;
 		}
 
 		hr = myObjectBuffer.ApplyChanges();
 		if (FAILED(hr))
 		{
-			std::cout << "Failed to update constant buffer" << std::endl;
+			CORE_LOG_WARN("Failed to update constant buffer");
 			return false;
 		}
 		return true;

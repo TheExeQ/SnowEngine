@@ -2,7 +2,7 @@
 #include "Engine/Engine.h"
 #include "Engine/Core/DX11.h"
 #include "Engine/Editor/SceneViewportPanel.h"
-#include <iostream>
+#include "Engine/Debug/Log.h"
 
 // Forward declare message handler from imgui_impl_win32.cpp
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -37,7 +37,7 @@ namespace Snow
 			hr = DX11::SwapChain->ResizeBuffers(0, width, height, DXGI_FORMAT_UNKNOWN, 0);
 			if (FAILED(hr))
 			{
-				std::cout << "Failed to resize swapchain buffers" << std::endl;
+				CORE_LOG_ERROR("Failed to resize swapchain buffers");
 				return;
 			}
 
@@ -49,7 +49,7 @@ namespace Snow
 				SceneViewportPanel::Get().OnResize();
 			}
 
-			std::cout << "Window successfully resized" << std::endl;
+			CORE_LOG_INFO("Window successfully resized");
 		}
 	}
 
@@ -104,13 +104,6 @@ namespace Snow
 
 		RegisterClassEx(&wcx);
 
-		auto error = GetLastError();
-		if (error)
-		{
-			PrintCSBackupAPIErrorMessage(error);
-			return false;
-		}
-
 		// Create the window.
 
 		HWND hwnd = CreateWindowEx(
@@ -130,8 +123,6 @@ namespace Snow
 
 		if (hwnd == NULL)
 		{
-			auto error = GetLastError();
-			PrintCSBackupAPIErrorMessage(error);
 			return false;
 		}
 
@@ -148,7 +139,7 @@ namespace Snow
 		myClientHeight = windowRect.bottom - windowRect.top;
 
 		ShowWindow(hwnd, SW_SHOW);
-		std::cout << "Successfully initialized Win32 window!" << std::endl;
+		CORE_LOG_INFO("Successfully initialized Win32 window!");
 		return true;
 	}
 
@@ -170,61 +161,5 @@ namespace Snow
 				UnregisterClass(myWindowClassWide.c_str(), myHInstance);
 			}
 		}
-	}
-
-	// Display error message text, given an error code.
-	// Typically, the parameter passed to this function is retrieved
-	// from GetLastError().
-	void PrintCSBackupAPIErrorMessage(DWORD dwErr)
-	{
-
-		WCHAR   wszMsgBuff[512];  // Buffer for text.
-
-		DWORD   dwChars;  // Number of chars returned.
-
-		// Try to get the message from the system errors.
-		dwChars = FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM |
-			FORMAT_MESSAGE_IGNORE_INSERTS,
-			NULL,
-			dwErr,
-			0,
-			wszMsgBuff,
-			512,
-			NULL);
-
-		if (0 == dwChars)
-		{
-			// The error code did not exist in the system errors.
-			// Try Ntdsbmsg.dll for the error code.
-
-			HINSTANCE hInst;
-
-			// Load the library.
-			hInst = LoadLibrary(L"Ntdsbmsg.dll");
-			if (NULL == hInst)
-			{
-				printf("cannot load Ntdsbmsg.dll\n");
-				exit(1);  // Could 'return' instead of 'exit'.
-			}
-
-			// Try getting message text from ntdsbmsg.
-			dwChars = FormatMessage(FORMAT_MESSAGE_FROM_HMODULE |
-				FORMAT_MESSAGE_IGNORE_INSERTS,
-				hInst,
-				dwErr,
-				0,
-				wszMsgBuff,
-				512,
-				NULL);
-
-			// Free the library.
-			FreeLibrary(hInst);
-
-		}
-
-		// Display the error message, or generic text if not found.
-		printf("Error value: %d Message: %ws\n",
-			dwErr,
-			dwChars ? wszMsgBuff : L"Error message not found.");
 	}
 }

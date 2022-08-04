@@ -1,7 +1,7 @@
 #pragma comment(lib, "d3dcompiler.lib")
 #include "Shaders.h"
 #include <d3dcompiler.h>
-#include <iostream>
+#include "Engine/Debug/Log.h"
 #include "Engine/Core/DX11.h"
 
 namespace Snow
@@ -12,7 +12,7 @@ namespace Snow
 		HRESULT hr = D3DReadFileToBlob(aFilePath.c_str(), &myShaderBuffer);
 		if (FAILED(hr))
 		{
-			std::cout << "Failed to read file" << std::endl;
+			CORE_LOG_ERROR(std::string("Failed to read file: " + std::string(aFilePath.begin(), aFilePath.end())));
 			return false;
 		}
 
@@ -20,7 +20,7 @@ namespace Snow
 		hr = DX11::Device->CreateVertexShader(myShaderBuffer->GetBufferPointer(), myShaderBuffer->GetBufferSize(), nullptr, &myShader);
 		if (FAILED(hr))
 		{
-			std::cout << "Failed to create vertex shader" << std::endl;
+			CORE_LOG_ERROR("Failed to create vertex shader");
 			return false;
 		}
 
@@ -28,7 +28,7 @@ namespace Snow
 		hr = DX11::Device->CreateInputLayout(aDesc, aDescSize, myShaderBuffer->GetBufferPointer(), myShaderBuffer->GetBufferSize(), myInputLayout.GetAddressOf());
 		if (FAILED(hr))
 		{
-			std::cout << "Failed to create input layout" << std::endl;
+			CORE_LOG_ERROR("Failed to create input layout");
 			return false;
 		}
 
@@ -56,7 +56,7 @@ namespace Snow
 		HRESULT hr = D3DReadFileToBlob(aFilePath.c_str(), &myShaderBuffer);
 		if (FAILED(hr))
 		{
-			std::cout << "Failed to read file" << std::endl;
+			CORE_LOG_ERROR(std::string("Failed to read file: " + std::string(aFilePath.begin(), aFilePath.end())));
 			return false;
 		}
 
@@ -64,7 +64,7 @@ namespace Snow
 		hr = DX11::Device->CreatePixelShader(myShaderBuffer->GetBufferPointer(), myShaderBuffer->GetBufferSize(), nullptr, &myShader);
 		if (FAILED(hr))
 		{
-			std::cout << "Failed to create pixel shader" << std::endl;
+			CORE_LOG_ERROR("Failed to create pixel shader");
 			return false;
 		}
 		return true;

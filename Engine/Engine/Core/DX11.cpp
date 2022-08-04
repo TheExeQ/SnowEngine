@@ -1,6 +1,6 @@
 #include "DX11.h"
 #include "Engine/Engine.h"
-#include <iostream>
+#include "Engine/Debug/Log.h"
 
 namespace Snow
 {
@@ -20,7 +20,7 @@ namespace Snow
 		if (!CreateRasterizer()) { return false; };
 		if (!CreateSamplerState()) { return false; };
 
-		std::cout << "Successfully initialized DirectX!" << std::endl;
+		CORE_LOG_INFO("Successfully initialized DirectX!");
 		return true;
 	}
 
@@ -64,7 +64,7 @@ namespace Snow
 
 		if (FAILED(result))
 		{
-			std::cout << "Failed to create device and swap chain" << std::endl;
+			CORE_LOG_ERROR("Failed to create device and swap chain");
 			return false;
 		}
 		return true;
@@ -79,7 +79,7 @@ namespace Snow
 		result = SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBuffer);
 		if (FAILED(result))
 		{
-			std::cout << "Failed to get back buffer" << std::endl;
+			CORE_LOG_ERROR("Failed to get back buffer");
 			return false;
 		}
 
@@ -93,7 +93,7 @@ namespace Snow
 		result = Device->CreateRenderTargetView(backBuffer, &rtvd, myRenderTargetView.GetAddressOf());
 		if (FAILED(result))
 		{
-			std::cout << "Failed to create render target view" << std::endl;
+			CORE_LOG_ERROR("Failed to create render target view");
 			return false;
 		}
 
@@ -137,7 +137,7 @@ namespace Snow
 		result = Device->CreateTexture2D(&depthStencilBufferDesc, NULL, myDepthStencilTexture.GetAddressOf());
 		if (FAILED(result))
 		{
-			std::cout << "Failed to create depth stencil texture" << std::endl;
+			CORE_LOG_ERROR("Failed to create depth stencil texture");
 			return false;
 		}
 
@@ -150,7 +150,7 @@ namespace Snow
 		result = Device->CreateDepthStencilView(myDepthStencilTexture.Get(), &dsvd, myDepthStencilView.GetAddressOf());
 		if (FAILED(result))
 		{
-			std::cout << "Failed to create depth stencil view" << std::endl;
+			CORE_LOG_ERROR("Failed to create depth stencil view");
 			return false;
 		}
 
@@ -165,7 +165,7 @@ namespace Snow
 		result = Device->CreateDepthStencilState(&depthStencilDesc, myDepthStencilState.GetAddressOf());
 		if (FAILED(result))
 		{
-			std::cout << "Failed to create depth stencil state" << std::endl;
+			CORE_LOG_ERROR("Failed to create depth stencil state");
 			return false;
 		}
 		return true;
@@ -197,7 +197,7 @@ namespace Snow
 		result = Device->CreateTexture2D(&textureDesc, NULL, myEditorTexture.GetAddressOf());
 		if (FAILED(result))
 		{
-			std::cout << "Failed to create editor texture" << std::endl;
+			CORE_LOG_ERROR("Failed to create editor texture");
 			return false;
 		}
 
@@ -210,7 +210,7 @@ namespace Snow
 		result = Device->CreateRenderTargetView(myEditorTexture.Get(), &renderTargetViewDesc, myEditorRenderTargetView.GetAddressOf());
 		if (FAILED(result))
 		{
-			std::cout << "Failed to create editor render target view" << std::endl;
+			CORE_LOG_ERROR("Failed to create editor render target view");
 			return false;
 		}
 
@@ -224,7 +224,7 @@ namespace Snow
 		result = Device->CreateShaderResourceView(myEditorTexture.Get(), &shaderResourceViewDesc, myEditorShaderResourceView.GetAddressOf());
 		if (FAILED(result))
 		{
-			std::cout << "Failed to create editor shader resource view" << std::endl;
+			CORE_LOG_ERROR("Failed to create editor shader resource view");
 			return false;
 		}
 
@@ -265,7 +265,7 @@ namespace Snow
 		result = Device->CreateTexture2D(&depthStencilBufferDesc, NULL, myEditorDepthStencilTexture.GetAddressOf());
 		if (FAILED(result))
 		{
-			std::cout << "Failed to create editor depth stencil texture" << std::endl;
+			CORE_LOG_ERROR("Failed to create editor depth stencil texture");
 			return false;
 		}
 
@@ -278,7 +278,7 @@ namespace Snow
 		result = Device->CreateDepthStencilView(myEditorDepthStencilTexture.Get(), &dsvd, myEditorDepthStencilView.GetAddressOf());
 		if (FAILED(result))
 		{
-			std::cout << "Failed to create editor depth stencil view" << std::endl;
+			CORE_LOG_ERROR("Failed to create editor depth stencil view");
 			return false;
 		}
 
@@ -293,7 +293,7 @@ namespace Snow
 		result = Device->CreateDepthStencilState(&depthStencilDesc, myEditorDepthStencilState.GetAddressOf());
 		if (FAILED(result))
 		{
-			std::cout << "Failed to create editor depth stencil state" << std::endl;
+			CORE_LOG_ERROR("Failed to create editor depth stencil state");
 			return false;
 		}
 		return true;
@@ -318,7 +318,7 @@ namespace Snow
 		HRESULT result = Device->CreateRasterizerState(&rasterizerDesc, myRasterizerState.GetAddressOf());
 		if (FAILED(result))
 		{
-			std::cout << "Failed to create rasterizer state" << std::endl;
+			CORE_LOG_ERROR("Failed to create rasterizer state");
 			return false;
 		}
 
@@ -342,7 +342,7 @@ namespace Snow
 		hr = Device->CreateSamplerState(&sampDesc, mySamplerState.GetAddressOf());
 		if (FAILED(hr))
 		{
-			std::cout << "Failed to create sampler state." << std::endl;
+			CORE_LOG_ERROR("Failed to create sampler state.");
 			return false;
 		}
 		return true;

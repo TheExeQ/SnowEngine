@@ -1,18 +1,19 @@
 #include "Engine.h"
-#include <iostream>
+#include "Engine/Debug/Log.h"
 
 namespace Snow
 {
 	bool Engine::Initialize(HINSTANCE hInstance, const int& aWidth, const int& aHeight, std::string aWindowTitle, const std::string& aWindowClass)
 	{
+		Log::Init();
+
 		if (!myInstance)
 		{
 			myInstance = this;
 		}
 		else
 		{
-			std::cout << "Engine already initialized" << std::endl;
-			std::cin.get();
+			CORE_LOG_ERROR("Engine already initialized");
 			return false;
 		}
 
@@ -21,8 +22,7 @@ namespace Snow
 		auto result = myWindowContainer.Initialize(hInstance, aWidth, aHeight, aWindowTitle, aWindowClass);
 		if (!result)
 		{
-			std::cout << "Failed to initialize Win32" << std::endl;
-			std::cin.get();
+			CORE_LOG_ERROR("Failed to initialize Win32");
 			return false;
 		}
 
@@ -31,13 +31,11 @@ namespace Snow
 		result = myRenderer.Initialize(handle);
 		if (!result)
 		{
-			std::cout << "Failed to initialize Renderer" << std::endl;
-			std::cin.get();
+			CORE_LOG_ERROR("Failed to initialize Renderer");
 			return false;
 		}
 
 		myImGuiLayer.OnAttach();
-
 		return true;
 	}
 

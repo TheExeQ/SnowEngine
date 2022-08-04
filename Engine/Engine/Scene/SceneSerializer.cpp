@@ -3,7 +3,7 @@
 
 #include <glm/glm.hpp>
 #include <fstream>
-#include <iostream>
+#include "Engine/Debug/Log.h"
 
 namespace YAML
 {
@@ -147,6 +147,8 @@ namespace Snow
 
 		std::ofstream fout(aFileName);
 		fout << out.c_str();
+		
+		CORE_LOG_INFO("Scene saved.");
 	}
 
 	bool SceneSerializer::Deserialize(const char* aFileName)
@@ -158,7 +160,7 @@ namespace Snow
 		YAML::Node data = YAML::Load(strStream.str());
 		if (!data["Scene"]) 
 		{
-			std::cout << "Could not load scene" << std::endl;
+			CORE_LOG_WARN("Could not load scene");
 			return false; 
 		}
 		

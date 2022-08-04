@@ -341,17 +341,17 @@ namespace Snow {
 					changesMade = true;
 				}
 
-				if (ImGui::DragFloat("FOV", &fov))
+				if (ImGui::DragFloat("FOV", &fov, 1.f, 30.f, 120.f))
 				{
 					changesMade = true;
 				}
 
-				if (ImGui::DragFloat("Near", &nearPlane))
+				if (ImGui::DragFloat("Near", &nearPlane, 0.1f, 0.1f, 100.f))
 				{
 					changesMade = true;
 				}
 
-				if (ImGui::DragFloat("Far", &farPlane))
+				if (ImGui::DragFloat("Far", &farPlane, 10.f, 100.f, 1000.f))
 				{
 					changesMade = true;
 				}

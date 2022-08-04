@@ -26,6 +26,11 @@ namespace Snow
 		serializer.Deserialize(aFilePath);
 	}
 
+	void Scene::ClearScene()
+	{
+		myRegistry.clear();
+	}
+
 	Snow::Entity Scene::GetEntityFromUUID(UUID aID)
 	{
 		auto view = myRegistry.view<IDComponent>();

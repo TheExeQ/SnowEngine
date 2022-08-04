@@ -3,7 +3,7 @@
 
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
-#include <iostream>
+#include "Engine/Debug/Log.h"
 
 namespace Snow
 {
@@ -24,7 +24,7 @@ namespace Snow
 		HRESULT hr = DX11::Device->CreateTexture2D(&textureDesc, &initialData, &pTexture);
 		if (FAILED(hr))
 		{
-			std::cout << "Failed to initialize texture from color data." << std::endl;
+			CORE_LOG_ERROR("Failed to initialize texture from color data.");
 		}
 
 		myTexture = static_cast<ID3D11Texture2D*>(pTexture);
@@ -33,7 +33,7 @@ namespace Snow
 		hr = DX11::Device->CreateShaderResourceView(myTexture.Get(), &srvDesc, &myTextureView);
 		if (FAILED(hr))
 		{
-			std::cout << "Failed to create shader resource view from texture generated from color data." << std::endl;
+			CORE_LOG_ERROR("Failed to create shader resource view from texture generated from color data.");
 		}
 
 		pTexture->Release();
@@ -66,7 +66,7 @@ namespace Snow
 		HRESULT hr = DX11::Device->CreateTexture2D(&desc, nullptr, &pTexture);
 		if (FAILED(hr))
 		{
-			std::cout << "Failed to create shader resource view from texture generated from " << filename << std::endl;
+			CORE_LOG_ERROR("Failed to create shader resource view from texture generated from %s", filename);
 		}
 		myTexture = static_cast<ID3D11Texture2D*>(pTexture);
 
@@ -82,7 +82,7 @@ namespace Snow
 		hr = DX11::Device->CreateShaderResourceView(pTexture, &srvDesc, &myTextureView);
 		if (FAILED(hr))
 		{
-			std::cout << "Failed to create shader resource view from texture generated from " << filename << std::endl;
+			CORE_LOG_ERROR("Failed to create shader resource view from texture generated from %s", filename);
 		}
 
 		pTexture->Release();

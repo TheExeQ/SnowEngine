@@ -1,4 +1,6 @@
 #pragma once
+#include "Engine/Core/Base.h"
+
 #include <d3d11.h>
 #include <wrl/client.h>
 #include <memory>
@@ -47,7 +49,7 @@ namespace Snow
 			}
 			if (!myStride)
 			{
-				myStride = std::make_unique<UINT>(sizeof(T));
+				myStride = CreateRef<UINT>(sizeof(T));
 			}
 
 			myBufferSize = numVertices;
@@ -71,7 +73,7 @@ namespace Snow
 	private:
 
 		Microsoft::WRL::ComPtr<ID3D11Buffer> myBuffer;
-		std::shared_ptr<UINT> myStride;
+		Ref<UINT> myStride;
 		UINT myBufferSize;
 	};
 

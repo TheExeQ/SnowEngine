@@ -1,7 +1,7 @@
 #include "Model.h"
 #include "Engine/Core/Random.h"
 #include "MeshFactory.h"
-#include <iostream>
+#include "Engine/Debug/Log.h"
 
 namespace Snow
 {
@@ -28,7 +28,7 @@ namespace Snow
 
 		if (!scene)
 		{
-			std::cout << "Failed to load model: " << aFilepath << std::endl;
+			CORE_LOG_WARN("Failed to load model: %s", aFilepath);
 			return false;
 		}
 
