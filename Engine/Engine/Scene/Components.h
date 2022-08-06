@@ -3,6 +3,7 @@
 #include "Engine/Core/UUID.h"
 #include "Engine/Renderer/Camera.h"
 #include "Engine/Renderer/Model.h"
+#include "Engine/Renderer/Animation.h"
 #include "Engine/Renderer/Material.h"
 
 #include <glm/glm.hpp>
@@ -20,7 +21,7 @@ namespace Snow
 		UUID uuid = UUID();
 	};
 
-	struct RelationshipComponent // #TODO: Not yet implemented support for, tbc.
+	struct RelationshipComponent
 	{
 		UUID Parent = 0;
 		std::vector<UUID> Children;
@@ -51,5 +52,12 @@ namespace Snow
 	{
 		Model model;
 		Material material;
+	};
+
+	struct SkeletalMeshComponent
+	{
+		Model model;
+		Material material;
+		Ref<Animation> currentAnimation = CreateRef<Animation>();
 	};
 }

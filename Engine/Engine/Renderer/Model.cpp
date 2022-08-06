@@ -1,24 +1,7 @@
 #include "Model.h"
-#include "Engine/Core/Random.h"
-#include "Engine/Debug/Log.h"
 
 namespace Snow
 {
-	bool Model::Initialize(const char* filepath)
-	{
-		if (!LoadModel(filepath))
-		{
-			return false;
-		}
-		return true;
-	}
-
-	void Model::Initialize(Mesh aMesh)
-	{
-		myMeshes.clear();
-		myMeshes.push_back(aMesh);
-	}
-
 	bool Model::LoadModel(const char* aFilepath)
 	{
 		auto it = myModels.find(std::string(aFilepath));
@@ -67,6 +50,7 @@ namespace Snow
 	{
 		std::vector<Vertex> vertices;
 		std::vector<DWORD> indicies;
+		std::vector<Bone> bones;
 
 		for (UINT i = 0; i < aMesh->mNumVertices; i++)
 		{
@@ -74,7 +58,7 @@ namespace Snow
 			vertex.position = glm::vec3(aMesh->mVertices[i].x, aMesh->mVertices[i].y, aMesh->mVertices[i].z);
 			vertex.texCoords = glm::vec2(aMesh->mTextureCoords[0][i].x, aMesh->mTextureCoords[0][i].y);
 
-			//vertex.normal = XMFLOAT3(aMesh->mNormals[i].x, aMesh->mNormals[i].y, aMesh->mNormals[i].z);
+			//vertex.normal = glm::vec3(aMesh->mNormals[i].x, aMesh->mNormals[i].y, aMesh->mNormals[i].z);
 			vertices.push_back(vertex);
 		}
 
@@ -86,6 +70,6 @@ namespace Snow
 				indicies.push_back(face.mIndices[j]);
 			}
 		}
-		return Mesh(vertices, indicies);
+		return Mesh(vertices, indicies, bones);
 	}
 }

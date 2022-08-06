@@ -4,7 +4,7 @@
 
 namespace Snow
 {
-	Mesh::Mesh(std::vector<Vertex>& aVertices, std::vector<DWORD>& aIndices)
+	void Mesh::Init(std::vector<Vertex>& aVertices, std::vector<DWORD>& aIndices)
 	{
 		HRESULT hr;
 
@@ -21,9 +21,20 @@ namespace Snow
 		}
 	}
 
+	Mesh::Mesh(std::vector<Vertex>& aVertices, std::vector<DWORD>& aIndices)
+	{
+		Init(aVertices, aIndices);
+	}
+
 	Mesh::Mesh(const Mesh& aMesh)
 	{
 		myVertexBuffer = aMesh.myVertexBuffer;
 		myIndexBuffer = aMesh.myIndexBuffer;
+	}
+
+	Mesh::Mesh(std::vector<Vertex>& aVertices, std::vector<DWORD>& aIndices, const std::vector<Bone>& aBones)
+	{
+		Init(aVertices, aIndices);
+		myBones = aBones;
 	}
 }

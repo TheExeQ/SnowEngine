@@ -323,7 +323,7 @@ namespace Snow {
 
 				if (ImGui::Button("Reload", buttonSize))
 				{
-					component->model.Initialize(meshFilepath.c_str());
+					component->model.LoadModel(meshFilepath.c_str());
 					component->material.myAlbedo.LoadTexture(albedoFilepath.c_str());
 				}
 			});

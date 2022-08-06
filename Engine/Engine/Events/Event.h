@@ -32,7 +32,7 @@ namespace Snow
 		EventCategoryMouseButton = BIT(4),
 	};
 
-	class Event
+	class Event // #TODO: inplement this (currently does nothing)
 	{
 	public:
 		virtual EventType GetEventType() const = 0;

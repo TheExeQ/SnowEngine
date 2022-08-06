@@ -1,5 +1,7 @@
 #pragma once
 #include "Mesh.h"
+#include "Engine/Debug/Log.h"
+
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
@@ -12,14 +14,12 @@ namespace Snow
 	class Model  // #TODO: Move myModels map to asset class that handles loading and caching
 	{
 	public:
-		bool Initialize(const char* aFilepath);
-		void Initialize(Mesh aMesh);
+		bool LoadModel(const char* aFilepath);
 
 	private:
 		friend class Renderer;
 		friend class SceneHierarchyPanel;
 		friend class SceneSerializer;
-		bool LoadModel(const char* aFilepath);
 		bool ProcessNode(aiNode* aNode, const aiScene* aScene);
 		Mesh ProcessMesh(aiMesh* aMesh);
 
