@@ -17,7 +17,7 @@ namespace Snow
 			myFilePath = it->second->myFilePath;
 			myTexture = it->second->myTexture;
 			myTextureView = it->second->myTextureView;
-			CORE_LOG_INFO("Texture reused!");
+			CORE_LOG_INFO("Texture reused.");
 			return true;
 		}
 		

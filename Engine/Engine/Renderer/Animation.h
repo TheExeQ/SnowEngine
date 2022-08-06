@@ -10,11 +10,6 @@
 
 namespace Snow
 {
-	struct Frame
-	{
-		std::vector<glm::mat4> transforms;
-	};
-
 	class Animation
 	{
 	public:
@@ -29,13 +24,13 @@ namespace Snow
 		bool LoadAnimation(const char* aFilepath);
 
 	private:
-		void CalculateFramePose(const std::vector<Bone>& aBones,const Frame& inFrame, Frame& outFrame);
+		void CalculateFramePose(const std::vector<Bone>& aBones, const glm::mat4 aInverseModelTransform, const std::vector<glm::mat4>& inTransforms, std::vector<glm::mat4>& outTransforms);
 
 		std::string myName = "";
 		bool myIsPlaying = false;
 		bool myIsLooping = false;
 		uint32_t myFPS = 0;
-		std::vector<Frame> myFrames;
+		std::vector<glm::mat4> myBoneFinalTransforms;
 
 		inline static std::unordered_map<std::string, Ref<Animation>> myAnimations;
 	};

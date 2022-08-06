@@ -63,5 +63,16 @@ namespace Snow
 				return true;
 			}
 		}
+
+		glm::mat4 ConvertAssimpMat4ToGlmMat4(const aiMatrix4x4& aMatrix)
+		{
+			glm::mat4 result;
+			//the a,b,c,d in assimp is the row ; the 1,2,3,4 is the column
+			result[0][0] = aMatrix.a1; result[1][0] = aMatrix.a2; result[2][0] = aMatrix.a3; result[3][0] = aMatrix.a4;
+			result[0][1] = aMatrix.b1; result[1][1] = aMatrix.b2; result[2][1] = aMatrix.b3; result[3][1] = aMatrix.b4;
+			result[0][2] = aMatrix.c1; result[1][2] = aMatrix.c2; result[2][2] = aMatrix.c3; result[3][2] = aMatrix.c4;
+			result[0][3] = aMatrix.d1; result[1][3] = aMatrix.d2; result[2][3] = aMatrix.d3; result[3][3] = aMatrix.d4;
+			return result;
+		}
 	}
 }

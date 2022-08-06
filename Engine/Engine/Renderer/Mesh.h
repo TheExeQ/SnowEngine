@@ -11,7 +11,6 @@ namespace Snow
 	{
 		uint32_t parentIndex;
 		glm::mat4 localMatrix;
-		glm::mat4 inverseModelMatrix;
 	};
 
 	class Mesh // #TODO: add submesh class so objects can be rendered in one draw call.

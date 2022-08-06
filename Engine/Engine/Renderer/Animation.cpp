@@ -31,7 +31,6 @@ namespace Snow
 			myIsPlaying = it->second->myIsPlaying;
 			myIsLooping = it->second->myIsLooping;
 			myFPS = it->second->myFPS;
-			myFrames = it->second->myFrames;
 			CORE_LOG_INFO("Animation reused!");
 			return true;
 		}
@@ -41,14 +40,14 @@ namespace Snow
 		myAnimations[std::string(aFilepath)] = CreateRef<Animation>(*this);
 	}
 
-	void Animation::CalculateFramePose(const std::vector<Bone>& aBones, const Frame& inFrame, Frame& outFrame)
+	void Animation::CalculateFramePose(const std::vector<Bone>& aBones, const glm::mat4 aInverseModelTransform, const std::vector<glm::mat4>& inTransforms, std::vector<glm::mat4>& outTransforms)
 	{
 		std::vector<glm::mat4> localTransform(aBones.size());
 		std::vector<glm::mat4> modelTransform(aBones.size());
 		
 		for (uint32_t i = 0; i < aBones.size(); i++)
 		{
-			localTransform[i] = inFrame.transforms[i] * aBones[i].localMatrix;
+			localTransform[i] = inTransforms[i] * aBones[i].localMatrix;
 		}
 
 		modelTransform[0] = localTransform[0];
@@ -61,7 +60,7 @@ namespace Snow
 
 		for (uint32_t i = 0; i < aBones.size(); i++)
 		{
-			outFrame.transforms[i] = aBones[i].inverseModelMatrix * modelTransform[i];
+			outTransforms[i] = aInverseModelTransform * modelTransform[i];
 		}
 	}
 }
