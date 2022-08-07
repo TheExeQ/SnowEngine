@@ -1,4 +1,5 @@
 #pragma once
+#include <array>
 #include <glm/glm.hpp>
 
 namespace Snow
@@ -11,6 +12,7 @@ namespace Snow
 
 	struct ObjectBuffer
 	{
-		glm::mat4 WorldMatrix;
+		glm::mat4 WorldTransform;
+		std::array<glm::mat4, 128> BoneTransforms;
 	};
 }

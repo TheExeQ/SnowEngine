@@ -75,9 +75,9 @@ namespace Snow
 		entityRelationShip->Parent = 0;
 	}
 
-	Entity Scene::CreateEntity(const char* aName)
+	Entity Scene::CreateEntity(const char* aName, Ref<Scene> aScene)
 	{
-		Entity entity(myRegistry.create());
+		Entity entity(myRegistry.create(), (aScene) ? aScene : Engine::GetActiveScene());
 		entity.AddComponent<TagComponent>()->name = aName;
 		entity.AddComponent<IDComponent>();
 		entity.AddComponent<RelationshipComponent>();
@@ -181,35 +181,5 @@ namespace Snow
 		glm::mat4 parentTransform = GetWorldSpaceTransformMatrix(parent);
 
 		return glm::inverse(parentTransform) * transform;
-	}
-
-	std::vector<Entity> Scene::RenderScene(Ref<Camera> aCamera)
-	{
-		if (!aCamera || !aCamera->GetIsPrimary()) // #TODO: fix so camera position updates from entity transform (Currently movement of camera in runtime doesn't work)
-		{
-			auto cameraEntities = myRegistry.view<CameraComponent>();
-			
-			for (auto entity : cameraEntities)
-			{
-				if (myRegistry.get<CameraComponent>(entity).camera->GetIsPrimary())
-				{
-					Entity primaryCameraEntity(entity, Engine::GetActiveScene());
-					auto pos = primaryCameraEntity.GetComponent<TransformComponent>()->position;
-					auto& camera = primaryCameraEntity.GetComponent<CameraComponent>()->camera;
-					camera->SetPosition(pos);
-					Engine::SetActiveCamera(camera);
-				}
-			}
-		}
-		
-		std::vector<Entity> entitiesToRender;
-		auto entitesWithComponents = myRegistry.view<TransformComponent, RelationshipComponent, StaticMeshComponent>();
-		
-		for (auto entity : entitesWithComponents)
-		{
-			entitiesToRender.push_back(Entity(entity));
-		}
-		
-		return entitiesToRender;
 	}
 }

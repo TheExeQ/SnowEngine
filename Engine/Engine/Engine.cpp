@@ -18,6 +18,7 @@ namespace Snow
 		}
 
 		myActiveScene = CreateRef<Scene>();
+		myEditorScene = CreateRef<Scene>();
 
 		auto result = myWindowContainer.Initialize(hInstance, aWidth, aHeight, aWindowTitle, aWindowClass);
 		if (!result)
@@ -45,7 +46,6 @@ namespace Snow
 		{
 			myTime.Update();
 			myWindowContainer.ProcessMessages();
-			if (!myIsRunning) { myImGuiLayer.myLayerActive = false; };
 
 			for (auto* layer : myLayerStack)
 			{
@@ -53,17 +53,15 @@ namespace Snow
 			}
 
 			myRenderer.BeginFrame();
-			if (myImGuiLayer.IsLayerActive())
+			if (GetActiveWindow())
 			{
 				myImGuiLayer.Begin();
-
 #ifndef RETAIL
 				for (auto* layer : myLayerStack)
 				{
 					layer->OnImGuiRender();
 				}
 #endif // !RETAIL
-
 				myImGuiLayer.End();
 			}
 			myRenderer.EndFrame();

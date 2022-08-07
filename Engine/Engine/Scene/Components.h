@@ -58,5 +58,6 @@ namespace Snow
 	{
 		Model animatedModel;
 		Material material;
+		Animation animation;
 	};
 }

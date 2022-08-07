@@ -2,6 +2,7 @@
 #include <Engine/Engine.h>
 #include <Engine/Input/Input.h>
 #include <Engine/Debug/Log.h>
+#include "Engine/Scene/Components.h"
 
 #include <imgui/imgui.h>
 #include <windows.h>
@@ -14,9 +15,13 @@ namespace Snow
 	{
 		LOG_INFO("Editor Layer Attached");
 		
-		myEditorCamera = CreateRef<EditorCamera>();
-		Engine::SetActiveCamera(myEditorCamera);
+		myEditorCameraEntity = Engine::GetEditorScene()->CreateEntity("EditorCamera", Engine::GetEditorScene());
+		myEditorCameraEntity.AddComponent<CameraComponent>();
 
+		Engine::SetEditorCamera(myEditorCameraEntity);
+		
+		myEditorCamera->SetIsPrimary(true);
+		
 		mySceneHierarchyPanel.Init();
 		mySceneViewportPanel.Init();
 	}
@@ -33,6 +38,7 @@ namespace Snow
 	{
 		//std::cout << "FPS: " << Time::GetFPS() << std::endl;
 		myEditorCamera->UpdateMovement();
+		myEditorCameraEntity.GetComponent<CameraComponent>()->camera = myEditorCamera;
 	}
 
 	void EditorLayer::RenderDockspace()

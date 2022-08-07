@@ -1,4 +1,5 @@
 #pragma once
+#include "Engine/Core/Base.h"
 #include "Components.h"
 
 #include <entt/entt.hpp>
@@ -29,7 +30,7 @@ namespace Snow
 		void ParentEntity(Entity aChild, Entity aParent);
 		void UnparentEntity(Entity aEntity);
 
-		Entity CreateEntity(const char* aName);
+		Entity CreateEntity(const char* aName, Ref<Scene> aScene = nullptr);
 		void DestroyEntity(Entity aEntity);
 
 		glm::mat4 GetWorldSpaceTransformMatrix(Entity aEntity);
@@ -46,16 +47,14 @@ namespace Snow
 		void OnUpdateEditor();
 
 	private:
-		friend class Renderer;
 		friend class Entity;
 		friend class Camera;
-		friend class SceneHierarchyPanel;
+		friend class SceneRenderer;
 		friend class SceneSerializer;
+		friend class SceneHierarchyPanel;
 
 		void ConvertToWorldSpace(Entity aEntity);
 		void ConvertToLocalSpace(Entity aEntity);
-
-		std::vector<Entity> RenderScene(Ref<Camera> aCamera); // Return entitys to render
 
 		std::string mySceneName = "Untitled";
 		entt::registry myRegistry;

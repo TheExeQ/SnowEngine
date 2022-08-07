@@ -14,7 +14,7 @@ namespace Snow
 		void SetNormal(const char* aFileName);
 
 	private:
-		friend class Renderer;
+		friend class SceneRenderer;
 		friend class SceneHierarchyPanel;
 		friend class SceneSerializer;
 		Texture myAlbedo;

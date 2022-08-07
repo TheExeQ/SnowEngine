@@ -19,7 +19,7 @@ namespace Snow
 		bool LoadTexture(const Color* colorData, UINT width, UINT height);
 
 	private:
-		friend class Renderer;
+		friend class SceneRenderer;
 		friend class SceneHierarchyPanel;
 		friend class SceneSerializer;
 		bool LoadTextureFromFile(const char* aFilepath);

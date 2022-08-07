@@ -13,8 +13,6 @@ namespace Snow
 		ImGuiLayer() : Layer("ImGui Layer") {};
 		~ImGuiLayer() = default;
 
-		bool IsLayerActive() { return myLayerActive; };
-
 	private:
 		friend class Engine;
 
@@ -23,7 +21,5 @@ namespace Snow
 
 		void Begin();
 		void End();
-
-		bool myLayerActive = false;
 	};
 }

@@ -37,9 +37,10 @@ namespace Snow
 
 		static WindowContainer* GetWindowContainer() { return &Get().myWindowContainer; };
 		static Ref<Scene> GetActiveScene() { return Get().myActiveScene; }
+		static Ref<Scene> GetEditorScene() { return Get().myEditorScene; }
 		
-		static const Ref<Camera> GetActiveCamera() { return Get().myRenderer.myMainCamera; }
-		static void SetActiveCamera(Ref<Camera> aCamera) { Get().myRenderer.myMainCamera = aCamera; }
+		static void SetEditorCamera(Entity aCameraEntity) { Get().myRenderer.mySceneRenderer->UpdateEditorCamera(aCameraEntity); };
+		static void SetRuntimeCamera(Entity aCameraEntity) { Get().myRenderer.mySceneRenderer->UpdateRuntimeCamera(aCameraEntity); };
 
 	private:
 		friend class SceneViewportPanel;
@@ -52,6 +53,7 @@ namespace Snow
 		Time myTime;
 
 		Ref<Scene> myActiveScene;
+		Ref<Scene> myEditorScene;
 
 		bool myIsRunning = true;
 		EngineRunMode myRunMode = EngineRunMode::Game;

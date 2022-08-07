@@ -15,7 +15,7 @@ namespace Snow
 		Mesh(const Mesh& aMesh);
 
 	protected:
-		friend class Renderer;
+		friend class SceneRenderer;
 		void Init(std::vector<Vertex>& aVertices, std::vector<DWORD>& aIndices);
 
 		VertexBuffer<Vertex> myVertexBuffer;

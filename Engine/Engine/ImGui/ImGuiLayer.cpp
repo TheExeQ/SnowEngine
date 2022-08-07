@@ -42,8 +42,6 @@ namespace Snow
 		// Setup Platform/Renderer backends
 		ImGui_ImplWin32_Init(hwnd);
 		ImGui_ImplDX11_Init(DX11::Device.Get(), DX11::Context.Get());
-
-		myLayerActive = true;
 	}
 
 	void ImGuiLayer::OnDetach()
@@ -52,8 +50,6 @@ namespace Snow
 		ImGui_ImplDX11_Shutdown();
 		ImGui_ImplWin32_Shutdown();
 		ImGui::DestroyContext();
-
-		myLayerActive = false;
 	}
 
 	void ImGuiLayer::Begin()

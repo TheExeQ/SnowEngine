@@ -2,12 +2,7 @@
 #include "Engine/Core/Base.h"
 #include "Engine/Core/DX11.h"
 #include "Engine/Scene/Entity.h"
-#include "Shaders.h"
-#include "Vertex.h"
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
-#include "ConstantBuffer.h"
-#include "Camera.h"
+#include "SceneRenderer.h"
 
 namespace Snow
 {
@@ -21,16 +16,7 @@ namespace Snow
 		void BeginFrame();
 		void EndFrame();
 
-		bool CreateShaders();
-		bool CreateConstantBuffers();
-
-		VertexShader myVertexShader;
-		PixelShader myPixelShader;
-
-		ConstantBuffer<FrameBuffer> myFrameBuffer;
-		ConstantBuffer<ObjectBuffer> myObjectBuffer;
-
-		Ref<Camera> myMainCamera = nullptr;
+		Ref<SceneRenderer> mySceneRenderer = CreateRef<SceneRenderer>();
 
 		DX11 myGraphicsAPI;
 		bool myVSyncEnabled = true;

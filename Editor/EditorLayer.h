@@ -23,7 +23,8 @@ namespace Snow
 	private:
 		void RenderDockspace();
 
-		Ref<EditorCamera> myEditorCamera;
+		Entity myEditorCameraEntity;
+		Ref<EditorCamera> myEditorCamera = CreateRef<EditorCamera>();
 		std::string myLastLoadedScene = "";
 
 		// Panels

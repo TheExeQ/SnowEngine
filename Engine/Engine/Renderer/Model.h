@@ -38,7 +38,7 @@ namespace Snow
 		void SetAnimation(const Animation& aAnimation);
 
 	private:
-		friend class Renderer;
+		friend class SceneRenderer;
 		friend class SceneHierarchyPanel;
 		friend class SceneSerializer;
 		bool ProcessNode(aiNode* aNode, const aiScene* aScene);
