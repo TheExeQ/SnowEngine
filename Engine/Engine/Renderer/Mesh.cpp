@@ -31,10 +31,4 @@ namespace Snow
 		myVertexBuffer = aMesh.myVertexBuffer;
 		myIndexBuffer = aMesh.myIndexBuffer;
 	}
-
-	Mesh::Mesh(std::vector<Vertex>& aVertices, std::vector<DWORD>& aIndices, const std::vector<Bone>& aBones)
-	{
-		Init(aVertices, aIndices);
-		myBones = aBones;
-	}
 }

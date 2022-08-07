@@ -7,18 +7,11 @@
 
 namespace Snow
 {
-	struct Bone
-	{
-		uint32_t parentIndex;
-		glm::mat4 localMatrix;
-	};
-
 	class Mesh // #TODO: add submesh class so objects can be rendered in one draw call.
 	{
 	public:
 		Mesh() {};
 		Mesh(std::vector<Vertex>& aVertices, std::vector<DWORD>& aIndices);
-		Mesh(std::vector<Vertex>& aVertices, std::vector<DWORD>& aIndices, const std::vector<Bone>& aBones);
 		Mesh(const Mesh& aMesh);
 
 	protected:
@@ -27,6 +20,5 @@ namespace Snow
 
 		VertexBuffer<Vertex> myVertexBuffer;
 		IndexBuffer myIndexBuffer;
-		std::vector<Bone> myBones;
 	};
 }

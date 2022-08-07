@@ -1,5 +1,4 @@
 #include "Animation.h"
-#include "Engine/Debug/Log.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
@@ -7,60 +6,32 @@
 
 namespace Snow
 {
-	void Animation::PlayAnimation()
-	{
-		myIsPlaying = true;
-	}
-
-	void Animation::StopAnimation()
-	{
-		myIsPlaying = false;
-	}
-
-	void Animation::SetLoop(bool aActive)
-	{
-		myIsLooping = aActive;
-	}
-
 	bool Animation::LoadAnimation(const char* aFilepath)
 	{
 		auto it = myAnimations.find(std::string(aFilepath));
 		if (it != myAnimations.end())
 		{
-			myName = it->second->myName;
-			myIsPlaying = it->second->myIsPlaying;
-			myIsLooping = it->second->myIsLooping;
-			myFPS = it->second->myFPS;
-			CORE_LOG_INFO("Animation reused!");
+			*this = *it->second.get();
+			CORE_LOG_INFO("Model reused.");
 			return true;
 		}
 		
-		// Do assimp loading code
+		myImporter = CreateRef<Assimp::Importer>();
 
-		myAnimations[std::string(aFilepath)] = CreateRef<Animation>(*this);
-	}
+		myScene = myImporter->ReadFile(aFilepath, aiProcess_Triangulate | aiProcess_ConvertToLeftHanded);
 
-	void Animation::CalculateFramePose(const std::vector<Bone>& aBones, const glm::mat4 aInverseModelTransform, const std::vector<glm::mat4>& inTransforms, std::vector<glm::mat4>& outTransforms)
-	{
-		std::vector<glm::mat4> localTransform(aBones.size());
-		std::vector<glm::mat4> modelTransform(aBones.size());
+		if (!myScene && !myScene->HasAnimations())
+		{
+			CORE_LOG_WARN(std::string("Failed to load animation: ") + std::string(aFilepath));
+			return false;
+		}
+
+		myAnimation = myScene->mAnimations[0];
+		myDuration = myAnimation->mDuration;
+		myTicksPerSecond = myAnimation->mTicksPerSecond;
 		
-		for (uint32_t i = 0; i < aBones.size(); i++)
-		{
-			localTransform[i] = inTransforms[i] * aBones[i].localMatrix;
-		}
-
-		modelTransform[0] = localTransform[0];
-
-		for (uint32_t i = 1; i < aBones.size(); i++)
-		{
-			uint32_t parent = aBones[i].parentIndex;
-			modelTransform[i] = localTransform[i] * modelTransform[parent];
-		}
-
-		for (uint32_t i = 0; i < aBones.size(); i++)
-		{
-			outTransforms[i] = aInverseModelTransform * modelTransform[i];
-		}
+		myFilePath = aFilepath;
+		myAnimations[std::string(aFilepath)] = CreateRef<Animation>(*this);
+		return true;
 	}
 }

@@ -1,37 +1,32 @@
 #pragma once
 #include "Engine/Core/Base.h"
-#include "Engine/Renderer/Mesh.h"
+#include "Engine/Debug/Log.h"
 
-#include <glm/glm.hpp>
-#include <unordered_map>
-#include <stdint.h>
-#include <string>
-#include <vector>
+struct aiScene;
+struct aiAnimation;
+
+namespace Assimp
+{
+	class Importer;
+}
 
 namespace Snow
 {
 	class Animation
 	{
 	public:
-		Animation() = default;
-		Animation(const Animation& aAnim) = default;
-		~Animation() = default;
-
-		void PlayAnimation();
-		void StopAnimation();
-
-		void SetLoop(bool aActive);
 		bool LoadAnimation(const char* aFilepath);
+		const aiAnimation* GetAnimation() const { return myAnimation; };
 
 	private:
-		void CalculateFramePose(const std::vector<Bone>& aBones, const glm::mat4 aInverseModelTransform, const std::vector<glm::mat4>& inTransforms, std::vector<glm::mat4>& outTransforms);
+		Ref<Assimp::Importer> myImporter;
+		const aiScene* myScene;
+		const aiAnimation* myAnimation;
 
-		std::string myName = "";
-		bool myIsPlaying = false;
-		bool myIsLooping = false;
-		uint32_t myFPS = 0;
-		std::vector<glm::mat4> myBoneFinalTransforms;
-
+		float myDuration = 0.f;
+		int myTicksPerSecond = 0;
+		std::string myFilePath = "";
+		
 		inline static std::unordered_map<std::string, Ref<Animation>> myAnimations;
 	};
 }

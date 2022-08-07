@@ -12,11 +12,7 @@ namespace Snow
 		auto it = myTextures.find(std::string(aFilepath));
 		if (it != myTextures.end())
 		{
-			myWidth = it->second->myWidth;
-			myHeight = it->second->myHeight;
-			myFilePath = it->second->myFilePath;
-			myTexture = it->second->myTexture;
-			myTextureView = it->second->myTextureView;
+			*this = *it->second.get();
 			CORE_LOG_INFO("Texture reused.");
 			return true;
 		}

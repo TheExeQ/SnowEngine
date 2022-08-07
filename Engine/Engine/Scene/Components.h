@@ -56,8 +56,7 @@ namespace Snow
 
 	struct SkeletalMeshComponent
 	{
-		Model model;
+		Model animatedModel;
 		Material material;
-		Ref<Animation> currentAnimation = CreateRef<Animation>();
 	};
 }
