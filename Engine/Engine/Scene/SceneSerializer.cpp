@@ -113,6 +113,30 @@ namespace Snow
 			outEmitter << YAML::EndMap;
 		}
 
+		if (aEntity.HasComponent<SkeletalMeshComponent>())
+		{
+			outEmitter << YAML::Key << "SkeletalMeshComponent";
+			outEmitter << YAML::BeginMap;
+			auto comp = aEntity.GetComponent<SkeletalMeshComponent>();
+
+			outEmitter << YAML::Key << "Model";
+			outEmitter << YAML::BeginMap;
+			outEmitter << YAML::Key << "MeshPath" << YAML::Value << comp->animatedModel.myFilePath;
+			outEmitter << YAML::EndMap;
+
+			outEmitter << YAML::Key << "Material";
+			outEmitter << YAML::BeginMap;
+			outEmitter << YAML::Key << "AlbedoPath" << YAML::Value << comp->material.myAlbedo.myFilePath;
+			outEmitter << YAML::EndMap;
+
+			outEmitter << YAML::Key << "Animation";
+			outEmitter << YAML::BeginMap;
+			outEmitter << YAML::Key << "AnimationPath" << YAML::Value << comp->animation.myFilePath;
+			outEmitter << YAML::EndMap;
+
+			outEmitter << YAML::EndMap;
+		}
+
 		if (aEntity.HasComponent<CameraComponent>())
 		{
 			outEmitter << YAML::Key << "CameraComponent";
@@ -204,6 +228,17 @@ namespace Snow
 					auto comp = DeserializedEntity.AddComponent<StaticMeshComponent>();
 					comp->model.LoadModel(model["MeshPath"].as<std::string>().c_str());
 					comp->material.SetAlbedo(material["AlbedoPath"].as<std::string>().c_str());
+				}
+
+				if (ent["SkeletalMeshComponent"])
+				{
+					auto model = ent["SkeletalMeshComponent"]["Model"];
+					auto material = ent["SkeletalMeshComponent"]["Material"];
+					auto animation = ent["SkeletalMeshComponent"]["Animation"];
+					auto comp = DeserializedEntity.AddComponent<SkeletalMeshComponent>();
+					comp->animatedModel.LoadModel(model["MeshPath"].as<std::string>().c_str());
+					comp->material.SetAlbedo(material["AlbedoPath"].as<std::string>().c_str());
+					comp->animation.LoadAnimation(animation["AnimationPath"].as<std::string>().c_str());
 				}
 
 				if (ent["CameraComponent"])

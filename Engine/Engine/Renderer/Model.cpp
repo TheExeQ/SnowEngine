@@ -30,6 +30,7 @@ namespace Snow
 
 		myMeshes.clear();
 
+		myInverseTransform = glm::inverse(Math::ConvertAssimpMat4ToGlmMat4(myScene->mRootNode->mTransformation));
 		ProcessNode(myScene->mRootNode, myScene);
 
 		myFilePath = aFilepath;
@@ -123,7 +124,7 @@ namespace Snow
 
 	void Model::UpdateBoneTransform(float aTime)
 	{
-		if (myCurrentAnimation)
+		if (myCurrentAnimation->GetAnimation())
 		{
 			ReadNodeHierarchy(aTime, myScene->mRootNode, glm::mat4(1.0f));
 			myBoneTransforms.resize(myBones.size());

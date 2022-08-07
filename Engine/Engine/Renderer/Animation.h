@@ -19,6 +19,10 @@ namespace Snow
 		const aiAnimation* GetAnimation() const { return myAnimation; };
 
 	private:
+		friend class SceneRenderer;
+		friend class SceneHierarchyPanel;
+		friend class SceneSerializer;
+
 		Ref<Assimp::Importer> myImporter;
 		const aiScene* myScene;
 		const aiAnimation* myAnimation;

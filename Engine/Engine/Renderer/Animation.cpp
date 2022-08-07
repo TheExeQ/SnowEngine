@@ -20,7 +20,7 @@ namespace Snow
 
 		myScene = myImporter->ReadFile(aFilepath, aiProcess_Triangulate | aiProcess_ConvertToLeftHanded);
 
-		if (!myScene && !myScene->HasAnimations())
+		if (!myScene || !myScene->HasAnimations())
 		{
 			CORE_LOG_WARN(std::string("Failed to load animation: ") + std::string(aFilepath));
 			return false;

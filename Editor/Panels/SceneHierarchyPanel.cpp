@@ -276,7 +276,8 @@ namespace Snow {
 
 		if (ImGui::BeginPopup("AddComponent"))
 		{
-			DisplayAddComponentEntry<StaticMeshComponent>("Static Mesh");
+			DisplayAddComponentEntry<StaticMeshComponent>("StaticMesh Component");
+			DisplayAddComponentEntry<SkeletalMeshComponent>("SkeletalMesh Component");
 			DisplayAddComponentEntry<CameraComponent>("Camera Component");
 
 			ImGui::EndPopup();
@@ -303,7 +304,7 @@ namespace Snow {
 				char buffer[256];
 				memset(buffer, 0, sizeof(buffer));
 				std::strncpy(buffer, meshFilepath.c_str(), sizeof(buffer));
-				if (ImGui::InputText("##StaticMesh", buffer, sizeof(buffer)))
+				if (ImGui::InputText("StaticMesh", buffer, sizeof(buffer)))
 				{
 					meshFilepath = std::string(buffer);
 				}
@@ -312,7 +313,7 @@ namespace Snow {
 
 				memset(buffer, 0, sizeof(buffer));
 				std::strncpy(buffer, albedoFilepath.c_str(), sizeof(buffer));
-				if (ImGui::InputText("##AlbedoTexture", buffer, sizeof(buffer)))
+				if (ImGui::InputText("AlbedoTexture", buffer, sizeof(buffer)))
 				{
 					albedoFilepath = std::string(buffer);
 				}
@@ -325,6 +326,51 @@ namespace Snow {
 				{
 					component->model.LoadModel(meshFilepath.c_str());
 					component->material.myAlbedo.LoadTexture(albedoFilepath.c_str());
+				}
+			});
+
+		DrawComponent<SkeletalMeshComponent>("Skeletal Mesh", entity, [](auto component)
+			{
+
+				// #TODO: Change so this doesn't take ref to filepath, instead a copy and update component filepath on button reload click.
+
+				auto& meshFilepath = component->animatedModel.myFilePath;
+
+				char buffer[256];
+				memset(buffer, 0, sizeof(buffer));
+				std::strncpy(buffer, meshFilepath.c_str(), sizeof(buffer));
+				if (ImGui::InputText("SkeletalMesh", buffer, sizeof(buffer)))
+				{
+					meshFilepath = std::string(buffer);
+				}
+
+				auto& animationFilepath = component->animation.myFilePath;
+
+				memset(buffer, 0, sizeof(buffer));
+				std::strncpy(buffer, animationFilepath.c_str(), sizeof(buffer));
+				if (ImGui::InputText("Animation", buffer, sizeof(buffer)))
+				{
+					animationFilepath = std::string(buffer);
+				}
+
+				auto& albedoFilepath = component->material.myAlbedo.myFilePath;
+
+				memset(buffer, 0, sizeof(buffer));
+				std::strncpy(buffer, albedoFilepath.c_str(), sizeof(buffer));
+				if (ImGui::InputText("AlbedoTexture", buffer, sizeof(buffer)))
+				{
+					albedoFilepath = std::string(buffer);
+				}
+
+				float lineWidth = GImGui->Font->FontSize + GImGui->Style.FramePadding.x * 20.0f;
+				float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+				ImVec2 buttonSize = { lineWidth, lineHeight };
+
+				if (ImGui::Button("Reload", buttonSize))
+				{
+					component->animatedModel.LoadModel(meshFilepath.c_str());
+					component->material.myAlbedo.LoadTexture(albedoFilepath.c_str());
+					component->animation.LoadAnimation(animationFilepath.c_str());
 				}
 			});
 

@@ -1,19 +1,11 @@
 #include "./Structures.hlsli"
-
-cbuffer FrameBuffer : register(b0)
-{
-    float4x4 view;
-    float4x4 projection;
-}
-
-cbuffer ObjectBuffer : register(b1)
-{
-    float4x4 world;
-}
+#include "./Functions.hlsli"
 
 VSOutput main(VSInput input)
 {
     VSOutput output;
+    
+    Skinning(input.pos, input.boneWeights, input.boneIds);
     
     float4x4 viewProjection = transpose(mul(mul(projection, view), world));
     

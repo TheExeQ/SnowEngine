@@ -106,8 +106,9 @@ namespace Snow
 			myFrameBuffer.myData.ViewMatrix = aCamera->GetViewMatrix();
 			myFrameBuffer.myData.ProjectionMatrix = aCamera->GetProjectionMatrix();
 			myFrameBuffer.ApplyChanges();
-
+			
 			myObjectBuffer.myData.WorldTransform = objMatrix;
+			myObjectBuffer.myData.BoneTransforms.fill(glm::mat4(1.f));
 			myObjectBuffer.ApplyChanges();
 
 			DX11::Context->PSSetShaderResources(0, 1, meshComp->material.myAlbedo.myTextureView.GetAddressOf());
@@ -137,9 +138,17 @@ namespace Snow
 
 		for (auto& entity : skeletalMeshEntities)
 		{
-			Entity object(entity, Engine::GetEditorScene());
+			Entity object(entity, Engine::GetActiveScene());
 			const auto& meshComp = object.GetComponent<SkeletalMeshComponent>();
+			meshComp->animatedModel.SetAnimation(meshComp->animation);
+			{
+				// Time only for testing until animation works
+				static float time = 0.f;
+				time += Time::GetDeltaTime() * 3.f;
+				if (time > meshComp->animation.myDuration) { time = 0.f; }
 
+				meshComp->animatedModel.UpdateBoneTransform(time);
+			}
 			auto objMatrix = object.GetWorldTransform();
 
 			myFrameBuffer.myData.ViewMatrix = aCamera->GetViewMatrix();
@@ -147,7 +156,11 @@ namespace Snow
 			myFrameBuffer.ApplyChanges();
 
 			myObjectBuffer.myData.WorldTransform = objMatrix;
-			//myObjectBuffer.myData.BoneTransforms = meshComp->animatedModel.myBoneTransforms;
+			myObjectBuffer.myData.BoneTransforms.fill(glm::mat4(1.f));
+			for (uint32_t i = 0; i < meshComp->animatedModel.myBoneTransforms.size(); i++)
+			{
+				myObjectBuffer.myData.BoneTransforms[i] = meshComp->animatedModel.myBoneTransforms[i];
+			}
 			myObjectBuffer.ApplyChanges();
 
 			DX11::Context->PSSetShaderResources(0, 1, meshComp->material.myAlbedo.myTextureView.GetAddressOf());

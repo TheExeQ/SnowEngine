@@ -1,18 +1,35 @@
 Scene: Untitled
 Entities:
-  - Entity: 9317541979504563121
+  - Entity: 18179258592395981053
     Parent: 0
     TagComponent:
-      Tag: Camera
+      Tag: Running Gremlin
     TransformComponent:
-      Position: [0, 0, -2]
+      Position: [2, -0.5, 2]
       Rotation: [0, -0, 0]
-      Scale: [1, 1, 1]
-    CameraComponent:
-      Primary: true
-      FOV: 90
-      Near: 0.100000001
-      Far: 1000
+      Scale: [0.0299999993, 0.0299999993, 0.0299999993]
+    SkeletalMeshComponent:
+      Model:
+        MeshPath: ../Assets/Models/SK/Gremlin.fbx
+      Material:
+        AlbedoPath: ../Assets/Textures/T_Gremlin_C.png
+      Animation:
+        AnimationPath: ../Assets/Models/Animations/gremlin@run.fbx
+  - Entity: 1748500495750464391
+    Parent: 0
+    TagComponent:
+      Tag: Walking Gremlin
+    TransformComponent:
+      Position: [0, -0.5, 2]
+      Rotation: [0, -0, 0]
+      Scale: [0.0299999993, 0.0299999993, 0.0299999993]
+    SkeletalMeshComponent:
+      Model:
+        MeshPath: ../Assets/Models/SK/Gremlin.fbx
+      Material:
+        AlbedoPath: ../Assets/Textures/T_Gremlin_C.png
+      Animation:
+        AnimationPath: ../Assets/Models/Animations/gremlin@walk.fbx
   - Entity: 18401471038857429846
     Parent: 0
     TagComponent:
@@ -26,29 +43,16 @@ Entities:
         MeshPath: ../Assets/Models/SK/Gremlin.fbx
       Material:
         AlbedoPath: ../Assets/Textures/T_Particle_Chest_C.png
-  - Entity: 1748500495750464391
+  - Entity: 9317541979504563121
     Parent: 0
     TagComponent:
-      Tag: Gremlin
+      Tag: Camera
     TransformComponent:
-      Position: [0, -0.5, 2]
+      Position: [0, 0, -2]
       Rotation: [0, -0, 0]
-      Scale: [0.0299999993, 0.0299999993, 0.0299999993]
-    StaticMeshComponent:
-      Model:
-        MeshPath: ../Assets/Models/SK/Gremlin.fbx
-      Material:
-        AlbedoPath: ../Assets/Textures/T_Gremlin_C.png
-  - Entity: 18179258592395981053
-    Parent: 0
-    TagComponent:
-      Tag: Green Gremlin
-    TransformComponent:
-      Position: [2, -0.5, 2]
-      Rotation: [0, -0, 0]
-      Scale: [0.0299999993, 0.0299999993, 0.0299999993]
-    StaticMeshComponent:
-      Model:
-        MeshPath: ../Assets/Models/SK/Gremlin.fbx
-      Material:
-        AlbedoPath: ../Assets/Textures/T_Particle_Chest_M.png
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Primary: true
+      FOV: 90
+      Near: 0.100000001
+      Far: 1000
