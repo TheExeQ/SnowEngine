@@ -1,458 +1,406 @@
-[19:04:55] [info] ENGINE: Successfully initialized Win32 window!
-[19:04:55] [info] ENGINE: Successfully initialized DirectX!
-[19:04:55] [info] GAME: Editor Layer Attached
-[19:04:55] [info] GAME: FPS: 5.185025
-[19:04:55] [info] GAME: FPS: 45.277142
-[19:04:55] [info] GAME: FPS: 383.479706
-[19:04:55] [info] GAME: FPS: 849.617676
-[19:04:55] [info] GAME: FPS: 801.346313
-[19:04:55] [info] GAME: FPS: 723.013489
-[19:04:55] [info] GAME: FPS: 318.136993
-[19:04:55] [info] GAME: FPS: 235.144730
-[19:04:55] [info] GAME: FPS: 246.353958
-[19:04:55] [info] GAME: FPS: 241.984268
-[19:04:55] [info] GAME: FPS: 240.326859
-[19:04:55] [info] GAME: FPS: 230.802979
-[19:04:55] [info] GAME: FPS: 246.020615
-[19:04:55] [info] GAME: FPS: 237.332397
-[19:04:55] [info] GAME: FPS: 241.114914
-[19:04:55] [info] GAME: FPS: 237.338013
-[19:04:55] [info] GAME: FPS: 246.014557
-[19:04:55] [info] GAME: FPS: 238.794571
-[19:04:55] [info] GAME: FPS: 47.862690
-[19:04:55] [info] GAME: FPS: 120.996529
-[19:04:55] [info] GAME: FPS: 119.353104
-[19:04:55] [info] GAME: FPS: 79.120804
-[19:04:55] [info] GAME: FPS: 231.053604
-[19:04:55] [info] GAME: FPS: 251.660965
-[19:04:55] [info] GAME: FPS: 239.802383
-[19:04:55] [info] GAME: FPS: 230.070160
-[19:04:55] [info] GAME: FPS: 252.194092
-[19:04:55] [info] GAME: FPS: 239.171509
-[19:04:55] [info] GAME: FPS: 241.155624
-[19:04:55] [info] GAME: FPS: 232.915649
-[19:04:55] [info] GAME: FPS: 242.665451
-[19:04:55] [info] GAME: FPS: 238.691956
-[19:04:55] [info] GAME: FPS: 239.670212
-[19:04:55] [info] GAME: FPS: 239.900192
-[19:04:55] [info] GAME: FPS: 237.259186
-[19:04:55] [info] GAME: FPS: 243.025177
-[19:04:55] [info] GAME: FPS: 229.668579
-[19:04:55] [info] GAME: FPS: 228.451340
-[19:04:55] [info] GAME: FPS: 263.991547
-[19:04:55] [info] GAME: FPS: 238.452927
-[19:04:55] [info] GAME: FPS: 240.147919
-[19:04:55] [info] GAME: FPS: 240.494446
-[19:04:55] [info] GAME: FPS: 240.338394
-[19:04:55] [info] GAME: FPS: 234.005707
-[19:04:55] [info] GAME: FPS: 244.403168
-[19:04:55] [info] GAME: FPS: 238.691956
-[19:04:55] [info] GAME: FPS: 240.789780
-[19:04:55] [info] GAME: FPS: 240.946442
-[19:04:55] [info] GAME: FPS: 239.182968
-[19:04:55] [info] GAME: FPS: 240.812973
-[19:04:55] [info] GAME: FPS: 239.171509
-[19:04:55] [info] GAME: FPS: 239.492279
-[19:04:55] [info] GAME: FPS: 240.633347
-[19:04:55] [info] GAME: FPS: 237.518402
-[19:04:55] [info] GAME: FPS: 243.825119
-[19:04:55] [info] GAME: FPS: 239.354691
-[19:04:55] [info] GAME: FPS: 239.303146
-[19:04:55] [info] GAME: FPS: 240.621780
-[19:04:55] [info] GAME: FPS: 172.265289
-[19:04:55] [info] GAME: FPS: 394.773193
-[19:04:55] [info] GAME: FPS: 235.977081
-[19:04:55] [info] GAME: FPS: 239.693192
-[19:04:55] [info] GAME: FPS: 236.961197
-[19:04:55] [info] GAME: FPS: 243.759750
-[19:04:55] [info] GAME: FPS: 205.427383
-[19:04:55] [info] GAME: FPS: 290.065247
-[19:04:55] [info] GAME: FPS: 238.464279
-[19:04:55] [info] GAME: FPS: 237.174789
-[19:04:55] [info] GAME: FPS: 240.998688
-[19:04:55] [info] GAME: FPS: 240.413513
-[19:04:55] [info] GAME: FPS: 239.469330
-[19:04:55] [info] GAME: FPS: 239.595551
-[19:04:55] [info] GAME: FPS: 236.199997
-[19:04:55] [info] GAME: FPS: 230.637939
-[19:04:55] [info] GAME: FPS: 247.053864
-[19:04:55] [info] GAME: FPS: 244.498779
-[19:04:55] [info] GAME: FPS: 241.143982
-[19:04:55] [info] GAME: FPS: 242.400742
-[19:04:55] [info] GAME: FPS: 206.240845
-[19:04:55] [info] GAME: FPS: 282.893433
-[19:04:55] [info] GAME: FPS: 236.043915
-[19:04:55] [info] GAME: FPS: 231.873291
-[19:04:55] [info] GAME: FPS: 243.113815
-[19:04:55] [info] GAME: FPS: 248.175903
-[19:04:55] [info] GAME: FPS: 188.320374
-[19:04:55] [info] GAME: FPS: 315.000305
-[19:04:55] [info] GAME: FPS: 195.832672
-[19:04:55] [info] GAME: FPS: 259.457214
-[19:04:55] [info] GAME: FPS: 292.295105
-[19:04:55] [info] GAME: FPS: 241.691833
-[19:04:55] [info] GAME: FPS: 210.712631
-[19:04:55] [info] GAME: FPS: 278.396423
-[19:04:55] [info] GAME: FPS: 239.716171
-[19:04:55] [info] GAME: FPS: 94.787628
-[19:04:55] [info] GAME: FPS: 281.048889
-[19:04:55] [info] GAME: FPS: 372.842163
-[19:04:55] [info] GAME: FPS: 243.220230
-[19:04:55] [info] GAME: FPS: 239.400543
-[19:04:55] [info] GAME: FPS: 241.423431
-[19:04:55] [info] GAME: FPS: 225.326736
-[19:04:55] [info] GAME: FPS: 202.843857
-[19:04:55] [info] GAME: FPS: 317.248840
-[19:04:55] [info] GAME: FPS: 240.101791
-[19:04:55] [info] GAME: FPS: 123.984871
-[19:04:55] [info] GAME: FPS: 105.397400
-[19:04:55] [info] GAME: FPS: 116.199348
-[19:04:55] [info] GAME: FPS: 106.517822
-[19:04:55] [info] GAME: FPS: 150.089310
-[19:04:55] [info] GAME: FPS: 115.747444
-[19:04:55] [info] GAME: FPS: 181.244797
-[19:04:55] [info] GAME: FPS: 370.658661
-[19:04:55] [info] GAME: FPS: 495.564667
-[19:04:55] [info] GAME: FPS: 752.671997
-[19:04:55] [info] GAME: FPS: 622.393738
-[19:04:55] [info] GAME: FPS: 370.370361
-[19:04:55] [info] GAME: FPS: 235.787888
-[19:04:55] [info] GAME: FPS: 233.394028
-[19:04:55] [info] GAME: FPS: 92.509506
-[19:04:55] [info] GAME: FPS: 550.206360
-[19:04:55] [info] GAME: FPS: 259.403381
-[19:04:55] [info] GAME: FPS: 237.625656
-[19:04:55] [info] GAME: FPS: 238.925797
-[19:04:55] [info] GAME: FPS: 240.274887
-[19:04:55] [info] GAME: FPS: 240.228699
-[19:04:55] [info] GAME: FPS: 220.307999
-[19:04:55] [info] GAME: FPS: 233.415817
-[19:04:55] [info] GAME: FPS: 272.123657
-[19:04:55] [info] GAME: FPS: 239.790909
-[19:04:55] [info] GAME: FPS: 240.604385
-[19:04:55] [info] GAME: FPS: 152.058884
-[19:04:55] [info] GAME: FPS: 37.657833
-[19:04:55] [info] GAME: FPS: 115.194099
-[19:04:55] [info] GAME: FPS: 122.491966
-[19:04:55] [info] GAME: FPS: 84.308502
-[19:04:55] [info] GAME: FPS: 121.486023
-[19:04:55] [info] GAME: FPS: 95.721260
-[19:04:55] [info] GAME: FPS: 134.546051
-[19:04:55] [info] GAME: FPS: 131.839157
-[19:04:55] [info] GAME: FPS: 147.531784
-[19:04:55] [info] GAME: FPS: 203.757294
-[19:04:55] [info] GAME: FPS: 292.902954
-[19:04:55] [info] GAME: FPS: 173.154175
-[19:04:56] [info] GAME: FPS: 217.566299
-[19:04:56] [info] GAME: FPS: 350.348602
-[19:04:56] [info] GAME: FPS: 185.663086
-[19:04:56] [info] GAME: FPS: 376.576904
-[19:04:56] [info] GAME: FPS: 285.477753
-[19:04:56] [info] GAME: FPS: 362.489594
-[19:04:56] [info] GAME: FPS: 228.906281
-[19:04:56] [info] GAME: FPS: 303.591492
-[19:04:56] [info] GAME: FPS: 236.110794
-[19:04:56] [info] GAME: FPS: 193.468506
-[19:04:56] [info] GAME: FPS: 174.212997
-[19:04:56] [info] GAME: FPS: 263.171753
-[19:04:56] [info] GAME: FPS: 220.371109
-[19:04:56] [info] GAME: FPS: 211.519348
-[19:04:56] [info] GAME: FPS: 154.478317
-[19:04:56] [info] GAME: FPS: 187.395767
-[19:04:56] [info] GAME: FPS: 203.371902
-[19:04:56] [info] GAME: FPS: 149.680420
-[19:04:56] [info] GAME: FPS: 229.953781
-[19:04:56] [info] GAME: FPS: 384.024567
-[19:04:56] [info] GAME: FPS: 247.579910
-[19:04:56] [info] GAME: FPS: 217.367661
-[19:04:56] [info] GAME: FPS: 192.629974
-[19:04:56] [info] GAME: FPS: 202.839767
-[19:04:56] [info] GAME: FPS: 342.876740
-[19:04:56] [info] GAME: FPS: 475.375549
-[19:04:56] [info] GAME: FPS: 459.284454
-[19:04:56] [info] GAME: FPS: 468.603577
-[19:04:56] [info] GAME: FPS: 423.854553
-[19:04:56] [info] GAME: FPS: 211.532776
-[19:04:56] [info] GAME: FPS: 266.240692
-[19:04:56] [info] GAME: FPS: 281.373108
-[19:04:56] [info] GAME: FPS: 302.032684
-[19:04:56] [info] GAME: FPS: 239.343246
-[19:04:56] [info] GAME: FPS: 239.475082
-[19:04:56] [info] GAME: FPS: 240.801392
-[19:04:56] [info] GAME: FPS: 236.401016
-[19:04:56] [info] GAME: FPS: 243.534180
-[19:04:56] [info] GAME: FPS: 238.942917
-[19:04:56] [info] GAME: FPS: 241.242889
-[19:04:56] [info] GAME: FPS: 238.259735
-[19:04:56] [info] GAME: FPS: 240.188324
-[19:04:56] [info] GAME: FPS: 240.482895
-[19:04:56] [info] GAME: FPS: 240.511795
-[19:04:56] [info] GAME: FPS: 235.360565
-[19:04:56] [info] GAME: FPS: 240.113342
-[19:04:56] [info] GAME: FPS: 237.586121
-[19:04:56] [info] GAME: FPS: 238.720459
-[19:04:56] [info] GAME: FPS: 239.704697
-[19:04:56] [info] GAME: FPS: 241.260345
-[19:04:56] [info] GAME: FPS: 237.766891
-[19:04:56] [info] GAME: FPS: 242.119019
-[19:04:56] [info] GAME: FPS: 239.062881
-[19:04:56] [info] GAME: FPS: 243.243896
-[19:04:56] [info] GAME: FPS: 237.490219
-[19:04:56] [info] GAME: FPS: 238.891525
-[19:04:56] [info] GAME: FPS: 243.326752
-[19:04:56] [info] GAME: FPS: 240.743408
-[19:04:56] [info] GAME: FPS: 239.687439
-[19:04:56] [info] GAME: FPS: 237.253555
-[19:04:56] [info] GAME: FPS: 244.021469
-[19:04:56] [info] GAME: FPS: 238.129257
-[19:04:56] [info] GAME: FPS: 238.259735
-[19:04:56] [info] GAME: FPS: 238.044235
-[19:04:56] [info] GAME: FPS: 242.265671
-[19:04:56] [info] GAME: FPS: 237.298584
-[19:04:56] [info] GAME: FPS: 240.407730
-[19:04:56] [info] GAME: FPS: 241.039368
-[19:04:56] [info] GAME: FPS: 240.147919
-[19:04:56] [info] GAME: FPS: 238.180298
-[19:04:56] [info] GAME: FPS: 238.720459
-[19:04:56] [info] GAME: FPS: 240.708649
-[19:04:56] [info] GAME: FPS: 242.459503
-[19:04:56] [info] GAME: FPS: 239.320343
-[19:04:56] [info] GAME: FPS: 239.721924
-[19:04:56] [info] GAME: FPS: 242.606567
-[19:04:56] [info] GAME: FPS: 239.108612
-[19:04:56] [info] GAME: FPS: 234.967911
-[19:04:56] [info] GAME: FPS: 243.753799
-[19:04:56] [info] GAME: FPS: 241.207962
-[19:04:56] [info] GAME: FPS: 239.762146
-[19:04:56] [info] GAME: FPS: 236.105209
-[19:04:56] [info] GAME: FPS: 240.830399
-[19:04:56] [info] GAME: FPS: 239.819672
-[19:04:56] [info] GAME: FPS: 241.318573
-[19:04:56] [info] GAME: FPS: 238.914368
-[19:04:56] [info] GAME: FPS: 239.228745
-[19:04:56] [info] GAME: FPS: 241.033554
-[19:04:56] [info] GAME: FPS: 239.785141
-[19:04:56] [info] GAME: FPS: 240.975464
-[19:04:56] [info] GAME: FPS: 238.361984
-[19:04:56] [info] GAME: FPS: 240.355713
-[19:04:56] [info] GAME: FPS: 239.337524
-[19:04:56] [info] GAME: FPS: 239.240173
-[19:04:56] [info] GAME: FPS: 240.940643
-[19:04:56] [info] GAME: FPS: 240.286407
-[19:04:56] [info] GAME: FPS: 239.354691
-[19:04:56] [info] GAME: FPS: 238.572388
-[19:04:56] [info] GAME: FPS: 240.297974
-[19:04:56] [info] GAME: FPS: 236.579987
-[19:04:56] [info] GAME: FPS: 238.840195
-[19:04:56] [info] GAME: FPS: 242.659546
-[19:04:56] [info] GAME: FPS: 239.097153
-[19:04:56] [info] GAME: FPS: 237.608704
-[19:04:56] [info] GAME: FPS: 242.907104
-[19:04:56] [info] GAME: FPS: 208.737762
-[19:04:56] [info] GAME: FPS: 283.792603
-[19:04:56] [info] GAME: FPS: 236.535217
-[19:04:56] [info] GAME: FPS: 241.569244
-[19:04:56] [info] GAME: FPS: 239.773666
-[19:04:56] [info] GAME: FPS: 239.223007
-[19:04:56] [info] GAME: FPS: 235.637878
-[19:04:56] [info] GAME: FPS: 243.546021
-[19:04:56] [info] GAME: FPS: 239.635757
-[19:04:56] [info] GAME: FPS: 240.488663
-[19:04:56] [info] GAME: FPS: 240.274887
-[19:04:56] [info] GAME: FPS: 240.558075
-[19:04:56] [info] GAME: FPS: 239.635757
-[19:04:56] [info] GAME: FPS: 238.880127
-[19:04:56] [info] GAME: FPS: 240.355713
-[19:04:56] [info] GAME: FPS: 240.147919
-[19:04:56] [info] GAME: FPS: 238.851593
-[19:04:56] [info] GAME: FPS: 240.621780
-[19:04:56] [info] GAME: FPS: 238.703369
-[19:04:56] [info] GAME: FPS: 241.126541
-[19:04:56] [info] GAME: FPS: 239.017166
-[19:04:56] [info] GAME: FPS: 237.891342
-[19:04:56] [info] GAME: FPS: 240.240234
-[19:04:56] [info] GAME: FPS: 238.606537
-[19:04:56] [info] GAME: FPS: 238.589462
-[19:04:56] [info] GAME: FPS: 242.966141
-[19:04:56] [info] GAME: FPS: 219.360779
-[19:04:56] [info] GAME: FPS: 265.442108
-[19:04:56] [info] GAME: FPS: 238.350601
-[19:04:56] [info] GAME: FPS: 240.373077
-[19:04:56] [info] GAME: FPS: 240.477112
-[19:04:56] [info] GAME: FPS: 226.213638
-[19:04:56] [info] GAME: FPS: 254.906967
-[19:04:56] [info] GAME: FPS: 240.540726
-[19:04:56] [info] GAME: FPS: 239.561127
-[19:04:56] [info] GAME: FPS: 235.072891
-[19:04:56] [info] GAME: FPS: 244.295685
-[19:04:56] [info] GAME: FPS: 240.465561
-[19:04:56] [info] GAME: FPS: 239.733398
-[19:04:56] [info] GAME: FPS: 236.289307
-[19:04:56] [info] GAME: FPS: 241.884766
-[19:04:56] [info] GAME: FPS: 241.353516
-[19:04:56] [info] GAME: FPS: 239.360428
-[19:04:56] [info] GAME: FPS: 239.998077
-[19:04:56] [info] GAME: FPS: 239.871414
-[19:04:56] [info] GAME: FPS: 239.607040
-[19:04:56] [info] GAME: FPS: 239.440659
-[19:04:56] [info] GAME: FPS: 236.049469
-[19:04:56] [info] GAME: FPS: 241.283630
-[19:04:56] [info] GAME: FPS: 240.830399
-[19:04:56] [info] GAME: FPS: 227.200424
-[19:04:56] [info] GAME: FPS: 251.603973
-[19:04:56] [info] GAME: FPS: 240.552322
-[19:04:56] [info] GAME: FPS: 241.376816
-[19:04:56] [info] GAME: FPS: 236.546432
-[19:04:56] [info] GAME: FPS: 241.254517
-[19:04:56] [info] GAME: FPS: 239.371887
-[19:04:56] [info] GAME: FPS: 239.165787
-[19:04:56] [info] GAME: FPS: 240.263321
-[19:04:56] [info] GAME: FPS: 240.697052
-[19:04:56] [info] GAME: FPS: 238.709076
-[19:04:56] [info] GAME: FPS: 234.549072
-[19:04:56] [info] GAME: FPS: 244.331512
-[19:04:56] [info] GAME: FPS: 242.471268
-[19:04:56] [info] GAME: FPS: 238.418793
-[19:04:56] [info] GAME: FPS: 237.817780
-[19:04:56] [info] GAME: FPS: 242.136612
-[19:04:56] [info] GAME: FPS: 242.160065
-[19:04:56] [info] GAME: FPS: 238.282455
-[19:04:56] [info] GAME: FPS: 238.794571
-[19:04:56] [info] GAME: FPS: 241.639282
-[19:04:56] [info] GAME: FPS: 239.257339
-[19:04:56] [info] GAME: FPS: 238.225693
-[19:04:56] [info] GAME: FPS: 237.795166
-[19:04:56] [info] GAME: FPS: 237.648239
-[19:04:56] [info] GAME: FPS: 239.320343
-[19:04:56] [info] GAME: FPS: 237.580490
-[19:04:56] [info] GAME: FPS: 220.813919
-[19:04:56] [info] GAME: FPS: 269.759918
-[19:04:56] [info] GAME: FPS: 236.127518
-[19:04:56] [info] GAME: FPS: 241.873077
-[19:04:56] [info] GAME: FPS: 239.894440
-[19:04:56] [info] GAME: FPS: 240.009598
-[19:04:56] [info] GAME: FPS: 158.247879
-[19:04:56] [info] GAME: FPS: 436.776581
-[19:04:56] [info] GAME: FPS: 247.383926
-[19:04:56] [info] GAME: FPS: 224.426575
-[19:04:56] [info] GAME: FPS: 221.990356
-[19:04:56] [info] GAME: FPS: 297.477386
-[19:04:56] [info] GAME: FPS: 235.999344
-[19:04:56] [info] GAME: FPS: 243.119705
-[19:04:56] [info] GAME: FPS: 233.797806
-[19:04:56] [info] GAME: FPS: 245.116058
-[19:04:56] [info] GAME: FPS: 240.113342
-[19:04:56] [info] GAME: FPS: 240.326859
-[19:04:56] [info] GAME: FPS: 239.670212
-[19:04:56] [info] GAME: FPS: 241.016129
-[19:04:56] [info] GAME: FPS: 237.636932
-[19:04:56] [info] GAME: FPS: 240.697052
-[19:04:56] [info] GAME: FPS: 238.663498
-[19:04:56] [info] GAME: FPS: 240.673874
-[19:04:56] [info] GAME: FPS: 239.566864
-[19:04:56] [info] GAME: FPS: 237.620010
-[19:04:56] [info] GAME: FPS: 242.054565
-[19:04:56] [info] GAME: FPS: 239.389084
-[19:04:56] [info] GAME: FPS: 240.211395
-[19:04:56] [info] GAME: FPS: 236.227905
-[19:04:56] [info] GAME: FPS: 243.090179
-[19:04:56] [info] GAME: FPS: 238.015900
-[19:04:56] [info] GAME: FPS: 242.148346
-[19:04:56] [info] GAME: FPS: 240.673874
-[19:04:56] [info] GAME: FPS: 241.569244
-[19:04:56] [info] GAME: FPS: 238.407440
-[19:04:56] [info] GAME: FPS: 237.073563
-[19:04:56] [info] GAME: FPS: 242.195267
-[19:04:56] [info] GAME: FPS: 240.436646
-[19:04:56] [info] GAME: FPS: 237.433807
-[19:04:56] [info] GAME: FPS: 240.969666
-[19:04:56] [info] GAME: FPS: 238.151932
-[19:04:56] [info] GAME: FPS: 241.697678
-[19:04:56] [info] GAME: FPS: 238.305161
-[19:04:56] [info] GAME: FPS: 242.101440
-[19:04:56] [info] GAME: FPS: 240.390396
-[19:04:56] [info] GAME: FPS: 241.149811
-[19:04:56] [info] GAME: FPS: 230.144302
-[19:04:56] [info] GAME: FPS: 246.663879
-[19:04:56] [info] GAME: FPS: 239.285965
-[19:04:56] [info] GAME: FPS: 241.937439
-[19:04:56] [info] GAME: FPS: 239.681717
-[19:04:56] [info] GAME: FPS: 241.452591
-[19:04:56] [info] GAME: FPS: 219.254974
-[19:04:56] [info] GAME: FPS: 263.873108
-[19:04:56] [info] GAME: FPS: 240.650711
-[19:04:56] [info] GAME: FPS: 238.737549
-[19:04:56] [info] GAME: FPS: 240.251785
-[19:04:56] [info] GAME: FPS: 240.952240
-[19:04:57] [info] GAME: FPS: 238.766052
-[19:04:57] [info] GAME: FPS: 241.446747
-[19:04:57] [info] GAME: FPS: 237.947937
-[19:04:57] [info] GAME: FPS: 240.471313
-[19:04:57] [info] GAME: FPS: 239.681717
-[19:04:57] [info] GAME: FPS: 241.167252
-[19:04:57] [info] GAME: FPS: 238.817383
-[19:04:57] [info] GAME: FPS: 240.101791
-[19:04:57] [info] GAME: FPS: 239.097153
-[19:04:57] [info] GAME: FPS: 239.934753
-[19:04:57] [info] GAME: FPS: 239.080017
-[19:04:57] [info] GAME: FPS: 239.658737
-[19:04:57] [info] GAME: FPS: 239.400543
-[19:04:57] [info] GAME: FPS: 241.306915
-[19:04:57] [info] GAME: FPS: 237.343643
-[19:04:57] [info] GAME: FPS: 239.744919
-[19:04:57] [info] GAME: FPS: 240.888397
-[19:04:57] [info] GAME: FPS: 239.917450
-[19:04:57] [info] GAME: FPS: 239.137207
-[19:04:57] [info] GAME: FPS: 241.027740
-[19:04:57] [info] GAME: FPS: 239.693192
-[19:04:57] [info] GAME: FPS: 240.038406
-[19:04:57] [info] GAME: FPS: 238.942917
-[19:04:57] [info] GAME: FPS: 239.957779
-[19:04:57] [info] GAME: FPS: 239.549652
-[19:04:57] [info] GAME: FPS: 240.749207
-[19:04:57] [info] GAME: FPS: 238.504120
-[19:04:57] [info] GAME: FPS: 240.882584
-[19:04:57] [info] GAME: FPS: 239.423462
-[19:04:57] [info] GAME: FPS: 239.509476
-[19:04:57] [info] GAME: FPS: 239.975052
-[19:04:57] [info] GAME: FPS: 240.194061
-[19:04:57] [info] GAME: FPS: 238.509781
-[19:04:57] [info] GAME: FPS: 239.940491
-[19:04:57] [info] GAME: FPS: 240.401947
-[19:04:57] [info] GAME: FPS: 241.004501
-[19:04:57] [info] GAME: FPS: 239.366165
-[19:04:57] [info] GAME: FPS: 239.773666
-[19:04:57] [info] GAME: FPS: 238.185989
-[19:04:57] [info] GAME: FPS: 239.986557
-[19:04:57] [info] GAME: FPS: 237.495834
-[19:04:57] [info] GAME: FPS: 217.400757
-[19:04:57] [info] GAME: FPS: 268.932892
-[19:04:57] [info] GAME: FPS: 240.448181
-[19:04:57] [info] GAME: FPS: 238.897247
-[19:04:57] [info] GAME: FPS: 240.142181
-[19:04:57] [info] GAME: FPS: 240.442429
-[19:04:57] [info] GAME: FPS: 237.846069
-[19:04:57] [info] GAME: FPS: 241.557556
-[19:04:57] [info] GAME: FPS: 239.813904
-[19:04:57] [info] GAME: FPS: 241.085861
-[19:04:57] [info] GAME: FPS: 240.581238
-[19:04:57] [info] GAME: FPS: 239.348969
-[19:04:57] [info] GAME: FPS: 230.600708
-[19:04:57] [info] GAME: FPS: 237.959274
-[19:04:57] [info] GAME: FPS: 238.350601
-[19:04:57] [info] GAME: FPS: 105.180122
-[19:04:57] [info] GAME: FPS: 314.248016
-[19:04:57] [info] GAME: FPS: 259.268860
-[19:04:57] [info] GAME: FPS: 236.177689
-[19:04:57] [info] GAME: FPS: 235.698959
-[19:04:57] [info] GAME: FPS: 231.267349
-[19:04:57] [info] GAME: FPS: 248.638718
-[19:04:57] [info] GAME: FPS: 235.593460
-[19:04:57] [info] GAME: FPS: 236.339569
-[19:04:57] [info] GAME: FPS: 247.224884
-[19:04:57] [info] GAME: FPS: 237.693436
-[19:04:57] [info] GAME: FPS: 249.438766
-[19:04:57] [info] GAME: FPS: 228.440887
-[19:04:57] [info] GAME: FPS: 253.401917
-[19:04:57] [info] GAME: FPS: 245.440918
-[19:04:57] [info] GAME: FPS: 240.436646
+[22:52:48] [info] ENGINE: Successfully initialized Win32 window!
+[22:52:48] [info] ENGINE: Successfully initialized DirectX!
+[22:52:48] [info] GAME: Editor Layer Attached
+[22:52:54] [info] ENGINE: Window successfully resized
+[22:52:54] [info] ENGINE: Window successfully resized
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:57] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate
+[22:52:58] [info] GAME: testUpdate

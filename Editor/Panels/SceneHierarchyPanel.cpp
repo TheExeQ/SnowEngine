@@ -5,6 +5,7 @@
 #include <string>
 
 #include "Engine/Scene/Components.h"
+#include "Engine/Scene/ScriptableComponents.h"
 
 namespace Snow {
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "Engine/Core/Base.h"
-#include "Components.h"
+#include "Engine/Scene/Components.h"
 
 #include <entt/entt.hpp>
 #include <glm/glm.hpp>
@@ -46,17 +46,14 @@ namespace Snow
 		glm::mat4 GetWorldSpaceTransformMatrix(Entity aEntity);
 		glm::mat4 GetLocalSpaceTransformMatrix(Entity aEntity);
 
+		void SetSceneState(SceneState aState) { mySceneState = aState; }
 		SceneState GetSceneState() const { return mySceneState; }
 		
+		void Update();
+
 		void OnRuntimeStart();
 		void OnRuntimeStop();
-
-		void OnSimulationStart();
-		void OnSimulationStop();
-
 		void OnUpdateRuntime();
-		void OnUpdateSimulation();
-		void OnUpdateEditor();
 
 	private:
 		friend class Entity;

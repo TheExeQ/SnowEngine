@@ -18,20 +18,6 @@
 
 namespace Snow
 {
-	struct BaseComponent
-	{
-		BaseComponent() 
-		{
-			sBaseComponents.emplace_back(this);
-		};
-		virtual void Start() {};
-		virtual void Update() {};
-
-	private:
-		friend class Engine;
-		inline static std::vector<BaseComponent*> sBaseComponents;
-	};
-
 	struct TagComponent
 	{
 		std::string name;

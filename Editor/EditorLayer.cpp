@@ -38,7 +38,7 @@ namespace Snow
 
 	void EditorLayer::OnUpdate()
 	{
-		LOG_INFO(std::string("FPS: " + std::to_string(Time::GetFPS())));
+		//LOG_INFO(std::string("FPS: " + std::to_string(Time::GetFPS())));
 		auto* transformComp = myEditorCameraEntity.GetComponent<TransformComponent>();
 		myEditorCamera->UpdateMovement(transformComp->position, transformComp->rotation);
 		myEditorCameraEntity.GetComponent<CameraComponent>()->camera = myEditorCamera;
@@ -179,13 +179,13 @@ namespace Snow
 			{
 				if (sceneState == SceneState::Edit || sceneState == SceneState::Simulate)
 				{
+					Engine::GetActiveScene()->SetSceneState(SceneState::Play);
 					Engine::GetActiveScene()->OnRuntimeStart();
-					//OnScenePlay();
 				}
 				else if (sceneState == SceneState::Play)
 				{
+					Engine::GetActiveScene()->SetSceneState(SceneState::Edit);
 					Engine::GetActiveScene()->OnRuntimeStop();
-					//OnSceneStop();
 				}
 			}
 		}

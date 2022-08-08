@@ -5,6 +5,7 @@
 
 #include "Engine/Engine.h"
 #include "Engine/Renderer/Camera.h"
+#include "Engine/Scene/ScriptableComponents.h"
 
 #include <entt/entt.hpp>
 
@@ -162,13 +163,37 @@ namespace Snow
 		return glm::inverse(parentTransform) * transform;
 	}
 
+	void Scene::Update()
+	{
+		if (mySceneState == SceneState::Edit || mySceneState == SceneState::Pause) { return; }
+
+		OnUpdateRuntime();
+	}
+
 	void Scene::OnRuntimeStart()
 	{
-		mySceneState = SceneState::Play;
+		// Init scripts
+		for (auto se : ScriptableEntity::sScriptableEntities)
+		{
+			se->OnCreate();
+		}
 	}
 
 	void Scene::OnRuntimeStop()
 	{
-		mySceneState = SceneState::Edit;
+		// Destroy scripts
+		for (auto se : ScriptableEntity::sScriptableEntities)
+		{
+			se->OnDestroy();
+		}
+	}
+
+	void Scene::OnUpdateRuntime()
+	{
+		// Update scripts
+		for (auto se : ScriptableEntity::sScriptableEntities)
+		{
+			se->OnUpdate();
+		}
 	}
 }

@@ -162,7 +162,7 @@ namespace Snow
 				time += Time::GetDeltaTime() * 3.f;
 				if (time > meshComp->animation.myDuration) { time = 0.f; }
 
-				meshComp->animatedModel.UpdateBoneTransform(time);
+				meshComp->animatedModel.UpdateBoneTransform(time); // #TODO: This is very performance heavy and lowers fps from 240 to 30-40
 			}
 			auto objMatrix = object.GetWorldTransform();
 

@@ -20,6 +20,11 @@ namespace Snow
 		myActiveScene = CreateRef<Scene>();
 		myEditorScene = CreateRef<Scene>();
 
+		if (myRunMode == EngineRunMode::Game)
+		{
+			myActiveScene->SetSceneState(SceneState::Play);
+		}
+
 		auto result = myWindowContainer.Initialize(hInstance, aWidth, aHeight, aWindowTitle, aWindowClass);
 		if (!result)
 		{
@@ -51,14 +56,7 @@ namespace Snow
 			{
 				layer->OnUpdate();
 			}
-			
-			if (myActiveScene->GetSceneState() != SceneState::Edit && myActiveScene->GetSceneState() != SceneState::Pause)
-			{
-				for (auto* baseComp : BaseComponent::sBaseComponents)
-				{
-					baseComp->Update();
-				}
-			}
+			myActiveScene->Update();
 
 			myRenderer.BeginFrame();
 			if (GetActiveWindow()) // #TODO: this makes no imgui windows render when window is out of focus.
