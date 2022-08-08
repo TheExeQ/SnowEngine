@@ -13,6 +13,14 @@ namespace Snow
 	class Entity;
 	class Camera;
 
+	enum class SceneState
+	{
+		Edit,
+		Play,
+		Pause,
+		Simulate
+	};
+
 	class Scene
 	{
 	public:
@@ -35,6 +43,8 @@ namespace Snow
 
 		glm::mat4 GetWorldSpaceTransformMatrix(Entity aEntity);
 		glm::mat4 GetLocalSpaceTransformMatrix(Entity aEntity);
+
+		SceneState GetSceneState() const { return mySceneState; }
 		
 		void OnRuntimeStart();
 		void OnRuntimeStop();
@@ -57,6 +67,7 @@ namespace Snow
 		void ConvertToLocalSpace(Entity aEntity);
 
 		std::string mySceneName = "Untitled";
+		SceneState mySceneState = SceneState::Edit;
 		entt::registry myRegistry;
 	};
 }

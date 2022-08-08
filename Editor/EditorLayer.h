@@ -22,10 +22,14 @@ namespace Snow
 
 	private:
 		void RenderDockspace();
+		void UI_Toolbar();
 
 		Entity myEditorCameraEntity;
 		Ref<EditorCamera> myEditorCamera = CreateRef<EditorCamera>();
 		std::string myLastLoadedScene = "";
+
+		Ref<Texture> myPlayIcon = CreateRef<Texture>();
+		Ref<Texture> myStopIcon = CreateRef<Texture>();
 
 		// Panels
 		SceneHierarchyPanel mySceneHierarchyPanel;

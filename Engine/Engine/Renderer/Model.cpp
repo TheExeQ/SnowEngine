@@ -92,7 +92,7 @@ namespace Snow
 
 	void Model::LoadBones(std::vector<Vertex>& vertices, aiMesh* aMesh)
 	{
-		std::vector<Bone> bones(aMesh->mNumBones);
+		std::vector<BoneInfo> bones(aMesh->mNumBones);
 
 		for (uint32_t boneId = 0; boneId < aMesh->mNumBones; boneId++)
 		{
@@ -119,7 +119,7 @@ namespace Snow
 			}
 		}
 
-		myBones.insert(myBones.end(), bones.begin(), bones.end());
+		myBonesInfo.insert(myBonesInfo.end(), bones.begin(), bones.end());
 	}
 
 	void Model::UpdateBoneTransform(float aTime)
@@ -127,10 +127,10 @@ namespace Snow
 		if (myCurrentAnimation->GetAnimation())
 		{
 			ReadNodeHierarchy(aTime, myScene->mRootNode, glm::mat4(1.0f));
-			myBoneTransforms.resize(myBones.size());
-			for (size_t i = 0; i < myBones.size(); i++)
+			myBoneTransforms.resize(myBonesInfo.size());
+			for (size_t i = 0; i < myBonesInfo.size(); i++)
 			{
-				myBoneTransforms[i] = myBones[i].finalTransform;
+				myBoneTransforms[i] = glm::transpose(myBonesInfo[i].finalTransform);
 			}
 		}
 	}
@@ -270,7 +270,7 @@ namespace Snow
 		if (myBoneMapping.find(name) != myBoneMapping.end())
 		{
 			uint32_t BoneIndex = myBoneMapping[name];
-			myBones[BoneIndex].finalTransform = myInverseTransform * transform * myBones[BoneIndex].offsetTransform;
+			myBonesInfo[BoneIndex].finalTransform = myInverseTransform * transform * myBonesInfo[BoneIndex].offsetTransform;
 		}
 
 		for (uint32_t i = 0; i < aNode->mNumChildren; i++)

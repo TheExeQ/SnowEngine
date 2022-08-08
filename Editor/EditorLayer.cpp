@@ -24,11 +24,15 @@ namespace Snow
 		
 		mySceneHierarchyPanel.Init();
 		mySceneViewportPanel.Init();
+
+		myPlayIcon->LoadTexture("../Editor/Assets/Icons/PlayButton.png");
+		myStopIcon->LoadTexture("../Editor/Assets/Icons/StopButton.png");
 	}
 
 	void EditorLayer::OnImGuiRender()
 	{
 		RenderDockspace(); // This has to be rendered before windows that should be dockable.
+		UI_Toolbar();
 		
 		mySceneHierarchyPanel.OnImGuiRender();
 		mySceneViewportPanel.OnImGuiRender(mySceneHierarchyPanel.GetSelectedEntity());
@@ -143,6 +147,66 @@ namespace Snow
 			ImGui::EndMenuBar();
 		}
 
+		ImGui::End();
+	}
+
+	void EditorLayer::UI_Toolbar()
+	{
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 2));
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, ImVec2(0, 0));
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+		auto& colors = ImGui::GetStyle().Colors;
+		const auto& buttonHovered = colors[ImGuiCol_ButtonHovered];
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(buttonHovered.x, buttonHovered.y, buttonHovered.z, 0.5f));
+		const auto& buttonActive = colors[ImGuiCol_ButtonActive];
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(buttonActive.x, buttonActive.y, buttonActive.z, 0.5f));
+
+		ImGui::Begin("##toolbar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+
+		auto sceneState = Engine::GetActiveScene()->GetSceneState();
+		bool toolbarEnabled = (sceneState == SceneState::Edit) ? false : true;
+
+		ImVec4 tintColor = ImVec4(1, 1, 1, 1);
+		if (!toolbarEnabled)
+		{
+			tintColor.w = 0.5f;
+		}
+
+		float size = ImGui::GetWindowHeight() - 4.0f;
+		{
+			Ref<Texture> icon = (sceneState == SceneState::Edit || sceneState == SceneState::Simulate) ? myPlayIcon : myStopIcon;
+			ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
+			if (ImGui::ImageButton(icon->GetTextureView().Get(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), tintColor) && toolbarEnabled)
+			{
+				if (sceneState == SceneState::Edit || sceneState == SceneState::Simulate)
+				{
+					//OnScenePlay();
+				}
+				else if (sceneState == SceneState::Play)
+				{
+					//OnSceneStop();
+				}
+			}
+		}
+		/* SIMULATE BUTTON
+		ImGui::SameLine();
+		{
+			Ref<Texture> icon = (sceneState == SceneState::Edit || sceneState == SceneState::Play) ? m_IconSimulate : m_IconStop;		//ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
+			if (ImGui::ImageButton(icon->GetTextureView().Get(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), tintColor) && toolbarEnabled)
+			{
+				if (sceneState == SceneState::Edit || sceneState == SceneState::Play)
+				{
+					//OnSceneSimulate();
+				}
+				else if (sceneState == SceneState::Simulate)
+				{
+					//OnSceneStop();
+				}
+			}
+		}
+		*/
+		ImGui::PopStyleVar(2);
+		ImGui::PopStyleColor(3);
 		ImGui::End();
 	}
 }

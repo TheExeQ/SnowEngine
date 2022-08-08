@@ -53,7 +53,7 @@ namespace Snow
 			}
 
 			myRenderer.BeginFrame();
-			if (GetActiveWindow())
+			if (GetActiveWindow()) // #TODO: this makes no imgui windows render when window is out of focus.
 			{
 				myImGuiLayer.Begin();
 #ifndef RETAIL

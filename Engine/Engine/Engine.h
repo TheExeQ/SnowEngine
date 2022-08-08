@@ -15,7 +15,7 @@ namespace Snow
 		Game
 	};
 
-	class Engine
+	class Engine // #TODO: make relative path variable so you can rename bin folder and putting assets inside bin folder without game crashing.
 	{
 	public:
 		bool Initialize(HINSTANCE hInstance, const int& aWidth, const int& aHeight,

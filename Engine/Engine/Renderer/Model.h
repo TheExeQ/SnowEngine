@@ -23,7 +23,7 @@ namespace Snow
 {
 	class Animation;
 
-	struct Bone
+	struct BoneInfo
 	{
 		glm::mat4 offsetTransform;
 		glm::mat4 finalTransform;
@@ -52,7 +52,7 @@ namespace Snow
 		const aiScene* myScene;
 		const Animation* myCurrentAnimation;
 
-		std::vector<Bone> myBones;
+		std::vector<BoneInfo> myBonesInfo;
 		std::unordered_map<std::string, uint32_t> myBoneMapping;
 		std::vector<glm::mat4> myBoneTransforms;
 		glm::mat4 myInverseTransform = glm::mat4(1.f);

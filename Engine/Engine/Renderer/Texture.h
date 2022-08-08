@@ -17,6 +17,7 @@ namespace Snow
 		Texture() {};
 		bool LoadTexture(const char* aFilepath);
 		bool LoadTexture(const Color* colorData, UINT width, UINT height);
+		const ComPtr<ID3D11ShaderResourceView> GetTextureView() const { return myTextureView; }
 
 	private:
 		friend class SceneRenderer;

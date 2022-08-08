@@ -95,41 +95,6 @@ namespace Snow
 		myRegistry.destroy(aEntity);
 	}
 
-	void Scene::OnRuntimeStart()
-	{
-
-	}
-
-	void Scene::OnRuntimeStop()
-	{
-
-	}
-
-	void Scene::OnSimulationStart()
-	{
-
-	}
-
-	void Scene::OnSimulationStop()
-	{
-
-	}
-
-	void Scene::OnUpdateRuntime()
-	{
-
-	}
-
-	void Scene::OnUpdateSimulation()
-	{
-
-	}
-
-	void Scene::OnUpdateEditor()
-	{
-
-	}
-
 	void Scene::ConvertToWorldSpace(Entity aEntity)
 	{
 		Entity parent(aEntity.ParentUUID());
