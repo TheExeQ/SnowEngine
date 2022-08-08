@@ -44,4 +44,43 @@ namespace Snow
 	{
 
 	}
+
+	UUID Entity::GetUUID()
+	{
+		return GetComponent<IDComponent>()->uuid;
+	}
+
+	std::vector<UUID> Entity::ChildrenUUIDs()
+	{
+		return GetComponent<RelationshipComponent>()->Children;
+	}
+
+	UUID Entity::ParentUUID()
+	{
+		return GetComponent<RelationshipComponent>()->Parent;
+	}
+
+	bool Entity::HasParent()
+	{
+		return ParentUUID();
+	}
+
+	glm::mat4 Entity::GetTransform()
+	{
+		return GetComponent<TransformComponent>()->GetTransform();
+	}
+
+	glm::mat4 Entity::GetWorldTransform()
+	{
+		return myScene->GetWorldSpaceTransformMatrix(*this);
+	}
+
+	bool Entity::IsValid()
+	{
+		if (!myScene) { return false; }
+		else
+		{
+			return myScene->myRegistry.valid(myEntityHandle);
+		}
+	}
 }

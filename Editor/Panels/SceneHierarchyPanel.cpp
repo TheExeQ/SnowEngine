@@ -5,7 +5,6 @@
 #include <string>
 
 #include "Engine/Scene/Components.h"
-#include "Engine/Scene/ScriptableComponents.h"
 
 namespace Snow {
 
@@ -280,6 +279,7 @@ namespace Snow {
 			DisplayAddComponentEntry<StaticMeshComponent>("StaticMesh Component");
 			DisplayAddComponentEntry<SkeletalMeshComponent>("SkeletalMesh Component");
 			DisplayAddComponentEntry<CameraComponent>("Camera Component");
+			DisplayAddComponentEntry<TestComponent>("Test Component");
 
 			ImGui::EndPopup();
 		}

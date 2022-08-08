@@ -18,44 +18,13 @@ namespace Snow
 		Entity(Scene* aScene);
 		Entity(const Entity& aEntity);
 
-		inline UUID GetUUID()
-		{
-			return GetComponent<IDComponent>()->uuid;
-		}
-		
-		inline std::vector<UUID> ChildrenUUIDs()
-		{
-			return GetComponent<RelationshipComponent>()->Children;
-		}
-
-		inline UUID ParentUUID()
-		{
-			return GetComponent<RelationshipComponent>()->Parent; 
-		}
-
-		inline bool HasParent()
-		{
-			return ParentUUID();
-		}
-		
-		inline glm::mat4 GetTransform()
-		{
-			return GetComponent<TransformComponent>()->GetTransform();
-		}
-
-		inline glm::mat4 GetWorldTransform()
-		{
-			return myScene->GetWorldSpaceTransformMatrix(*this);
-		}
-
-		inline bool IsValid() 
-		{
-			if (!myScene) { return false; }
-			else
-			{
-				return myScene->myRegistry.valid(myEntityHandle);
-			}
-		}
+		UUID GetUUID();
+		UUID ParentUUID();
+		bool HasParent();
+		std::vector<UUID> ChildrenUUIDs();
+		glm::mat4 GetTransform();
+		glm::mat4 GetWorldTransform();
+		bool IsValid();
 
 		template<typename T, typename... Args>
 		T* AddComponent(Args&&... args)
