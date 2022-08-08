@@ -5,7 +5,6 @@
 #include "Engine/Renderer/Model.h"
 #include "Engine/Renderer/Animation.h"
 #include "Engine/Renderer/Material.h"
-#include "Engine/Scene/ScriptableComponent.h"
 
 #include <glm/glm.hpp>
 #include <entt/entt.hpp>
@@ -19,9 +18,23 @@
 
 namespace Snow
 {
-	struct TestComponent : public ScriptableComponent
+	// Forward declaration
+	class ScriptableEntity;
+	
+	struct NativeScriptComponent
 	{
-		void OnUpdate() override { LOG_INFO("testUpdate"); }
+		int scriptID = -1;
+		ScriptableEntity* Instance = nullptr;
+
+		ScriptableEntity* (*InstantiateScript)();
+		void (*DestroyScript)(NativeScriptComponent*);
+
+		template<typename T>
+		void Bind()
+		{
+			InstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); };
+			DestroyScript = [](NativeScriptComponent* nsc) { delete nsc->Instance; nsc->Instance = nullptr; };
+		}
 	};
 
 	struct TagComponent
@@ -53,6 +66,21 @@ namespace Snow
 			glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.f), scale);
 
 			return positionMatrix * rotationMatrix * scaleMatrix;
+		}
+		
+		glm::vec3 Right() const
+		{
+			return glm::normalize(GetTransform()[0]);
+		}
+
+		glm::vec3 Up() const
+		{
+			return glm::normalize(GetTransform()[1]);
+		}
+
+		glm::vec3 Forward() const
+		{
+			return glm::normalize(GetTransform()[2]);
 		}
 	};
 

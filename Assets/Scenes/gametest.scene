@@ -1,44 +1,5 @@
 Scene: Untitled
 Entities:
-  - Entity: 9317541979504563121
-    Parent: 1748500495750464391
-    TagComponent:
-      Tag: Camera
-    TransformComponent:
-      Position: [3.93401962e-07, 2.98023224e-07, -1.99999619]
-      Rotation: [8.74227055e-08, -2.62268316e-07, 8.74228689e-08]
-      Scale: [0.999999046, 1, 0.999999046]
-    CameraComponent:
-      Primary: true
-      FOV: 90
-      Near: 0.100000001
-      Far: 1000
-  - Entity: 18401471038857429846
-    Parent: 0
-    TagComponent:
-      Tag: Chest
-    TransformComponent:
-      Position: [-2, -0.5, 0]
-      Rotation: [0, -0.785398245, 0]
-      Scale: [0.00999999978, 0.00999999978, 0.00999999978]
-    StaticMeshComponent:
-      Model:
-        MeshPath: ../Assets/Models/SM/Particle_Chest.fbx
-      Material:
-        AlbedoPath: ../Assets/Textures/T_Particle_Chest_C.png
-  - Entity: 1748500495750464391
-    Parent: 0
-    TagComponent:
-      Tag: Gremlin
-    TransformComponent:
-      Position: [0, -0.5, 2]
-      Rotation: [3.14159274, -8.74227766e-08, 3.14159274]
-      Scale: [0.0299999695, 0.0299999993, 0.0299999695]
-    StaticMeshComponent:
-      Model:
-        MeshPath: ../Assets/Models/SK/Gremlin.fbx
-      Material:
-        AlbedoPath: ../Assets/Textures/T_Particle_Chest_C.png
   - Entity: 18179258592395981053
     Parent: 0
     TagComponent:
@@ -52,3 +13,44 @@ Entities:
         MeshPath: ../Assets/Models/SM/Particle_Chest.fbx
       Material:
         AlbedoPath: ../Assets/Textures/T_Particle_Chest_M.png
+  - Entity: 1748500495750464391
+    Parent: 0
+    TagComponent:
+      Tag: Gremlin
+    TransformComponent:
+      Position: [0.104409948, -0.5, 2]
+      Rotation: [-3.1415925, -8.74227766e-08, -3.1415925]
+      Scale: [0.0299999695, 0.0299999993, 0.0299999695]
+    StaticMeshComponent:
+      Model:
+        MeshPath: ../Assets/Models/SK/Gremlin.fbx
+      Material:
+        AlbedoPath: ../Assets/Textures/T_Gremlin_C.png
+    NativeScriptComponent:
+      ScriptID: 1
+  - Entity: 18401471038857429846
+    Parent: 0
+    TagComponent:
+      Tag: Chest
+    TransformComponent:
+      Position: [-2, -0.5, 0]
+      Rotation: [0, -0.785398245, 0]
+      Scale: [0.00999999978, 0.00999999978, 0.00999999978]
+    StaticMeshComponent:
+      Model:
+        MeshPath: ../Assets/Models/SM/Particle_Chest.fbx
+      Material:
+        AlbedoPath: ../Assets/Textures/T_Particle_Chest_C.png
+  - Entity: 9317541979504563121
+    Parent: 1748500495750464391
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Position: [0.10441006, 1.44999933, -1.99999475]
+      Rotation: [-4.7683676e-07, -2.62268316e-07, 4.76837613e-07]
+      Scale: [0.999999046, 1, 0.999999046]
+    CameraComponent:
+      Primary: true
+      FOV: 90
+      Near: 0.100000001
+      Far: 1000

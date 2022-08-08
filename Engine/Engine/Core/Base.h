@@ -1,8 +1,5 @@
 #pragma once
-#include "Engine/Core/Time.h"
-#include "Engine/Core/Random.h"
-#include "Engine/Input/Input.h"
-#include "Engine/Math/Math.h"
+#include <memory>
 
 namespace Snow 
 {

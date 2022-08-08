@@ -10,13 +10,14 @@ namespace Snow
 		void Init();
 		void OnImGuiRender();
 		Entity GetSelectedEntity() const { return mySelectionContext; };
+		static void BindNativeScript(Entity aEntity, int aTypeIndex);
 
 	private:
 		template<typename T>
 		void DisplayAddComponentEntry(const std::string& entryName);
 
-		void DrawEntityNode(Entity entity);
-		void DrawComponents(Entity entity);
+		void DrawEntityNode(Entity aEntity);
+		void DrawComponents(Entity aEntity);
 
 		Ref<Scene> myContext = nullptr;
 		Entity mySelectionContext;

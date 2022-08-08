@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "Engine/Core/Time.h"
 #include "Engine/Debug/Log.h"
 
 namespace Snow

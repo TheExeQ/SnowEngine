@@ -1,5 +1,7 @@
 #include "SceneRenderer.h"
 #include "Engine/Engine.h"
+#include "Engine/Core/Time.h"
+#include "Engine/Math/Math.h"
 #include "Engine/Scene/Components.h"
 
 namespace Snow

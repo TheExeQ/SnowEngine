@@ -1,11 +1,12 @@
 #pragma once
 #include <windows.h>
-#include "Core/Base.h"
-#include "Core/LayerStack.h"
-#include "Win32/WindowContainer.h"
-#include "Renderer/Renderer.h"
-#include "imgui/ImGuiLayer.h"
-#include "Scene/Scene.h"
+#include "Engine/Core/Base.h"
+#include "Engine/Core/Time.h"
+#include "Engine/Core/LayerStack.h"
+#include "Engine/Win32/WindowContainer.h"
+#include "Engine/Renderer/Renderer.h"
+#include "Engine/imgui/ImGuiLayer.h"
+#include "Engine/Scene/Scene.h"
 
 namespace Snow
 {

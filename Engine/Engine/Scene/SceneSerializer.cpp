@@ -1,9 +1,11 @@
 #include "SceneSerializer.h"
+#include "Engine/Debug/Log.h"
+#include "Engine/Math/Math.h"
+#include "Engine/Editor/SceneHierarchyPanel.h"
 #include "Components.h"
 
 #include <glm/glm.hpp>
 #include <fstream>
-#include "Engine/Debug/Log.h"
 
 namespace YAML
 {
@@ -151,6 +153,17 @@ namespace Snow
 			outEmitter << YAML::EndMap;
 		}
 
+		if (aEntity.HasComponent<NativeScriptComponent>())
+		{
+			outEmitter << YAML::Key << "NativeScriptComponent";
+			outEmitter << YAML::BeginMap;
+			auto comp = aEntity.GetComponent<NativeScriptComponent>();
+
+			outEmitter << YAML::Key << "ScriptID" << YAML::Value << comp->scriptID;
+
+			outEmitter << YAML::EndMap;
+		}
+
 		outEmitter << YAML::EndMap;
 	}
 
@@ -252,6 +265,14 @@ namespace Snow
 					comp->camera->myFov = fov.as<float>();
 					comp->camera->myNearPlane = nearPlane.as<float>();
 					comp->camera->myFarPlane = farPlane.as<float>();
+				}
+
+				if (ent["NativeScriptComponent"])
+				{
+					auto scriptID = ent["NativeScriptComponent"]["ScriptID"];
+					auto comp = DeserializedEntity.AddComponent<NativeScriptComponent>();
+					comp->scriptID = scriptID.as<int>();
+					SceneHierarchyPanel::BindNativeScript(DeserializedEntity, scriptID.as<int>());
 				}
 			}
 			

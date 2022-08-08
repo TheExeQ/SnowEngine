@@ -5,6 +5,7 @@
 
 #include "Engine/Engine.h"
 #include "Engine/Renderer/Camera.h"
+#include "Engine/Scene/ScriptableEntity.h"
 
 #include <entt/entt.hpp>
 
@@ -47,12 +48,12 @@ namespace Snow
 	void Scene::ParentEntity(Entity aChild, Entity aParent)
 	{
 		if (!aChild.IsValid() || !aParent.IsValid()) { return; }
-		
+
 		UnparentEntity(aChild);
-		
+
 		const auto& childRelationShip = aChild.GetComponent<RelationshipComponent>();
 		const auto& parentRelationShip = aParent.GetComponent<RelationshipComponent>();
-		
+
 		childRelationShip->Parent = aParent.GetUUID();
 		parentRelationShip->Children.push_back(aChild.GetUUID());
 
@@ -62,7 +63,7 @@ namespace Snow
 	void Scene::UnparentEntity(Entity aEntity)
 	{
 		if (!aEntity.IsValid()) { return; }
-		
+
 		const auto& entityRelationShip = aEntity.GetComponent<RelationshipComponent>();
 		if (aEntity.HasParent())
 		{
@@ -130,7 +131,7 @@ namespace Snow
 
 		glm::mat4 transform = aEntity.GetTransform();
 		glm::mat4 parentTransform = GetWorldSpaceTransformMatrix(parent);
-		
+
 		glm::mat4 localTransform = glm::inverse(parentTransform) * transform;
 
 		const auto& entityTransformComp = aEntity.GetComponent<TransformComponent>();
@@ -153,7 +154,7 @@ namespace Snow
 		Entity parent(aEntity.ParentUUID());
 
 		glm::mat4 transform = aEntity.GetTransform();
-		
+
 		if (!parent.IsValid())
 			return transform;
 
@@ -172,27 +173,38 @@ namespace Snow
 	void Scene::OnRuntimeStart()
 	{
 		// Init scripts
-		for (auto se : ScriptableComponent::sScriptableComponents)
-		{
-			se->OnCreate();
-		}
+		myRegistry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
+			{
+				if (!nsc.Instance && nsc.scriptID >= 0)
+				{
+					nsc.Instance = nsc.InstantiateScript();
+					nsc.Instance->myEntity = Entity{ entity, this };
+					nsc.Instance->OnCreate();
+				}
+			});
 	}
 
 	void Scene::OnRuntimeStop()
 	{
 		// Destroy scripts
-		for (auto se : ScriptableComponent::sScriptableComponents)
-		{
-			se->OnDestroy();
-		}
+		myRegistry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
+			{
+				if (nsc.Instance)
+				{
+					nsc.Instance->OnDestroy();
+				}
+			});
 	}
 
 	void Scene::OnUpdateRuntime()
 	{
 		// Update scripts
-		for (auto se : ScriptableComponent::sScriptableComponents)
-		{
-			se->OnUpdate();
-		}
+		myRegistry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
+			{
+				if (nsc.Instance)
+				{
+					nsc.Instance->OnUpdate();
+				}
+			});
 	}
 }

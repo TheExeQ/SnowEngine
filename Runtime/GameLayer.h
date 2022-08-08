@@ -1,6 +1,5 @@
 #pragma once
 #include <Engine/Core/Layer.h>
-#include <Engine/Scene/Entity.h>
 
 namespace Snow
 {
@@ -8,9 +7,5 @@ namespace Snow
 	{
 	public:
 		virtual void OnAttach() override;
-		virtual void OnUpdate() override;
-	
-	private:
-		Entity myEntity;
 	};
 }

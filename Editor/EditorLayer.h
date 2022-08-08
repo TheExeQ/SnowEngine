@@ -3,7 +3,7 @@
 #include "Engine/Scene/SceneSerializer.h"
 
 // Panels
-#include "Panels/SceneHierarchyPanel.h"
+#include "Engine/Editor/SceneHierarchyPanel.h"
 #include "Engine/Editor/SceneViewportPanel.h"
 
 #include <Engine/Core/Base.h>

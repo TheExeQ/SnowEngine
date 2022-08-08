@@ -5,6 +5,8 @@
 #include <string>
 
 #include "Engine/Scene/Components.h"
+#include "Engine/Scene/ScriptableEntity.h"
+#include "GameProject/Scripts.h"
 
 namespace Snow {
 
@@ -66,16 +68,16 @@ namespace Snow {
 		}
 	}
 
-	void SceneHierarchyPanel::DrawEntityNode(Entity entity)
+	void SceneHierarchyPanel::DrawEntityNode(Entity aEntity)
 	{
-		auto tag = entity.GetComponent<TagComponent>()->name;
+		auto tag = aEntity.GetComponent<TagComponent>()->name;
 
-		ImGuiTreeNodeFlags flags = ((mySelectionContext == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
+		ImGuiTreeNodeFlags flags = ((mySelectionContext == aEntity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
 		flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
-		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, tag.c_str());
+		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)aEntity, flags, tag.c_str());
 		if (ImGui::IsItemClicked())
 		{
-			mySelectionContext = entity;
+			mySelectionContext = aEntity;
 		}
 
 		bool entityDeleted = false;
@@ -92,8 +94,8 @@ namespace Snow {
 
 		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 		{
-			ImGui::Text(entity.GetComponent<TagComponent>()->name.c_str());
-			ImGui::SetDragDropPayload("scene_entity_hierarchy", &entity, sizeof(Entity));
+			ImGui::Text(aEntity.GetComponent<TagComponent>()->name.c_str());
+			ImGui::SetDragDropPayload("scene_entity_hierarchy", &aEntity, sizeof(Entity));
 			ImGui::EndDragDropSource();
 		}
 
@@ -104,7 +106,7 @@ namespace Snow {
 			if (payload)
 			{
 				Entity& droppedEntity = *(Entity*)payload->Data;
-				myContext->ParentEntity(droppedEntity, entity);
+				myContext->ParentEntity(droppedEntity, aEntity);
 			}
 
 			ImGui::EndDragDropTarget();
@@ -112,7 +114,7 @@ namespace Snow {
 
 		if (opened)
 		{
-			for (auto child : entity.ChildrenUUIDs())
+			for (auto child : aEntity.ChildrenUUIDs())
 			{
 				Entity e(child, myContext.get());
 				if (e.IsValid())
@@ -126,8 +128,8 @@ namespace Snow {
 		
 		if (entityDeleted)
 		{
-			myContext->DestroyEntity(entity);
-			if (mySelectionContext == entity)
+			myContext->DestroyEntity(aEntity);
+			if (mySelectionContext == aEntity)
 				mySelectionContext = {};
 		}
 	}
@@ -199,12 +201,12 @@ namespace Snow {
 	}
 
 	template<typename T, typename UIFunction>
-	static void DrawComponent(const std::string& name, Entity entity, UIFunction uiFunction)
+	static void DrawComponent(const std::string& name, Entity aEntity, UIFunction uiFunction)
 	{
 		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
-		if (entity.HasComponent<T>())
+		if (aEntity.HasComponent<T>())
 		{
-			auto component = entity.GetComponent<T>();
+			auto component = aEntity.GetComponent<T>();
 			ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
 
 			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 4 });
@@ -237,7 +239,7 @@ namespace Snow {
 			}
 
 			if (removeComponent)
-				entity.RemoveComponent<T>();
+				aEntity.RemoveComponent<T>();
 		}
 	}
 
@@ -253,11 +255,11 @@ namespace Snow {
 		}
 	}
 
-	void SceneHierarchyPanel::DrawComponents(Entity entity)
+	void SceneHierarchyPanel::DrawComponents(Entity aEntity)
 	{
-		if (entity.HasComponent<TagComponent>())
+		if (aEntity.HasComponent<TagComponent>())
 		{
-			auto& tag = entity.GetComponent<TagComponent>()->name;
+			auto& tag = aEntity.GetComponent<TagComponent>()->name;
 
 			char buffer[256];
 			memset(buffer, 0, sizeof(buffer));
@@ -279,14 +281,14 @@ namespace Snow {
 			DisplayAddComponentEntry<StaticMeshComponent>("StaticMesh Component");
 			DisplayAddComponentEntry<SkeletalMeshComponent>("SkeletalMesh Component");
 			DisplayAddComponentEntry<CameraComponent>("Camera Component");
-			DisplayAddComponentEntry<TestComponent>("Test Component");
+			DisplayAddComponentEntry<NativeScriptComponent>("Native Script Component");
 
 			ImGui::EndPopup();
 		}
 
 		ImGui::PopItemWidth();
 
-		DrawComponent<TransformComponent>("Transform", entity, [](auto component)
+		DrawComponent<TransformComponent>("Transform", aEntity, [](auto component)
 			{
 				DrawVec3Control("Position", component->position);
 				glm::vec3 rotation = glm::degrees(component->rotation);
@@ -295,7 +297,7 @@ namespace Snow {
 				DrawVec3Control("Scale", component->scale, 1.0f);
 			});
 
-		DrawComponent<StaticMeshComponent>("Static Mesh", entity, [](auto component)
+		DrawComponent<StaticMeshComponent>("Static Mesh", aEntity, [](auto component)
 			{
 
 				// #TODO: Change so this doesn't take ref to filepath, instead a copy and update component filepath on button reload click.
@@ -330,7 +332,7 @@ namespace Snow {
 				}
 			});
 
-		DrawComponent<SkeletalMeshComponent>("Skeletal Mesh", entity, [](auto component)
+		DrawComponent<SkeletalMeshComponent>("Skeletal Mesh", aEntity, [](auto component)
 			{
 
 				// #TODO: Change so this doesn't take ref to filepath, instead a copy and update component filepath on button reload click.
@@ -375,7 +377,7 @@ namespace Snow {
 				}
 			});
 
-		DrawComponent<CameraComponent>("Camera Component", entity, [](auto component)
+		DrawComponent<CameraComponent>("Camera Component", aEntity, [](auto component)
 			{
 				bool changesMade = false;
 				bool primary = component->camera->GetIsPrimary();
@@ -409,5 +411,53 @@ namespace Snow {
 					component->camera->SetIsPrimary(primary);
 				}
 			});
+
+		DrawComponent<NativeScriptComponent>("Native Script Component", aEntity, [&](auto component)
+			{
+				static const char* items[] = { "Example", "Character"};
+				static int selectedItem = component->scriptID;
+
+				std::string loadedScriptText = std::string("Loaded: ") + ((component->scriptID >= 0) ? items[component->scriptID] : std::string("None"));
+
+				ImGui::Text(loadedScriptText.c_str());
+				ImGui::Combo("Scripts", &selectedItem, items, IM_ARRAYSIZE(items));
+				if(ImGui::Button("Load Script"))
+				{
+					BindNativeScript(aEntity, selectedItem);
+				}
+			});
+	}
+
+	void SceneHierarchyPanel::BindNativeScript(Entity aEntity, int aTypeIndex)
+	{
+		switch (aTypeIndex)
+		{
+		case 0:
+		{
+			auto nsc = aEntity.GetComponent<NativeScriptComponent>();
+			if (nsc->Instance)
+			{
+				nsc->DestroyScript(nsc);
+			}
+			nsc->Bind<Game::ExampleScript>();
+			nsc->scriptID = aTypeIndex;
+			break;
+		}
+
+		case 1:
+		{
+			auto nsc = aEntity.GetComponent<NativeScriptComponent>();
+			if (nsc->Instance)
+			{
+				nsc->DestroyScript(nsc);
+			}
+			nsc->Bind<Game::CharacterScript>();
+			nsc->scriptID = aTypeIndex;
+			break;
+		}
+
+		default:
+			break;
+		}
 	}
 }
