@@ -80,9 +80,10 @@ namespace Snow
 
 	void SceneRenderer::RenderEditorScene()
 	{
+		auto sceneState = Engine::GetActiveScene()->GetSceneState();
 		auto camera = myEditorCameraEntity.GetComponent<CameraComponent>()->camera;
 		RenderStaticMeshes(camera);
-		RenderSkeletalMeshes(camera);
+		RenderSkeletalMeshes(camera, (sceneState == SceneState::Edit || sceneState == SceneState::Pause) ? false : true);
 	}
 
 	void SceneRenderer::RenderRuntimeScene()
@@ -132,7 +133,7 @@ namespace Snow
 		}
 	}
 
-	void SceneRenderer::RenderSkeletalMeshes(Ref<Camera> aCamera)
+	void SceneRenderer::RenderSkeletalMeshes(Ref<Camera> aCamera, bool aAnimateActivated)
 	{
 		auto skeletalMeshEntities = Engine::GetActiveScene()->myRegistry.view<SkeletalMeshComponent>();
 
@@ -140,8 +141,10 @@ namespace Snow
 		{
 			Entity object(entity, Engine::GetActiveScene());
 			const auto& meshComp = object.GetComponent<SkeletalMeshComponent>();
-			meshComp->animatedModel.SetAnimation(meshComp->animation);
+			if (aAnimateActivated)
 			{
+				meshComp->animatedModel.SetAnimation(meshComp->animation);
+
 				// Time only for testing until animation works
 				static float time = 0.f;
 				time += Time::GetDeltaTime() * 3.f;
@@ -157,9 +160,12 @@ namespace Snow
 
 			myObjectBuffer.myData.WorldTransform = objMatrix;
 			myObjectBuffer.myData.BoneTransforms.fill(glm::mat4(1.f));
-			for (uint32_t i = 0; i < meshComp->animatedModel.myBoneTransforms.size(); i++)
+			if (aAnimateActivated)
 			{
-				myObjectBuffer.myData.BoneTransforms[i] = meshComp->animatedModel.myBoneTransforms[i];
+				for (uint32_t i = 0; i < meshComp->animatedModel.myBoneTransforms.size(); i++)
+				{
+					myObjectBuffer.myData.BoneTransforms[i] = meshComp->animatedModel.myBoneTransforms[i];
+				}
 			}
 			myObjectBuffer.ApplyChanges();
 

@@ -147,4 +147,14 @@ namespace Snow
 
 		return glm::inverse(parentTransform) * transform;
 	}
+
+	void Scene::OnRuntimeStart()
+	{
+		mySceneState = SceneState::Play;
+	}
+
+	void Scene::OnRuntimeStop()
+	{
+		mySceneState = SceneState::Edit;
+	}
 }

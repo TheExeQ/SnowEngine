@@ -164,7 +164,7 @@ namespace Snow
 		ImGui::Begin("##toolbar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
 		auto sceneState = Engine::GetActiveScene()->GetSceneState();
-		bool toolbarEnabled = (sceneState == SceneState::Edit) ? false : true;
+		bool toolbarEnabled = true;
 
 		ImVec4 tintColor = ImVec4(1, 1, 1, 1);
 		if (!toolbarEnabled)
@@ -180,10 +180,12 @@ namespace Snow
 			{
 				if (sceneState == SceneState::Edit || sceneState == SceneState::Simulate)
 				{
+					Engine::GetActiveScene()->OnRuntimeStart();
 					//OnScenePlay();
 				}
 				else if (sceneState == SceneState::Play)
 				{
+					Engine::GetActiveScene()->OnRuntimeStop();
 					//OnSceneStop();
 				}
 			}

@@ -24,7 +24,7 @@ namespace Snow
 	private:
 		friend class SceneViewportPanel;
 		void RenderStaticMeshes(Ref<Camera> aCamera);
-		void RenderSkeletalMeshes(Ref<Camera> aCamera);
+		void RenderSkeletalMeshes(Ref<Camera> aCamera, bool aAnimateActivated = true);
 
 		bool CreateShaders();
 		bool CreateConstantBuffers();
