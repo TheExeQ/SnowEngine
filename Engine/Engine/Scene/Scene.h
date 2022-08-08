@@ -41,6 +41,8 @@ namespace Snow
 		Entity CreateEntity(const char* aName, Ref<Scene> aScene = nullptr);
 		void DestroyEntity(Entity aEntity);
 
+		Entity GetPrimaryCameraEntity();
+
 		glm::mat4 GetWorldSpaceTransformMatrix(Entity aEntity);
 		glm::mat4 GetLocalSpaceTransformMatrix(Entity aEntity);
 

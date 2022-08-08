@@ -3,7 +3,12 @@
 
 namespace Snow
 {
-	Entity::Entity(entt::entity aEntityHandle, Ref<Scene> aScene)
+	Entity::Entity()
+	{
+		myScene = Engine::GetActiveScene().get();
+	}
+	
+	Entity::Entity(entt::entity aEntityHandle, Scene* aScene)
 		: myEntityHandle(aEntityHandle), myScene(aScene)
 	{
 
@@ -12,7 +17,7 @@ namespace Snow
 	Entity::Entity(entt::entity aEntityHandle)
 		: myEntityHandle(aEntityHandle)
 	{
-		myScene = Engine::GetActiveScene();
+		myScene = Engine::GetActiveScene().get();
 	}
 
 	Entity::Entity(const Entity& aEntity)
@@ -23,18 +28,18 @@ namespace Snow
 
 	Entity::Entity(UUID aID)
 	{
-		myScene = Engine::GetActiveScene();
+		myScene = Engine::GetActiveScene().get();
 
 		myEntityHandle = (entt::entity)myScene->GetEntityFromUUID(aID);
 	}
 
-	Entity::Entity(UUID aID, Ref<Scene> aScene)
+	Entity::Entity(UUID aID, Scene* aScene)
 		: myScene(aScene)
 	{
 		myEntityHandle = (entt::entity)myScene->GetEntityFromUUID(aID);
 	}
 
-	Entity::Entity(Ref<Scene> aScene)
+	Entity::Entity(Scene* aScene)
 		: myScene(aScene)
 	{
 

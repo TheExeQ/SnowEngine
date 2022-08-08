@@ -10,12 +10,12 @@ namespace Snow
 	class Entity
 	{
 	public:
-		Entity() {};
+		Entity();
 		Entity(UUID aID);
-		Entity(UUID aID, Ref<Scene> aScene);
+		Entity(UUID aID, Scene* aScene);
 		Entity(entt::entity aEntityHandle);
-		Entity(entt::entity aEntityHandle, Ref<Scene> aScene);
-		Entity(Ref<Scene> aScene);
+		Entity(entt::entity aEntityHandle, Scene* aScene);
+		Entity(Scene* aScene);
 		Entity(const Entity& aEntity);
 
 		inline UUID GetUUID()
@@ -99,6 +99,6 @@ namespace Snow
 
 	private:
 		entt::entity myEntityHandle = entt::null;
-		Ref<Scene> myScene = nullptr;
+		Scene* myScene = nullptr;
 	};
 }

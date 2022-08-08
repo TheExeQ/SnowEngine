@@ -163,7 +163,7 @@ namespace Snow
 		out << YAML::Value << YAML::BeginSeq;
 		myScene->myRegistry.each([&](entt::entity aEntity) 
 			{
-				Entity ent(aEntity, myScene);
+				Entity ent(aEntity, myScene.get());
 				SerializeEntity(out, ent);
 			});
 		out << YAML::EndSeq;
@@ -197,7 +197,7 @@ namespace Snow
 			
 			for (auto ent : entities)
 			{
-				Entity DeserializedEntity(myScene);
+				Entity DeserializedEntity(myScene.get());
 				if (ent["TagComponent"])
 				{
 					auto tag = ent["TagComponent"]["Tag"];
@@ -257,7 +257,7 @@ namespace Snow
 			
 			for (auto entity : childEntities)
 			{
-				myScene->ParentEntity(entity.first, Entity(entity.second, myScene));
+				myScene->ParentEntity(entity.first, Entity(entity.second, myScene.get()));
 			}
 		}
 

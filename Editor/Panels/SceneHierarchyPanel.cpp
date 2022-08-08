@@ -22,7 +22,7 @@ namespace Snow {
 		{
 			myContext->myRegistry.each([&](auto entityID)
 				{
-					Entity entity(entityID, myContext);
+					Entity entity(entityID, myContext.get());
 					if (entity.IsValid() && !entity.HasParent())
 					{
 						DrawEntityNode(entity);
@@ -114,7 +114,7 @@ namespace Snow {
 		{
 			for (auto child : entity.ChildrenUUIDs())
 			{
-				Entity e(child, myContext);
+				Entity e(child, myContext.get());
 				if (e.IsValid())
 				{
 					DrawEntityNode(e);

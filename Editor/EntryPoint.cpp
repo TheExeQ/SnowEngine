@@ -18,11 +18,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	
 	Snow::Engine engine;
 	engine.SetRunMode(Snow::EngineRunMode::Editor);
-	Snow::EditorLayer editor;
 	
 	if (engine.Initialize(hInstance, 1280, 720))
 	{
 		// Initialization
+		Snow::EditorLayer editor;
 		engine.PushLayer(&editor);
 
 		// Update Loop

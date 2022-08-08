@@ -77,7 +77,7 @@ namespace Snow
 
 	Entity Scene::CreateEntity(const char* aName, Ref<Scene> aScene)
 	{
-		Entity entity(myRegistry.create(), (aScene) ? aScene : Engine::GetActiveScene());
+		Entity entity(myRegistry.create(), (aScene) ? aScene.get() : Engine::GetActiveScene().get());
 		entity.AddComponent<TagComponent>()->name = aName;
 		entity.AddComponent<IDComponent>();
 		entity.AddComponent<RelationshipComponent>();
@@ -93,6 +93,20 @@ namespace Snow
 			UnparentEntity(Entity(child));
 		}
 		myRegistry.destroy(aEntity);
+	}
+
+	Snow::Entity Scene::GetPrimaryCameraEntity()
+	{
+		auto cameraEntities = myRegistry.view<CameraComponent>();
+		for (auto entity : cameraEntities)
+		{
+			if (myRegistry.get<CameraComponent>(entity).camera->GetIsPrimary())
+			{
+				return Entity(entity, this);
+			}
+		}
+
+		return Entity(this);
 	}
 
 	void Scene::ConvertToWorldSpace(Entity aEntity)

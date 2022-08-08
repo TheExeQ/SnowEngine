@@ -18,8 +18,6 @@ namespace Snow
 		myEditorCameraEntity = Engine::GetEditorScene()->CreateEntity("EditorCamera", Engine::GetEditorScene());
 		myEditorCameraEntity.AddComponent<CameraComponent>();
 
-		Engine::SetEditorCamera(myEditorCameraEntity);
-		
 		myEditorCamera->SetIsPrimary(true);
 		
 		mySceneHierarchyPanel.Init();

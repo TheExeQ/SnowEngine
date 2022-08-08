@@ -39,11 +39,16 @@ namespace Snow
 
 	void Camera::SetIsPrimary(bool aChoise)
 	{
+		auto cameraEditorEntities = Engine::GetEditorScene()->myRegistry.view<CameraComponent>();
+		for (auto entity : cameraEditorEntities)
+		{
+			Engine::GetEditorScene()->myRegistry.get<CameraComponent>(entity).camera->myIsPrimary = false;
+		}
+
 		auto cameraEntities = Engine::GetActiveScene()->myRegistry.view<CameraComponent>();
 		for (auto entity : cameraEntities)
 		{
-			Entity camEntity(entity, Engine::GetActiveScene());
-			camEntity.GetComponent<CameraComponent>()->camera->myIsPrimary = false;
+			Engine::GetActiveScene()->myRegistry.get<CameraComponent>(entity).camera->myIsPrimary = false;
 		}
 		
 		myIsPrimary = aChoise;

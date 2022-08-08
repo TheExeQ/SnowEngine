@@ -1,6 +1,6 @@
 #include "GameLayer.h"
 #include <Engine/Engine.h>
-#include <Engine/Renderer/MeshFactory.h>
+#include <Engine/Debug/Log.h>
 #include <Engine/Scene/Scene.h>
 
 #include <iostream>
@@ -9,10 +9,10 @@ namespace Snow
 {
 	void GameLayer::OnAttach()
 	{
-		std::cout << "Game Layer Attached" << std::endl;
+		LOG_INFO("Game Layer Attached");
 
 		Engine::GetActiveScene()->LoadScene("../Assets/Scenes/gametest.scene");
-		myEntity = Entity(UUID(1748500495750464391), Engine::GetActiveScene());
+		myEntity = Entity(UUID(1748500495750464391), Engine::GetActiveScene().get());
 	}
 
 	void GameLayer::OnUpdate()

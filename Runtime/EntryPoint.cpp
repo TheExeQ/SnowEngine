@@ -14,11 +14,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 #endif
 
 	Snow::Engine engine;
-	Snow::GameLayer game;
 
 	if (engine.Initialize(hInstance, 1280, 720))
 	{
 		// Initialization
+		Snow::GameLayer game;
 		engine.PushLayer(&game);
 
 		// Update Loop

@@ -39,9 +39,6 @@ namespace Snow
 		static Ref<Scene> GetActiveScene() { return Get().myActiveScene; }
 		static Ref<Scene> GetEditorScene() { return Get().myEditorScene; }
 		
-		static void SetEditorCamera(Entity aCameraEntity) { Get().myRenderer.mySceneRenderer->UpdateEditorCamera(aCameraEntity); };
-		static void SetRuntimeCamera(Entity aCameraEntity) { Get().myRenderer.mySceneRenderer->UpdateRuntimeCamera(aCameraEntity); };
-
 	private:
 		friend class SceneViewportPanel;
 		friend LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);

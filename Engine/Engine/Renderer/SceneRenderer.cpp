@@ -67,30 +67,26 @@ namespace Snow
 		return true;
 	}
 
-	void SceneRenderer::UpdateEditorCamera(Entity aCamera)
-	{
-		myEditorCameraEntity = aCamera;
-		
-	}
-
-	void SceneRenderer::UpdateRuntimeCamera(Entity aCamera)
-	{
-		myRuntimeCameraEntity = aCamera;
-	}
-
 	void SceneRenderer::RenderEditorScene()
 	{
 		auto sceneState = Engine::GetActiveScene()->GetSceneState();
-		auto camera = myEditorCameraEntity.GetComponent<CameraComponent>()->camera;
-		RenderStaticMeshes(myEditorCameraEntity);
-		RenderSkeletalMeshes(myEditorCameraEntity, (sceneState == SceneState::Edit || sceneState == SceneState::Pause) ? false : true);
+		auto camEntity = Engine::GetEditorScene()->GetPrimaryCameraEntity();
+		if (camEntity.IsValid())
+		{
+			RenderStaticMeshes(camEntity);
+			RenderSkeletalMeshes(camEntity, (sceneState == SceneState::Edit || sceneState == SceneState::Pause) ? false : true);
+		}
 	}
 
 	void SceneRenderer::RenderRuntimeScene()
 	{
-		auto camera = myRuntimeCameraEntity.GetComponent<CameraComponent>()->camera;
-		RenderStaticMeshes(myRuntimeCameraEntity);
-		RenderSkeletalMeshes(myRuntimeCameraEntity);
+		auto camEntity = Engine::GetActiveScene()->GetPrimaryCameraEntity();
+
+		if (camEntity.IsValid())
+		{
+			RenderStaticMeshes(camEntity);
+			RenderSkeletalMeshes(camEntity);
+		}
 	}
 
 	void SceneRenderer::RenderStaticMeshes(Entity& aCamera)
@@ -99,17 +95,23 @@ namespace Snow
 
 		for (auto& entity : staticMeshEntities)
 		{
-			Entity object(entity, Engine::GetActiveScene());
+			Entity object(entity, Engine::GetActiveScene().get());
+			
 			const auto& meshComp = object.GetComponent<StaticMeshComponent>();
-			const auto& cameraTransform = aCamera.GetComponent<TransformComponent>();
+			auto cameraTransform = aCamera.GetWorldTransform();
+			glm::vec3 camPos;
+			glm::vec3 camRot;
+			glm::vec3 camScale;
+			Math::DecomposeTransform(cameraTransform, camPos, camRot, camScale);
+			
 			const auto& camera = aCamera.GetComponent<CameraComponent>()->camera;
 
 			auto objMatrix = object.GetWorldTransform();
 
-			myFrameBuffer.myData.ViewMatrix = camera->GetViewMatrix(cameraTransform->position, cameraTransform->rotation);
+			myFrameBuffer.myData.ViewMatrix = camera->GetViewMatrix(camPos, camRot);
 			myFrameBuffer.myData.ProjectionMatrix = camera->GetProjectionMatrix();
 			myFrameBuffer.ApplyChanges();
-			
+
 			myObjectBuffer.myData.WorldTransform = objMatrix;
 			myObjectBuffer.myData.BoneTransforms.fill(glm::mat4(1.f));
 			myObjectBuffer.ApplyChanges();
@@ -141,9 +143,15 @@ namespace Snow
 
 		for (auto& entity : skeletalMeshEntities)
 		{
-			Entity object(entity, Engine::GetActiveScene());
+			Entity object(entity, Engine::GetActiveScene().get());
 			const auto& meshComp = object.GetComponent<SkeletalMeshComponent>();
-			const auto& cameraTransform = aCamera.GetComponent<TransformComponent>();
+			
+			auto cameraTransform = aCamera.GetWorldTransform();
+			glm::vec3 camPos;
+			glm::vec3 camRot;
+			glm::vec3 camScale;
+			Math::DecomposeTransform(cameraTransform, camPos, camRot, camScale);
+			
 			const auto& camera = aCamera.GetComponent<CameraComponent>()->camera;
 			if (aAnimateActivated)
 			{
@@ -158,7 +166,7 @@ namespace Snow
 			}
 			auto objMatrix = object.GetWorldTransform();
 
-			myFrameBuffer.myData.ViewMatrix = camera->GetViewMatrix(cameraTransform->position, cameraTransform->rotation);
+			myFrameBuffer.myData.ViewMatrix = camera->GetViewMatrix(camPos, camRot);
 			myFrameBuffer.myData.ProjectionMatrix = camera->GetProjectionMatrix();
 			myFrameBuffer.ApplyChanges();
 

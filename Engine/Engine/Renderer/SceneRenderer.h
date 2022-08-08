@@ -15,8 +15,6 @@ namespace Snow
 	{
 	public:
 		bool Initialize();
-		void UpdateEditorCamera(Entity aCamera);
-		void UpdateRuntimeCamera(Entity aCamera);
 
 		void RenderEditorScene();
 		void RenderRuntimeScene();
@@ -34,8 +32,5 @@ namespace Snow
 
 		ConstantBuffer<FrameBuffer> myFrameBuffer;
 		ConstantBuffer<ObjectBuffer> myObjectBuffer;
-
-		Entity myEditorCameraEntity;
-		Entity myRuntimeCameraEntity;
 	};
 }
