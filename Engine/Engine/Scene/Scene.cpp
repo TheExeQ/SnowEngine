@@ -5,7 +5,6 @@
 
 #include "Engine/Engine.h"
 #include "Engine/Renderer/Camera.h"
-#include "Engine/Scene/ScriptableComponents.h"
 
 #include <entt/entt.hpp>
 
@@ -173,7 +172,7 @@ namespace Snow
 	void Scene::OnRuntimeStart()
 	{
 		// Init scripts
-		for (auto se : ScriptableEntity::sScriptableEntities)
+		for (auto se : ScriptableComponent::sScriptableComponents)
 		{
 			se->OnCreate();
 		}
@@ -182,7 +181,7 @@ namespace Snow
 	void Scene::OnRuntimeStop()
 	{
 		// Destroy scripts
-		for (auto se : ScriptableEntity::sScriptableEntities)
+		for (auto se : ScriptableComponent::sScriptableComponents)
 		{
 			se->OnDestroy();
 		}
@@ -191,7 +190,7 @@ namespace Snow
 	void Scene::OnUpdateRuntime()
 	{
 		// Update scripts
-		for (auto se : ScriptableEntity::sScriptableEntities)
+		for (auto se : ScriptableComponent::sScriptableComponents)
 		{
 			se->OnUpdate();
 		}

@@ -5,6 +5,7 @@
 #include "Engine/Renderer/Model.h"
 #include "Engine/Renderer/Animation.h"
 #include "Engine/Renderer/Material.h"
+#include "Engine/Scene/ScriptableComponent.h"
 
 #include <glm/glm.hpp>
 #include <entt/entt.hpp>
@@ -18,6 +19,11 @@
 
 namespace Snow
 {
+	struct TestComponent : public ScriptableComponent
+	{
+		void OnUpdate() override { LOG_INFO("testUpdate"); }
+	};
+
 	struct TagComponent
 	{
 		std::string name;
