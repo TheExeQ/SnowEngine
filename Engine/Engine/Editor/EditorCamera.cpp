@@ -5,7 +5,7 @@
 #include "Engine/Editor/SceneViewportPanel.h"
 #include <ImGuizmo/ImGuizmo.h>
 
-void Snow::EditorCamera::UpdateMovement()
+void Snow::EditorCamera::UpdateMovement(glm::vec3& outPosition, glm::vec3& outRotation)
 {
 	static POINT prevMousePos = InputManager::GetMousePosition();
 	POINT currMousePos = InputManager::GetMousePosition();
@@ -19,44 +19,44 @@ void Snow::EditorCamera::UpdateMovement()
 		float xDiff = (float)(currMousePos.x - prevMousePos.x);
 		float yDiff = (float)(currMousePos.y - prevMousePos.y);
 
-		AdjustRotation(yDiff * myRotationSpeed, xDiff * myRotationSpeed, 0.f);
+		outRotation += glm::vec3(yDiff * myRotationSpeed, xDiff * myRotationSpeed, 0.f);
 
-		glm::vec3 clampResult = GetRotation();
+		glm::vec3 clampResult = outRotation;
 		clampResult.x = glm::clamp(clampResult.x, glm::radians(-90.f), glm::radians(90.f));
-		SetRotation(clampResult);
+		outRotation = clampResult;
 
 		glm::mat4 camMat = glm::transpose(myViewMatrix);
 
 		// Forward & Backwards
 		if (InputManager::IsKeyDown(Key::W))
 		{
-			AdjustPosition(speed * glm::vec3(camMat[2]) * Time::GetDeltaTime());
+			outPosition += (speed * glm::vec3(camMat[2]) * Time::GetDeltaTime());
 
 		}
 		if (InputManager::IsKeyDown(Key::S))
 		{
-			AdjustPosition(speed * -glm::vec3(camMat[2]) * Time::GetDeltaTime());
+			outPosition += (speed * -glm::vec3(camMat[2]) * Time::GetDeltaTime());
 
 		}
 
 		// Right & Left
 		if (InputManager::IsKeyDown(Key::D))
 		{
-			AdjustPosition(speed * glm::vec3(camMat[0]) * Time::GetDeltaTime());
+			outPosition += (speed * glm::vec3(camMat[0]) * Time::GetDeltaTime());
 		}
 		if (InputManager::IsKeyDown(Key::A))
 		{
-			AdjustPosition(speed * -glm::vec3(camMat[0]) * Time::GetDeltaTime());
+			outPosition += (speed * -glm::vec3(camMat[0]) * Time::GetDeltaTime());
 		}
 
 		// Up & down
 		if (InputManager::IsKeyDown(Key::E) || InputManager::IsKeyDown(Key::SPACE))
 		{
-			AdjustPosition(0.f, speed * Time::GetDeltaTime(), 0.f);
+			outPosition += glm::vec3(0.f, speed * Time::GetDeltaTime(), 0.f);
 		}
 		if (InputManager::IsKeyDown(Key::Q) || InputManager::IsKeyDown(Key::CONTROL))
 		{
-			AdjustPosition(0.f, -speed * Time::GetDeltaTime(), 0.f);
+			outPosition += glm::vec3(0.f, -speed * Time::GetDeltaTime(), 0.f);
 		}
 	}
 	else
@@ -76,6 +76,8 @@ void Snow::EditorCamera::UpdateMovement()
 		}
 	}
 	
+	UpdateViewMatrix(outPosition, outRotation);
+
 	prevMousePos = currMousePos;
 }
 

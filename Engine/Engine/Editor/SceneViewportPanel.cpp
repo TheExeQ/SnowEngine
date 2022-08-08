@@ -46,9 +46,11 @@ namespace Snow
 			auto size = ImGui::GetWindowSize();
 			ImGuizmo::SetRect(pos.x, pos.y, size.x, size.y);
 		
-			Ref<Camera> camera = Engine::Get().myRenderer.mySceneRenderer->myEditorCameraEntity.GetComponent<CameraComponent>()->camera;
+			auto& camEntity = Engine::Get().myRenderer.mySceneRenderer->myEditorCameraEntity;
+			Ref<Camera> camera = camEntity.GetComponent<CameraComponent>()->camera;
+			const auto& tranform = camEntity.GetComponent<TransformComponent>();
 			glm::mat4 projectionMat = camera->GetProjectionMatrix();
-			glm::mat4 viewMat = camera->GetViewMatrix();
+			glm::mat4 viewMat = camera->GetViewMatrix(tranform->position, tranform->rotation);
 
 			auto comp = aSelectedEntity.GetComponent<TransformComponent>();
 			auto oldRot = comp->rotation;

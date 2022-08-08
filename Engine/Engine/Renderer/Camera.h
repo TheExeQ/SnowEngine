@@ -16,11 +16,8 @@ namespace Snow
 		Camera(const Camera& aCamera);
 		void SetProjectionValues(float fovDegrees, float aspectRatio, float nearZ, float farZ);
 
-		const glm::mat4& GetViewMatrix() const;
+		const glm::mat4& GetViewMatrix(glm::vec3 aPosition, glm::vec3 aRotation);
 		const glm::mat4& GetProjectionMatrix() const;
-
-		const glm::vec3& GetPosition() const;
-		const glm::vec3& GetRotation() const;
 
 		void SetIsPrimary(bool aChoise);
 		bool GetIsPrimary() const { return myIsPrimary; };
@@ -28,21 +25,10 @@ namespace Snow
 		float GetNear() const { return myNearPlane; };
 		float GetFar() const { return myFarPlane; };
 
-		void SetPosition(const glm::vec3& pos);
-		void SetPosition(float x, float y, float z);
-		void AdjustPosition(const glm::vec3& pos);
-		void AdjustPosition(float x, float y, float z);
-		void SetRotation(const glm::vec3& rot);
-		void SetRotation(float x, float y, float z);
-		void AdjustRotation(const glm::vec3& rot);
-		void AdjustRotation(float x, float y, float z);
-		void SetLookAtPos(glm::vec3 lookAtPos);
-
 	protected:
+		friend class SceneRenderer;
 		friend class SceneSerializer;
-		void UpdateViewMatrix();
-		glm::vec4 myPosVector;
-		glm::vec4 myRotVector;
+		void UpdateViewMatrix(glm::vec3 aPosition, glm::vec3 aRotation);
 		glm::mat4 myViewMatrix;
 		glm::mat4 myProjectionMatrix;
 

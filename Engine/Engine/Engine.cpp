@@ -47,12 +47,13 @@ namespace Snow
 			myTime.Update();
 			myWindowContainer.ProcessMessages();
 
+			for (auto* layer : myLayerStack)
+			{
+				layer->OnUpdate();
+			}
+			
 			if (myActiveScene->GetSceneState() != SceneState::Edit && myActiveScene->GetSceneState() != SceneState::Pause)
 			{
-				for (auto* layer : myLayerStack)
-				{
-					layer->OnUpdate();
-				}
 				for (auto* baseComp : BaseComponent::sBaseComponents)
 				{
 					baseComp->Update();

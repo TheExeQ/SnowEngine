@@ -7,7 +7,7 @@ namespace Snow
 	{
 	public:
 		EditorCamera() { myIsPrimary = true; };
-		void UpdateMovement();
+		void UpdateMovement(glm::vec3& outPosition, glm::vec3& outRotation);
 		
 	private:
 		friend class SceneViewportPanel;
