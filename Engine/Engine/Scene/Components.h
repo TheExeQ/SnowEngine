@@ -35,6 +35,12 @@ namespace Snow
 			InstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); };
 			DestroyScript = [](NativeScriptComponent* nsc) { delete nsc->Instance; nsc->Instance = nullptr; };
 		}
+
+		template<typename T>
+		T* CastTo()
+		{
+			return static_cast<T*>(Instance);
+		}
 	};
 
 	struct TagComponent

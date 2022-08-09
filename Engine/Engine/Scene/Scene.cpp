@@ -45,6 +45,19 @@ namespace Snow
 		return Entity();
 	}
 
+	Snow::Entity Scene::GetEntityFromName(std::string aName)
+	{
+		auto view = myRegistry.view<TagComponent>();
+		for (entt::entity entity : view)
+		{
+			if (view.get<TagComponent>(entity).name == aName)
+			{
+				return Entity(entity);
+			}
+		}
+		return Entity();
+	}
+
 	void Scene::ParentEntity(Entity aChild, Entity aParent)
 	{
 		if (!aChild.IsValid() || !aParent.IsValid()) { return; }

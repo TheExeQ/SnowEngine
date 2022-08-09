@@ -34,6 +34,7 @@ namespace Snow
 		void ClearScene();
 		
 		Entity GetEntityFromUUID(UUID aID);
+		Entity GetEntityFromName(std::string aName);
 
 		void ParentEntity(Entity aChild, Entity aParent);
 		void UnparentEntity(Entity aEntity);

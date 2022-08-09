@@ -24,6 +24,8 @@ namespace Game
 	class ExampleScript : public ScriptableEntity
 	{
 	public:
-		void OnUpdate() { LOG_INFO("Example::Update"); };
+		void OnCreate() { LOG_INFO("ExampleScript::OnCreate"); };
+		void OnUpdate() { LOG_INFO("ExampleScript::OnUpdate"); };
+		void OnDestroy() { LOG_INFO("ExampleScript::OnDestroy"); };
 	};
 }

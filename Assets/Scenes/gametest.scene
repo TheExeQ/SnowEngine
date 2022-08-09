@@ -19,7 +19,7 @@ Entities:
       Tag: Gremlin
     TransformComponent:
       Position: [0.104409948, -0.5, 2]
-      Rotation: [-3.1415925, -8.74227766e-08, -3.1415925]
+      Rotation: [3.1415925, -8.74227766e-08, 3.1415925]
       Scale: [0.0299999695, 0.0299999993, 0.0299999695]
     StaticMeshComponent:
       Model:
@@ -46,8 +46,8 @@ Entities:
     TagComponent:
       Tag: Camera
     TransformComponent:
-      Position: [0.10441006, 1.44999933, -1.99999475]
-      Rotation: [-4.7683676e-07, -2.62268316e-07, 4.76837613e-07]
+      Position: [0.104410522, 1.45000029, -1.99999428]
+      Rotation: [-2.38418195e-07, -2.62268401e-07, 2.3841892e-07]
       Scale: [0.999999046, 1, 0.999999046]
     CameraComponent:
       Primary: true
