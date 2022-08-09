@@ -70,17 +70,17 @@ namespace Snow
 		
 		glm::vec3 Right() const
 		{
-			return glm::normalize(GetTransform()[0]);
+			return glm::normalize(-GetTransform()[0]);
 		}
 
 		glm::vec3 Up() const
 		{
-			return glm::normalize(GetTransform()[1]);
+			return glm::normalize(-GetTransform()[1]);
 		}
 
 		glm::vec3 Forward() const
 		{
-			return glm::normalize(GetTransform()[2]);
+			return glm::normalize(-GetTransform()[2]);
 		}
 	};
 

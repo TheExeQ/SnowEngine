@@ -14,19 +14,19 @@ namespace Game
 			auto& transform = GetComponent<TransformComponent>();
 			if (InputManager::IsKeyDown(Key::W))
 			{
-				transform.position -= transform.Forward() * Time::GetDeltaTime() * mySpeed;
+				transform.position += transform.Forward() * Time::GetDeltaTime() * mySpeed;
 			}
 			if (InputManager::IsKeyDown(Key::S))
 			{
-				transform.position += transform.Forward() * Time::GetDeltaTime() * mySpeed;
+				transform.position -= transform.Forward() * Time::GetDeltaTime() * mySpeed;
 			}
 			if (InputManager::IsKeyDown(Key::D))
 			{
-				transform.position -= transform.Right() * Time::GetDeltaTime() * mySpeed;
+				transform.position += transform.Right() * Time::GetDeltaTime() * mySpeed;
 			}
 			if (InputManager::IsKeyDown(Key::A))
 			{
-				transform.position += transform.Right() * Time::GetDeltaTime() * mySpeed;
+				transform.position -= transform.Right() * Time::GetDeltaTime() * mySpeed;
 			}
 			if (InputManager::IsKeyDown(Key::E))
 			{
