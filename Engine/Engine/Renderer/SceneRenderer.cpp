@@ -72,11 +72,23 @@ namespace Snow
 	void SceneRenderer::RenderEditorScene()
 	{
 		auto sceneState = Engine::GetActiveScene()->GetSceneState();
-		auto camEntity = Engine::GetEditorScene()->GetPrimaryCameraEntity();
-		if (camEntity.IsValid())
+		if (sceneState == SceneState::Play)
 		{
-			RenderStaticMeshes(camEntity);
-			RenderSkeletalMeshes(camEntity, (sceneState == SceneState::Edit || sceneState == SceneState::Pause) ? false : true);
+			auto camEntity = Engine::GetActiveScene()->GetPrimaryCameraEntity();
+			if (camEntity.IsValid())
+			{
+				RenderStaticMeshes(camEntity);
+				RenderSkeletalMeshes(camEntity, (sceneState == SceneState::Edit || sceneState == SceneState::Pause) ? false : true);
+			}
+		}
+		else
+		{
+			auto camEntity = Engine::GetEditorScene()->GetPrimaryCameraEntity();
+			if (camEntity.IsValid())
+			{
+				RenderStaticMeshes(camEntity);
+				RenderSkeletalMeshes(camEntity, (sceneState == SceneState::Edit || sceneState == SceneState::Pause) ? false : true);
+			}
 		}
 	}
 

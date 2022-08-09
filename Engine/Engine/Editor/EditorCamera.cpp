@@ -1,4 +1,5 @@
 #include "EditorCamera.h"
+#include "Engine/Engine.h"
 #include "Engine/Input/Input.h"
 #include "Engine/Core/Time.h"
 
@@ -7,6 +8,8 @@
 
 void Snow::EditorCamera::UpdateMovement(glm::vec3& outPosition, glm::vec3& outRotation)
 {
+	if (Engine::GetActiveScene()->GetSceneState() == SceneState::Play) { return; }
+	
 	static POINT prevMousePos = InputManager::GetMousePosition();
 	POINT currMousePos = InputManager::GetMousePosition();
 
