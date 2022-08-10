@@ -20,7 +20,6 @@ namespace Snow
 
 		myEditorCamera->SetIsPrimary(true);
 		
-		mySceneHierarchyPanel.Init();
 		mySceneViewportPanel.Init();
 
 		myPlayIcon->LoadTexture("../Editor/Assets/Icons/PlayButton.png");
@@ -41,7 +40,7 @@ namespace Snow
 		//LOG_INFO(std::string("FPS: " + std::to_string(Time::GetFPS())));
 		auto* transformComp = myEditorCameraEntity.GetComponent<TransformComponent>();
 		myEditorCamera->UpdateMovement(transformComp->position, transformComp->rotation);
-		myEditorCameraEntity.GetComponent<CameraComponent>()->camera = myEditorCamera;
+		myEditorCameraEntity.GetComponent<CameraComponent>()->camera = *myEditorCamera.get();
 	}
 
 	void EditorLayer::RenderDockspace()
@@ -179,13 +178,18 @@ namespace Snow
 			{
 				if (sceneState == SceneState::Edit || sceneState == SceneState::Simulate)
 				{
-					Engine::GetActiveScene()->SetSceneState(SceneState::Play);
-					Engine::GetActiveScene()->OnRuntimeStart();
+					myClonedScene = CreateRef<Scene>();
+					auto& scene = Engine::Get().myActiveScene;
+					scene->CopyTo(myClonedScene);
+					scene->SetSceneState(SceneState::Play);
+					scene->OnRuntimeStart();
 				}
 				else if (sceneState == SceneState::Play)
 				{
-					Engine::GetActiveScene()->SetSceneState(SceneState::Edit);
-					Engine::GetActiveScene()->OnRuntimeStop();
+					auto& scene = Engine::Get().myActiveScene;
+					scene = myClonedScene;
+					scene->SetSceneState(SceneState::Edit);
+					scene->OnRuntimeStop();
 				}
 			}
 		}

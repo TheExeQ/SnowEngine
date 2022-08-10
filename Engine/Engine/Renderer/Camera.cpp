@@ -39,16 +39,10 @@ namespace Snow
 
 	void Camera::SetIsPrimary(bool aChoise)
 	{
-		auto cameraEditorEntities = Engine::GetEditorScene()->myRegistry.view<CameraComponent>();
-		for (auto entity : cameraEditorEntities)
-		{
-			Engine::GetEditorScene()->myRegistry.get<CameraComponent>(entity).camera->myIsPrimary = false;
-		}
-
 		auto cameraEntities = Engine::GetActiveScene()->myRegistry.view<CameraComponent>();
 		for (auto entity : cameraEntities)
 		{
-			Engine::GetActiveScene()->myRegistry.get<CameraComponent>(entity).camera->myIsPrimary = false;
+			Engine::GetActiveScene()->myRegistry.get<CameraComponent>(entity).camera.myIsPrimary = false; // #TODO: This sets cameras in cloned scene to false too.
 		}
 		
 		myIsPrimary = aChoise;

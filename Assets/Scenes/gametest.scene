@@ -1,18 +1,31 @@
 Scene: Untitled
 Entities:
-  - Entity: 18179258592395981053
+  - Entity: 9317541979504563121
+    Parent: 1748500495750464391
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Position: [0.104410514, 1.45000029, -1.99999428]
+      Rotation: [-2.38418195e-07, -2.62268401e-07, 2.3841892e-07]
+      Scale: [0.999999046, 1, 0.999999046]
+    CameraComponent:
+      Primary: true
+      FOV: 90
+      Near: 0.100000001
+      Far: 1000
+  - Entity: 18401471038857429846
     Parent: 0
     TagComponent:
-      Tag: Green Chest
+      Tag: Chest
     TransformComponent:
-      Position: [2, -0.5, 0]
-      Rotation: [0, 0.785398245, 0]
+      Position: [-2, -0.5, 0]
+      Rotation: [0, -0.785398245, 0]
       Scale: [0.00999999978, 0.00999999978, 0.00999999978]
     StaticMeshComponent:
       Model:
         MeshPath: ../Assets/Models/SM/Particle_Chest.fbx
       Material:
-        AlbedoPath: ../Assets/Textures/T_Particle_Chest_M.png
+        AlbedoPath: ../Assets/Textures/T_Particle_Chest_C.png
   - Entity: 1748500495750464391
     Parent: 0
     TagComponent:
@@ -28,29 +41,16 @@ Entities:
         AlbedoPath: ../Assets/Textures/T_Gremlin_C.png
     NativeScriptComponent:
       ScriptID: 1
-  - Entity: 18401471038857429846
+  - Entity: 18179258592395981053
     Parent: 0
     TagComponent:
-      Tag: Chest
+      Tag: Green Chest
     TransformComponent:
-      Position: [-2, -0.5, 0]
-      Rotation: [0, -0.785398245, 0]
+      Position: [2, -0.5, 0]
+      Rotation: [0, 0.785398245, 0]
       Scale: [0.00999999978, 0.00999999978, 0.00999999978]
     StaticMeshComponent:
       Model:
         MeshPath: ../Assets/Models/SM/Particle_Chest.fbx
       Material:
-        AlbedoPath: ../Assets/Textures/T_Particle_Chest_C.png
-  - Entity: 9317541979504563121
-    Parent: 1748500495750464391
-    TagComponent:
-      Tag: Camera
-    TransformComponent:
-      Position: [0.104410522, 1.45000029, -1.99999428]
-      Rotation: [-2.38418195e-07, -2.62268401e-07, 2.3841892e-07]
-      Scale: [0.999999046, 1, 0.999999046]
-    CameraComponent:
-      Primary: true
-      FOV: 90
-      Near: 0.100000001
-      Far: 1000
+        AlbedoPath: ../Assets/Textures/T_Particle_Chest_M.png

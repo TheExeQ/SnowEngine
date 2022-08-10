@@ -118,12 +118,12 @@ namespace Snow
 			glm::vec3 camScale;
 			Math::DecomposeTransform(cameraTransform, camPos, camRot, camScale);
 			
-			const auto& camera = aCamera.GetComponent<CameraComponent>()->camera;
+			auto& camera = aCamera.GetComponent<CameraComponent>()->camera;
 
 			auto objMatrix = object.GetWorldTransform();
 
-			myFrameBuffer.myData.ViewMatrix = camera->GetViewMatrix(camPos, camRot);
-			myFrameBuffer.myData.ProjectionMatrix = camera->GetProjectionMatrix();
+			myFrameBuffer.myData.ViewMatrix = camera.GetViewMatrix(camPos, camRot);
+			myFrameBuffer.myData.ProjectionMatrix = camera.GetProjectionMatrix();
 			myFrameBuffer.ApplyChanges();
 
 			myObjectBuffer.myData.WorldTransform = objMatrix;
@@ -166,7 +166,7 @@ namespace Snow
 			glm::vec3 camScale;
 			Math::DecomposeTransform(cameraTransform, camPos, camRot, camScale);
 			
-			const auto& camera = aCamera.GetComponent<CameraComponent>()->camera;
+			auto& camera = aCamera.GetComponent<CameraComponent>()->camera;
 			if (aAnimateActivated)
 			{
 				meshComp->animatedModel.SetAnimation(meshComp->animation);
@@ -180,8 +180,8 @@ namespace Snow
 			}
 			auto objMatrix = object.GetWorldTransform();
 
-			myFrameBuffer.myData.ViewMatrix = camera->GetViewMatrix(camPos, camRot);
-			myFrameBuffer.myData.ProjectionMatrix = camera->GetProjectionMatrix();
+			myFrameBuffer.myData.ViewMatrix = camera.GetViewMatrix(camPos, camRot);
+			myFrameBuffer.myData.ProjectionMatrix = camera.GetProjectionMatrix();
 			myFrameBuffer.ApplyChanges();
 
 			myObjectBuffer.myData.WorldTransform = objMatrix;

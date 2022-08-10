@@ -3,12 +3,15 @@
 #include "Engine/Scene/Components.h"
 
 #include <entt/entt.hpp>
+#include <unordered_map>
 #include <glm/glm.hpp>
 #include <vector>
 #include <utility>
 
 namespace Snow
 {
+	using EntityMap = std::unordered_map<UUID, entt::entity>;
+	
 	class Renderer;
 	class Entity;
 	class Camera;
@@ -26,6 +29,8 @@ namespace Snow
 	public:
 		Scene();
 		~Scene();
+		
+		void CopyTo(Ref<Scene> aScene);
 
 		std::string GetName() const { return mySceneName; };
 		void SetName(const std::string& aName) { mySceneName = aName; };
@@ -40,6 +45,7 @@ namespace Snow
 		void UnparentEntity(Entity aEntity);
 
 		Entity CreateEntity(const char* aName, Ref<Scene> aScene = nullptr);
+		Entity CreateEntityWithID(UUID aID, const char* aName, Ref<Scene> aScene = nullptr);
 		void DestroyEntity(Entity aEntity);
 
 		Entity GetPrimaryCameraEntity();
@@ -69,5 +75,6 @@ namespace Snow
 		std::string mySceneName = "Untitled";
 		SceneState mySceneState = SceneState::Edit;
 		entt::registry myRegistry;
+		EntityMap myEnttMap;
 	};
 }

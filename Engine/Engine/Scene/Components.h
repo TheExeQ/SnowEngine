@@ -15,6 +15,7 @@
 // 1) Add new component here (obviously).
 // 2) If appropriate, update SceneHierarchy panel to render the new component, and to allow new component to be added (via "Add Component" menu).
 // 3) Update SceneSerializer to serialize and deserialize the new component.
+// 4) Update CopyTo in Scene to make sure component won't be edited during play/simulations.
 
 namespace Snow
 {
@@ -92,7 +93,7 @@ namespace Snow
 
 	struct CameraComponent
 	{
-		Ref<Camera> camera = CreateRef<Camera>();
+		Camera camera;
 	};
 
 	struct StaticMeshComponent

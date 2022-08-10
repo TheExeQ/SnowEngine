@@ -25,6 +25,7 @@ namespace Snow
 		void UI_Toolbar();
 
 		Entity myEditorCameraEntity;
+		Ref<Scene> myClonedScene = CreateRef<Scene>();
 		Ref<EditorCamera> myEditorCamera = CreateRef<EditorCamera>();
 		std::string myLastLoadedScene = "";
 

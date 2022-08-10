@@ -7,7 +7,6 @@ namespace Snow
 	class SceneHierarchyPanel
 	{
 	public:
-		void Init();
 		void OnImGuiRender();
 		Entity GetSelectedEntity() const { return mySelectionContext; };
 		static void BindNativeScript(Entity aEntity, int aTypeIndex);

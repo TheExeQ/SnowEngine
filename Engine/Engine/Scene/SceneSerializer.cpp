@@ -145,10 +145,10 @@ namespace Snow
 			outEmitter << YAML::BeginMap;
 			auto comp = aEntity.GetComponent<CameraComponent>();
 
-			outEmitter << YAML::Key << "Primary" << YAML::Value << comp->camera->myIsPrimary;
-			outEmitter << YAML::Key << "FOV" << YAML::Value << comp->camera->myFov;
-			outEmitter << YAML::Key << "Near" << YAML::Value << comp->camera->myNearPlane;
-			outEmitter << YAML::Key << "Far" << YAML::Value << comp->camera->myFarPlane;
+			outEmitter << YAML::Key << "Primary" << YAML::Value << comp->camera.myIsPrimary;
+			outEmitter << YAML::Key << "FOV" << YAML::Value << comp->camera.myFov;
+			outEmitter << YAML::Key << "Near" << YAML::Value << comp->camera.myNearPlane;
+			outEmitter << YAML::Key << "Far" << YAML::Value << comp->camera.myFarPlane;
 
 			outEmitter << YAML::EndMap;
 		}
@@ -213,9 +213,9 @@ namespace Snow
 				Entity DeserializedEntity(myScene.get());
 				if (ent["TagComponent"])
 				{
-					auto tag = ent["TagComponent"]["Tag"];
-					DeserializedEntity = myScene->CreateEntity(tag.as<std::string>().c_str());
-					DeserializedEntity.GetComponent<IDComponent>()->uuid = ent["Entity"].as<uint64_t>();
+					auto tag = ent["TagComponent"]["Tag"].as<std::string>();
+					auto uuid = ent["Entity"].as<uint64_t>();
+					DeserializedEntity = myScene->CreateEntityWithID(uuid, tag.c_str());
 					if (ent["Parent"].as<uint64_t>())
 					{
 						childEntities.push_back(std::pair<Entity, uint64_t>(DeserializedEntity, ent["Parent"].as<uint64_t>()));
@@ -261,10 +261,10 @@ namespace Snow
 					auto nearPlane = ent["CameraComponent"]["Near"];
 					auto farPlane = ent["CameraComponent"]["Far"];
 					auto comp = DeserializedEntity.AddComponent<CameraComponent>();
-					comp->camera->myIsPrimary = primary.as<bool>();
-					comp->camera->myFov = fov.as<float>();
-					comp->camera->myNearPlane = nearPlane.as<float>();
-					comp->camera->myFarPlane = farPlane.as<float>();
+					comp->camera.myIsPrimary = primary.as<bool>();
+					comp->camera.myFov = fov.as<float>();
+					comp->camera.myNearPlane = nearPlane.as<float>();
+					comp->camera.myFarPlane = farPlane.as<float>();
 				}
 
 				if (ent["NativeScriptComponent"])

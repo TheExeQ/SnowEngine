@@ -21,6 +21,41 @@ namespace Snow
 
 	}
 
+	template<typename T>
+	static void CopyComponent(entt::registry& dstRegistry, entt::registry& srcRegistry, const std::unordered_map<UUID, entt::entity>& enttMap)
+	{
+		auto components = srcRegistry.view<T>();
+		for (auto srcEntity : components)
+		{
+			entt::entity destEntity = enttMap.at(srcRegistry.get<IDComponent>(srcEntity).uuid);
+
+			auto& srcComponent = srcRegistry.get<T>(srcEntity);
+			auto& destComponent = dstRegistry.emplace_or_replace<T>(destEntity, srcComponent);
+		}
+	}
+
+	void Scene::CopyTo(Ref<Scene> aScene)
+	{
+		aScene->ClearScene();
+		
+		auto view = myRegistry.view<IDComponent>();
+		for (entt::entity entity : view)
+		{
+			auto name = myRegistry.get<TagComponent>(entity).name;
+			auto id = myRegistry.get<IDComponent>(entity).uuid;
+			aScene->CreateEntityWithID(id, name.c_str(), aScene);
+		}
+
+		CopyComponent<NativeScriptComponent>(aScene->myRegistry, myRegistry, aScene->myEnttMap);
+		CopyComponent<TagComponent>(aScene->myRegistry, myRegistry, aScene->myEnttMap);
+		CopyComponent<IDComponent>(aScene->myRegistry, myRegistry, aScene->myEnttMap);
+		CopyComponent<RelationshipComponent>(aScene->myRegistry, myRegistry, aScene->myEnttMap);
+		CopyComponent<TransformComponent>(aScene->myRegistry, myRegistry, aScene->myEnttMap);
+		CopyComponent<CameraComponent>(aScene->myRegistry, myRegistry, aScene->myEnttMap);
+		CopyComponent<StaticMeshComponent>(aScene->myRegistry, myRegistry, aScene->myEnttMap);
+		CopyComponent<SkeletalMeshComponent>(aScene->myRegistry, myRegistry, aScene->myEnttMap);
+	}
+
 	void Scene::LoadScene(const char* aFilePath)
 	{
 		SceneSerializer serializer(Engine::GetActiveScene());
@@ -34,13 +69,9 @@ namespace Snow
 
 	Snow::Entity Scene::GetEntityFromUUID(UUID aID)
 	{
-		auto view = myRegistry.view<IDComponent>();
-		for (entt::entity entity : view)
+		if (auto it = myEnttMap.find(aID); it != myEnttMap.end())
 		{
-			if (view.get<IDComponent>(entity).uuid == aID)
-			{
-				return Entity(entity);
-			}
+			return Entity(it->second, this);
 		}
 		return Entity();
 	}
@@ -52,7 +83,7 @@ namespace Snow
 		{
 			if (view.get<TagComponent>(entity).name == aName)
 			{
-				return Entity(entity);
+				return Entity(entity, this);
 			}
 		}
 		return Entity();
@@ -93,9 +124,21 @@ namespace Snow
 	{
 		Entity entity(myRegistry.create(), (aScene) ? aScene.get() : Engine::GetActiveScene().get());
 		entity.AddComponent<TagComponent>()->name = aName;
-		entity.AddComponent<IDComponent>();
+		auto uuid = entity.AddComponent<IDComponent>()->uuid;
 		entity.AddComponent<RelationshipComponent>();
 		entity.AddComponent<TransformComponent>();
+		myEnttMap[uuid] = (entt::entity)entity;
+		return entity;
+	}
+
+	Snow::Entity Scene::CreateEntityWithID(UUID aID, const char* aName, Ref<Scene> aScene /*= nullptr*/)
+	{
+		Entity entity(myRegistry.create(), (aScene) ? aScene.get() : Engine::GetActiveScene().get());
+		entity.AddComponent<TagComponent>()->name = aName;
+		entity.AddComponent<IDComponent>()->uuid = aID;
+		entity.AddComponent<RelationshipComponent>();
+		entity.AddComponent<TransformComponent>();
+		myEnttMap[aID] = (entt::entity)entity;
 		return entity;
 	}
 
@@ -114,7 +157,7 @@ namespace Snow
 		auto cameraEntities = myRegistry.view<CameraComponent>();
 		for (auto entity : cameraEntities)
 		{
-			if (myRegistry.get<CameraComponent>(entity).camera->GetIsPrimary())
+			if (myRegistry.get<CameraComponent>(entity).camera.GetIsPrimary())
 			{
 				return Entity(entity, this);
 			}
@@ -155,9 +198,14 @@ namespace Snow
 	{
 		glm::mat4 transform(1.0f);
 
-		Entity parent(aEntity.ParentUUID());
-		if (parent.IsValid())
-			transform = GetWorldSpaceTransformMatrix(parent);
+		if (aEntity.HasParent())
+		{
+			Entity parent(aEntity.ParentUUID());
+			if (parent.IsValid())
+			{
+				transform = GetWorldSpaceTransformMatrix(parent);
+			}
+		}
 
 		return transform * aEntity.GetTransform();
 	}

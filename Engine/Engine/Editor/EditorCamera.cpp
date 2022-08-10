@@ -8,7 +8,11 @@
 
 void Snow::EditorCamera::UpdateMovement(glm::vec3& outPosition, glm::vec3& outRotation)
 {
-	if (Engine::GetActiveScene()->GetSceneState() == SceneState::Play) { return; }
+	if (Engine::GetActiveScene()->GetSceneState() == SceneState::Play) 
+	{ 
+		SceneViewportPanel::Get().myShowGizmos = false;
+		return; 
+	}
 	
 	static POINT prevMousePos = InputManager::GetMousePosition();
 	POINT currMousePos = InputManager::GetMousePosition();

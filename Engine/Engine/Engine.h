@@ -41,6 +41,7 @@ namespace Snow
 		static Ref<Scene> GetEditorScene() { return Get().myEditorScene; }
 		
 	private:
+		friend class EditorLayer;
 		friend class SceneViewportPanel;
 		friend LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 

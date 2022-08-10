@@ -8,15 +8,11 @@
 #include "Engine/Scene/ScriptableEntity.h"
 #include "GameProject/Scripts.h"
 
-namespace Snow {
-
-	void SceneHierarchyPanel::Init()
-	{
-		myContext = Engine::GetActiveScene();
-	}
-
+namespace Snow 
+{
 	void SceneHierarchyPanel::OnImGuiRender()
 	{
+		myContext = Engine::GetActiveScene();
 		ImGui::Begin("Scene Hierarchy");
 		ImRect windowRect = { ImGui::GetWindowContentRegionMin(), ImGui::GetWindowContentRegionMax() };
 
@@ -116,13 +112,13 @@ namespace Snow {
 		{
 			for (auto child : aEntity.ChildrenUUIDs())
 			{
-				Entity e(child, myContext.get());
+				Entity e = myContext->GetEntityFromUUID(child);
 				if (e.IsValid())
 				{
 					DrawEntityNode(e);
 				}
 			}
-			
+
 			ImGui::TreePop();
 		}
 		
@@ -380,10 +376,10 @@ namespace Snow {
 		DrawComponent<CameraComponent>("Camera Component", aEntity, [](auto component)
 			{
 				bool changesMade = false;
-				bool primary = component->camera->GetIsPrimary();
-				float fov = component->camera->GetFOV();
-				float nearPlane = component->camera->GetNear();
-				float farPlane = component->camera->GetFar();
+				bool primary = component->camera.GetIsPrimary();
+				float fov = component->camera.GetFOV();
+				float nearPlane = component->camera.GetNear();
+				float farPlane = component->camera.GetFar();
 				
 				if (ImGui::Checkbox("Primary", &primary))
 				{
@@ -407,8 +403,8 @@ namespace Snow {
 
 				if (changesMade)
 				{
-					component->camera->SetProjectionValues(fov, 16.f/9.f, nearPlane, farPlane);
-					component->camera->SetIsPrimary(primary);
+					component->camera.SetProjectionValues(fov, 16.f/9.f, nearPlane, farPlane);
+					component->camera.SetIsPrimary(primary);
 				}
 			});
 
