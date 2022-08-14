@@ -30,7 +30,7 @@ namespace Snow
 		friend class SceneHierarchyPanel;
 		friend class SceneSerializer;
 		
-		float myTimeRatio = 0.5f;
+		float myTimeRatio = 0.0f;
 		float myPlaybackSpeed = 1.f;
 		Ref<ozz::animation::Animation> myAnimation = CreateRef<ozz::animation::Animation>();
 		Ref<ozz::animation::Skeleton> mySkeleton = CreateRef<ozz::animation::Skeleton>();

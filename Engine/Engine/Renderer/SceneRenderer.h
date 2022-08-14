@@ -23,6 +23,7 @@ namespace Snow
 		friend class SceneViewportPanel;
 		void RenderStaticMeshes(Entity& aCamera);
 		void RenderSkeletalMeshes(Entity& aCamera, bool aAnimateActivated = true);
+		void RenderBones(Entity& aCamera, bool aAnimateActivated = true);
 
 		bool CreateShaders();
 		bool CreateConstantBuffers();
