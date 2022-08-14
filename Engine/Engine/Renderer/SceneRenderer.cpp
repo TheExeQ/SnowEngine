@@ -167,17 +167,6 @@ namespace Snow
 			Math::DecomposeTransform(cameraTransform, camPos, camRot, camScale);
 			
 			auto& camera = aCamera.GetComponent<CameraComponent>()->camera;
-			if (aAnimateActivated)
-			{
-				meshComp->animatedModel.SetAnimation(meshComp->animation);
-
-				// Time only for testing until animation works
-				static float time = 0.f;
-				time += Time::GetDeltaTime() * 3.f;
-				if (time > meshComp->animation.myDuration) { time = 0.f; }
-
-				meshComp->animatedModel.UpdateBoneTransform(time); // #TODO: This is very performance heavy and lowers fps from 240 to 30-40
-			}
 			auto objMatrix = object.GetWorldTransform();
 
 			myFrameBuffer.myData.ViewMatrix = camera.GetViewMatrix(camPos, camRot);
@@ -188,9 +177,10 @@ namespace Snow
 			myObjectBuffer.myData.BoneTransforms.fill(glm::mat4(1.f));
 			if (aAnimateActivated)
 			{
-				for (uint32_t i = 0; i < meshComp->animatedModel.myBoneTransforms.size(); i++)
+				meshComp->skeleton.OnUpdate();
+				for (uint32_t i = 0; i < meshComp->skeleton.myModelTransforms.size(); i++)
 				{
-					myObjectBuffer.myData.BoneTransforms[i] = meshComp->animatedModel.myBoneTransforms[i];
+					myObjectBuffer.myData.BoneTransforms[i] = Math::ConvertOzzMat4ToGlmMat4(meshComp->skeleton.myModelTransforms[i]) * meshComp->animatedModel.myInverseBindPoseBones[i];
 				}
 			}
 			myObjectBuffer.ApplyChanges();

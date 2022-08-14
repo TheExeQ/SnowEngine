@@ -7,7 +7,7 @@ void Skinning(inout float3 Pos, float4 weights, uint4 indicies)
         
         for (uint i = 0; i < 4; i++)
         {
-            m += boneTransforms[indicies[i]] * weights[i];
+            m += weights[i] * boneTransforms[indicies[i]];
         }
 
         Pos = mul(m, float4(Pos, 1));

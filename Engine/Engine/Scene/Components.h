@@ -3,7 +3,7 @@
 #include "Engine/Core/UUID.h"
 #include "Engine/Renderer/Camera.h"
 #include "Engine/Renderer/Model.h"
-#include "Engine/Renderer/Animation.h"
+#include "Engine/Renderer/Skeleton.h"
 #include "Engine/Renderer/Material.h"
 
 #include <glm/glm.hpp>
@@ -106,6 +106,6 @@ namespace Snow
 	{
 		Model animatedModel;
 		Material material;
-		Animation animation;
+		Skeleton skeleton;
 	};
 }

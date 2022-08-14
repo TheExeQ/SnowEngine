@@ -133,7 +133,8 @@ namespace Snow
 
 			outEmitter << YAML::Key << "Animation";
 			outEmitter << YAML::BeginMap;
-			outEmitter << YAML::Key << "AnimationPath" << YAML::Value << comp->animation.myFilePath;
+			outEmitter << YAML::Key << "SkeletonPath" << YAML::Value << comp->skeleton.mySkeletonFilePath;
+			outEmitter << YAML::Key << "AnimationPath" << YAML::Value << comp->skeleton.myAnimationFilePath;
 			outEmitter << YAML::EndMap;
 
 			outEmitter << YAML::EndMap;
@@ -251,7 +252,8 @@ namespace Snow
 					auto comp = DeserializedEntity.AddComponent<SkeletalMeshComponent>();
 					comp->animatedModel.LoadModel(model["MeshPath"].as<std::string>().c_str());
 					comp->material.SetAlbedo(material["AlbedoPath"].as<std::string>().c_str());
-					comp->animation.LoadAnimation(animation["AnimationPath"].as<std::string>().c_str());
+					comp->skeleton.LoadSkeleton(animation["SkeletonPath"].as<std::string>().c_str());
+					comp->skeleton.LoadAnimation(animation["AnimationPath"].as<std::string>().c_str());
 				}
 
 				if (ent["CameraComponent"])

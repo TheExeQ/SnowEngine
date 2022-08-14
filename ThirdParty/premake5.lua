@@ -26,7 +26,9 @@ project "ThirdParty"
 	
 	libdirs
 	{
-		"./libs/assimp/"
+		"./libs/assimp/",
+		"./libs/PhysX/",
+		"./libs/ozz/",
 	}
 
 	filter "system:windows"
@@ -49,6 +51,13 @@ project "ThirdParty"
 		links
 		{
 			"assimp-vc143-mt.lib",
+			"ozz_animation_fbx_r.lib",
+			"ozz_animation_offline_r.lib",
+			"ozz_animation_r.lib",
+			"ozz_animation_tools_r.lib",
+			"ozz_base_r.lib",
+			"ozz_geometry_r.lib",
+			"ozz_options_r.lib",
 		}
 		
 	filter "configurations:Release"
@@ -59,6 +68,13 @@ project "ThirdParty"
 		links
 		{
 			"assimp-vc143-mt.lib",
+			"ozz_animation_fbx_r.lib",
+			"ozz_animation_offline_r.lib",
+			"ozz_animation_r.lib",
+			"ozz_animation_tools_r.lib",
+			"ozz_base_r.lib",
+			"ozz_geometry_r.lib",
+			"ozz_options_r.lib",
 		}
 		
 	filter "configurations:Retail"
@@ -69,4 +85,11 @@ project "ThirdParty"
 		links
 		{
 			"assimp-vc143-mt.lib",
+			"ozz_animation_fbx_r.lib",
+			"ozz_animation_offline_r.lib",
+			"ozz_animation_r.lib",
+			"ozz_animation_tools_r.lib",
+			"ozz_base_r.lib",
+			"ozz_geometry_r.lib",
+			"ozz_options_r.lib",
 		}

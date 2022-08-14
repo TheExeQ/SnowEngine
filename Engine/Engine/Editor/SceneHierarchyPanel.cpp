@@ -343,7 +343,16 @@ namespace Snow
 					meshFilepath = std::string(buffer);
 				}
 
-				auto& animationFilepath = component->animation.myFilePath;
+				auto& skeletonFilepath = component->skeleton.mySkeletonFilePath;
+
+				memset(buffer, 0, sizeof(buffer));
+				std::strncpy(buffer, skeletonFilepath.c_str(), sizeof(buffer));
+				if (ImGui::InputText("Skeleton", buffer, sizeof(buffer)))
+				{
+					skeletonFilepath = std::string(buffer);
+				}
+
+				auto& animationFilepath = component->skeleton.myAnimationFilePath;
 
 				memset(buffer, 0, sizeof(buffer));
 				std::strncpy(buffer, animationFilepath.c_str(), sizeof(buffer));
@@ -369,7 +378,8 @@ namespace Snow
 				{
 					component->animatedModel.LoadModel(meshFilepath.c_str());
 					component->material.myAlbedo.LoadTexture(albedoFilepath.c_str());
-					component->animation.LoadAnimation(animationFilepath.c_str());
+					component->skeleton.LoadAnimation(animationFilepath.c_str());
+					component->skeleton.LoadSkeleton(skeletonFilepath.c_str());
 				}
 			});
 

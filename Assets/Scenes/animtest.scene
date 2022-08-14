@@ -1,0 +1,31 @@
+Scene: Untitled
+Entities:
+  - Entity: 8954289203850583273
+    Parent: 0
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Position: [-1.5, 0, 2]
+      Rotation: [0, 1.57079637, 0]
+      Scale: [0.999986947, 1, 0.999986947]
+    CameraComponent:
+      Primary: false
+      FOV: 90
+      Near: 0.100000001
+      Far: 1000
+  - Entity: 15210294068699734251
+    Parent: 0
+    TagComponent:
+      Tag: Gremlin
+    TransformComponent:
+      Position: [0, 0, 2]
+      Rotation: [0, -0, 0]
+      Scale: [0.00999999978, 0.00999999978, 0.00999999978]
+    SkeletalMeshComponent:
+      Model:
+        MeshPath: ../assets/models/sk/Gremlin.fbx
+      Material:
+        AlbedoPath: ../assets/textures/T_Gremlin_C.png
+      Animation:
+        SkeletonPath: ../assets/models/sk/Gremlin.skeleton
+        AnimationPath: ../assets/models/animations/gremlin@walk.animation
