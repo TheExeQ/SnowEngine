@@ -51,13 +51,13 @@ project "ThirdParty"
 		links
 		{
 			"assimp-vc143-mt.lib",
-			"ozz_animation_fbx_r.lib",
-			"ozz_animation_offline_r.lib",
-			"ozz_animation_r.lib",
-			"ozz_animation_tools_r.lib",
-			"ozz_base_r.lib",
-			"ozz_geometry_r.lib",
-			"ozz_options_r.lib",
+			"ozz_animation_fbx_d.lib",
+			"ozz_animation_offline_d.lib",
+			"ozz_animation_d.lib",
+			"ozz_animation_tools_d.lib",
+			"ozz_base_d.lib",
+			"ozz_geometry_d.lib",
+			"ozz_options_d.lib",
 		}
 		
 	filter "configurations:Release"

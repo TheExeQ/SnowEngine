@@ -64,7 +64,7 @@ namespace Snow
 
 	bool Skeleton::OnUpdate()
 	{
-		myTimeRatio += Time::GetDeltaTime();
+		myTimeRatio += Time::GetDeltaTime() * myPlaybackSpeed;
 		if (myTimeRatio > 1.f) { myTimeRatio = 0.f; };
 
 		// Samples optimized animation

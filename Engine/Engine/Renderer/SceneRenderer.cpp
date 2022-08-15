@@ -4,6 +4,8 @@
 #include "Engine/Math/Math.h"
 #include "Engine/Scene/Components.h"
 
+#include "Engine/Debug/Profiler.h"
+
 namespace Snow
 {
 	bool SceneRenderer::Initialize()
@@ -78,8 +80,8 @@ namespace Snow
 			if (camEntity.IsValid())
 			{
 				RenderStaticMeshes(camEntity);
-				//RenderSkeletalMeshes(camEntity, (sceneState == SceneState::Edit || sceneState == SceneState::Pause) ? false : true);
-				RenderBones(camEntity, (sceneState == SceneState::Edit || sceneState == SceneState::Pause) ? false : true);
+				RenderSkeletalMeshes(camEntity, (sceneState == SceneState::Edit || sceneState == SceneState::Pause) ? false : true);
+				//RenderBones(camEntity, (sceneState == SceneState::Edit || sceneState == SceneState::Pause) ? false : true);
 			}
 		}
 		else
@@ -88,8 +90,8 @@ namespace Snow
 			if (camEntity.IsValid())
 			{
 				RenderStaticMeshes(camEntity);
-				//RenderSkeletalMeshes(camEntity, (sceneState == SceneState::Edit || sceneState == SceneState::Pause) ? false : true);
-				RenderBones(camEntity, (sceneState == SceneState::Edit || sceneState == SceneState::Pause) ? false : true);
+				RenderSkeletalMeshes(camEntity, (sceneState == SceneState::Edit || sceneState == SceneState::Pause) ? false : true);
+				//RenderBones(camEntity, (sceneState == SceneState::Edit || sceneState == SceneState::Pause) ? false : true);
 			}
 		}
 	}
@@ -177,7 +179,7 @@ namespace Snow
 
 			myObjectBuffer.myData.WorldTransform = objMatrix;
 			myObjectBuffer.myData.BoneTransforms.fill(glm::mat4(1.f));
-			//if (aAnimateActivated)
+			if (aAnimateActivated)
 			{
 				meshComp->skeleton.OnUpdate();
 				for (uint32_t i = 0; i < meshComp->skeleton.myModelTransforms.size(); i++)
@@ -268,7 +270,7 @@ namespace Snow
 			Math::DecomposeTransform(cameraTransform, camPos, camRot, camScale);
 
 			auto& camera = aCamera.GetComponent<CameraComponent>()->camera;
-			auto objTransform = object.GetWorldTransform();
+			auto objTransform = glm::scale(object.GetWorldTransform(), glm::vec3(100.f));
 
 			myFrameBuffer.myData.ViewMatrix = camera.GetViewMatrix(camPos, camRot);
 			myFrameBuffer.myData.ProjectionMatrix = camera.GetProjectionMatrix();
