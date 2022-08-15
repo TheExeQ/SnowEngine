@@ -80,9 +80,9 @@ namespace Snow
 			glm::mat4 result;
 
 			result[0][0] = aMatrix.cols[0].m128_f32[0]; result[1][0] = aMatrix.cols[1].m128_f32[0]; result[2][0] = aMatrix.cols[2].m128_f32[0]; result[3][0] = aMatrix.cols[3].m128_f32[0];
-			result[0][1] = aMatrix.cols[1].m128_f32[1]; result[1][1] = aMatrix.cols[1].m128_f32[1]; result[2][1] = aMatrix.cols[2].m128_f32[1]; result[3][1] = aMatrix.cols[3].m128_f32[1];
-			result[0][2] = aMatrix.cols[2].m128_f32[2]; result[1][2] = aMatrix.cols[1].m128_f32[2]; result[2][2] = aMatrix.cols[2].m128_f32[2]; result[3][2] = aMatrix.cols[3].m128_f32[2];
-			result[0][3] = aMatrix.cols[3].m128_f32[3]; result[1][3] = aMatrix.cols[1].m128_f32[3]; result[2][3] = aMatrix.cols[2].m128_f32[3]; result[3][3] = aMatrix.cols[3].m128_f32[3];
+			result[0][1] = aMatrix.cols[0].m128_f32[1]; result[1][1] = aMatrix.cols[1].m128_f32[1]; result[2][1] = aMatrix.cols[2].m128_f32[1]; result[3][1] = aMatrix.cols[3].m128_f32[1];
+			result[0][2] = aMatrix.cols[0].m128_f32[2]; result[1][2] = aMatrix.cols[1].m128_f32[2]; result[2][2] = aMatrix.cols[2].m128_f32[2]; result[3][2] = aMatrix.cols[3].m128_f32[2];
+			result[0][3] = aMatrix.cols[0].m128_f32[3]; result[1][3] = aMatrix.cols[1].m128_f32[3]; result[2][3] = aMatrix.cols[2].m128_f32[3]; result[3][3] = aMatrix.cols[3].m128_f32[3];
 			
 			return result;
 		}

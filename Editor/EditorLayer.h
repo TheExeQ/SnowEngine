@@ -23,6 +23,7 @@ namespace Snow
 	private:
 		void RenderDockspace();
 		void UI_Toolbar();
+		void Stats();
 
 		Entity myEditorCameraEntity;
 		Ref<Scene> myClonedScene = CreateRef<Scene>();

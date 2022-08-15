@@ -6,6 +6,8 @@
 
 #include "Engine/Debug/Profiler.h"
 
+#include <iostream>
+
 namespace Snow
 {
 	bool SceneRenderer::Initialize()
@@ -184,7 +186,8 @@ namespace Snow
 				meshComp->skeleton.OnUpdate();
 				for (uint32_t i = 0; i < meshComp->skeleton.myModelTransforms.size(); i++)
 				{
-					myObjectBuffer.myData.BoneTransforms[i] = Math::ConvertOzzMat4ToGlmMat4(meshComp->skeleton.myModelTransforms[i]) * meshComp->animatedModel.myInverseBindPoseBones[i];
+					auto mat = Math::ConvertOzzMat4ToGlmMat4(meshComp->skeleton.myModelTransforms[i]) * meshComp->animatedModel.myBindPoseInverses[i];
+					myObjectBuffer.myData.BoneTransforms[i] = glm::transpose(mat);
 				}
 			}
 			myObjectBuffer.ApplyChanges();

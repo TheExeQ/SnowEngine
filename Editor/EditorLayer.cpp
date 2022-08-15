@@ -30,6 +30,7 @@ namespace Snow
 	{
 		RenderDockspace(); // This has to be rendered before windows that should be dockable.
 		UI_Toolbar();
+		Stats();
 		
 		mySceneHierarchyPanel.OnImGuiRender();
 		mySceneViewportPanel.OnImGuiRender(mySceneHierarchyPanel.GetSelectedEntity());
@@ -212,6 +213,18 @@ namespace Snow
 		*/
 		ImGui::PopStyleVar(2);
 		ImGui::PopStyleColor(3);
+		ImGui::End();
+	}
+
+	void EditorLayer::Stats()
+	{
+		float fps = Time::GetFPS();
+
+		std::stringstream ssFPS;
+		ssFPS << "FPS: " << fps;
+		
+		ImGui::Begin("Stats");
+		ImGui::Text(ssFPS.str().c_str());
 		ImGui::End();
 	}
 }

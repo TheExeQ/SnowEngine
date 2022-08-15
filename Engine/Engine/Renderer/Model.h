@@ -44,7 +44,7 @@ namespace Snow
 		std::string myFilePath = "";
 		std::vector<Mesh> myMeshes;
 		
-		std::vector<glm::mat4> myInverseBindPoseBones;
+		std::vector<glm::mat4> myBindPoseInverses;
 
 		inline static std::unordered_map<std::string, Ref<Model>> myModels;
 	};

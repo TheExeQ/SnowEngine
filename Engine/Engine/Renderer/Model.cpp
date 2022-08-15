@@ -85,15 +85,9 @@ namespace Snow
 
 	void Model::LoadBones(std::vector<Vertex>& vertices, aiMesh* aMesh)
 	{
-
 		for (uint32_t boneId = 0; boneId < aMesh->mNumBones; boneId++)
 		{
-			auto name = std::string(aMesh->mBones[boneId]->mName.C_Str());
-		}
-
-		for (uint32_t boneId = 0; boneId < aMesh->mNumBones; boneId++)
-		{
-			myInverseBindPoseBones.push_back(glm::inverse(Math::ConvertAssimpMat4ToGlmMat4(aMesh->mBones[boneId]->mOffsetMatrix)));
+			myBindPoseInverses.push_back(glm::inverse(Math::ConvertAssimpMat4ToGlmMat4(aMesh->mBones[boneId]->mOffsetMatrix)));
 			for (uint32_t weightId = 0; weightId < aMesh->mBones[boneId]->mNumWeights; weightId++)
 			{
 				uint32_t vertexId = aMesh->mBones[boneId]->mWeights[weightId].mVertexId;

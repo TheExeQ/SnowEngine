@@ -1,0 +1,111 @@
+Scene: Untitled
+Entities:
+  - Entity: 8954289203850583273
+    Parent: 0
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Position: [5, 0, -2.5]
+      Rotation: [0, -0, 0]
+      Scale: [0.999986947, 1, 0.999986947]
+    CameraComponent:
+      Primary: true
+      FOV: 90
+      Near: 0.100000001
+      Far: 1000
+  - Entity: 15210294068699735451
+    Parent: 0
+    TagComponent:
+      Tag: Gremlin
+    TransformComponent:
+      Position: [0, 0, 2]
+      Rotation: [0, -0, 0]
+      Scale: [0.00999999978, 0.00999999978, 0.00999999978]
+    SkeletalMeshComponent:
+      Model:
+        MeshPath: ../assets/models/sk/Gremlin.fbx
+      Material:
+        AlbedoPath: ../assets/textures/T_Gremlin_C.png
+      Animation:
+        SkeletonPath: ../assets/models/sk/Gremlin.skeleton
+        AnimationPath: ../assets/models/animations/gremlin@walk.animation
+  - Entity: 15210294003899734661
+    Parent: 0
+    TagComponent:
+      Tag: Gremlin2
+    TransformComponent:
+      Position: [2, 0, 2]
+      Rotation: [0, -0, 0]
+      Scale: [0.00999999978, 0.00999999978, 0.00999999978]
+    SkeletalMeshComponent:
+      Model:
+        MeshPath: ../assets/models/sk/Gremlin.fbx
+      Material:
+        AlbedoPath: ../assets/textures/T_Gremlin_C.png
+      Animation:
+        SkeletonPath: ../assets/models/sk/Gremlin.skeleton
+        AnimationPath: ../assets/models/animations/gremlin@run.animation
+  - Entity: 15203894068699734276
+    Parent: 0
+    TagComponent:
+      Tag: Gremlin3
+    TransformComponent:
+      Position: [4, 0, 2]
+      Rotation: [0, -0, 0]
+      Scale: [0.00999999978, 0.00999999978, 0.00999999978]
+    SkeletalMeshComponent:
+      Model:
+        MeshPath: ../assets/models/sk/Gremlin.fbx
+      Material:
+        AlbedoPath: ../assets/textures/T_Gremlin_C.png
+      Animation:
+        SkeletonPath: ../assets/models/sk/Gremlin.skeleton
+        AnimationPath: ../assets/models/animations/gremlin@walk.animation
+  - Entity: 15203894068699737777
+    Parent: 0
+    TagComponent:
+      Tag: Gremlin4
+    TransformComponent:
+      Position: [6, 0, 2]
+      Rotation: [0, -0, 0]
+      Scale: [0.00999999978, 0.00999999978, 0.00999999978]
+    SkeletalMeshComponent:
+      Model:
+        MeshPath: ../assets/models/sk/Gremlin.fbx
+      Material:
+        AlbedoPath: ../assets/textures/T_Gremlin_C.png
+      Animation:
+        SkeletonPath: ../assets/models/sk/Gremlin.skeleton
+        AnimationPath: ../assets/models/animations/gremlin@run.animation
+  - Entity: 15203894068699736666
+    Parent: 0
+    TagComponent:
+      Tag: Gremlin5
+    TransformComponent:
+      Position: [8, 0, 2]
+      Rotation: [0, -0, 0]
+      Scale: [0.00999999978, 0.00999999978, 0.00999999978]
+    SkeletalMeshComponent:
+      Model:
+        MeshPath: ../assets/models/sk/Gremlin.fbx
+      Material:
+        AlbedoPath: ../assets/textures/T_Gremlin_C.png
+      Animation:
+        SkeletonPath: ../assets/models/sk/Gremlin.skeleton
+        AnimationPath: ../assets/models/animations/gremlin@walk.animation
+  - Entity: 15203894068699735555
+    Parent: 0
+    TagComponent:
+      Tag: Gremlin6
+    TransformComponent:
+      Position: [10, 0, 2]
+      Rotation: [0, -0, 0]
+      Scale: [0.00999999978, 0.00999999978, 0.00999999978]
+    SkeletalMeshComponent:
+      Model:
+        MeshPath: ../assets/models/sk/Gremlin.fbx
+      Material:
+        AlbedoPath: ../assets/textures/T_Gremlin_C.png
+      Animation:
+        SkeletonPath: ../assets/models/sk/Gremlin.skeleton
+        AnimationPath: ../assets/models/animations/gremlin@run.animation
