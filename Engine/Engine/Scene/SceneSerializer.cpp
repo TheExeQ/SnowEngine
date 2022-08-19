@@ -60,28 +60,28 @@ namespace Snow
 
 	void SceneSerializer::SerializeEntity(YAML::Emitter& outEmitter, Entity aEntity)
 	{
-		auto idComp = aEntity.GetComponent<IDComponent>();
+		auto& idComp = aEntity.GetComponent<IDComponent>();
 		outEmitter << YAML::BeginMap;
-		outEmitter << YAML::Key << "Entity" << YAML::Value << (uint64_t)idComp->uuid;
+		outEmitter << YAML::Key << "Entity" << YAML::Value << (uint64_t)idComp.uuid;
 		
 		if (aEntity.HasComponent<RelationshipComponent>())
 		{
-			auto comp = aEntity.GetComponent<RelationshipComponent>();
-			outEmitter << YAML::Key << "Parent" << YAML::Value << (uint64_t)comp->Parent;
+			auto& comp = aEntity.GetComponent<RelationshipComponent>();
+			outEmitter << YAML::Key << "Parent" << YAML::Value << (uint64_t)comp.Parent;
 		}
 		
 		if (aEntity.HasComponent<TagComponent>())
 		{
 			outEmitter << YAML::Key << "TagComponent";
 			outEmitter << YAML::BeginMap;
-			auto comp = aEntity.GetComponent<TagComponent>();
-			outEmitter << YAML::Key << "Tag" << YAML::Value << comp->name;
+			auto& comp = aEntity.GetComponent<TagComponent>();
+			outEmitter << YAML::Key << "Tag" << YAML::Value << comp.name;
 			outEmitter << YAML::EndMap;
 		}
 
 		if (aEntity.HasComponent<TransformComponent>())
 		{
-			auto comp = aEntity.GetComponent<TransformComponent>();
+			auto& comp = aEntity.GetComponent<TransformComponent>();
 			glm::vec3 worldPosition;
 			glm::vec3 worldRotation;
 			glm::vec3 worldScale;
@@ -100,16 +100,16 @@ namespace Snow
 		{
 			outEmitter << YAML::Key << "StaticMeshComponent";
 			outEmitter << YAML::BeginMap;
-			auto comp = aEntity.GetComponent<StaticMeshComponent>();
+			auto& comp = aEntity.GetComponent<StaticMeshComponent>();
 			
 			outEmitter << YAML::Key << "Model";
 			outEmitter << YAML::BeginMap;
-			outEmitter << YAML::Key << "MeshPath" << YAML::Value << comp->model.myFilePath;
+			outEmitter << YAML::Key << "MeshPath" << YAML::Value << comp.model.myFilePath;
 			outEmitter << YAML::EndMap;
 			
 			outEmitter << YAML::Key << "Material";
 			outEmitter << YAML::BeginMap;
-			outEmitter << YAML::Key << "AlbedoPath" << YAML::Value << comp->material.myAlbedo.myFilePath;
+			outEmitter << YAML::Key << "AlbedoPath" << YAML::Value << comp.material.myAlbedo.myFilePath;
 			outEmitter << YAML::EndMap;
 			
 			outEmitter << YAML::EndMap;
@@ -119,22 +119,22 @@ namespace Snow
 		{
 			outEmitter << YAML::Key << "SkeletalMeshComponent";
 			outEmitter << YAML::BeginMap;
-			auto comp = aEntity.GetComponent<SkeletalMeshComponent>();
+			auto& comp = aEntity.GetComponent<SkeletalMeshComponent>();
 
 			outEmitter << YAML::Key << "Model";
 			outEmitter << YAML::BeginMap;
-			outEmitter << YAML::Key << "MeshPath" << YAML::Value << comp->animatedModel.myFilePath;
+			outEmitter << YAML::Key << "MeshPath" << YAML::Value << comp.animatedModel.myFilePath;
 			outEmitter << YAML::EndMap;
 
 			outEmitter << YAML::Key << "Material";
 			outEmitter << YAML::BeginMap;
-			outEmitter << YAML::Key << "AlbedoPath" << YAML::Value << comp->material.myAlbedo.myFilePath;
+			outEmitter << YAML::Key << "AlbedoPath" << YAML::Value << comp.material.myAlbedo.myFilePath;
 			outEmitter << YAML::EndMap;
 
 			outEmitter << YAML::Key << "Animation";
 			outEmitter << YAML::BeginMap;
-			outEmitter << YAML::Key << "SkeletonPath" << YAML::Value << comp->skeleton.mySkeletonFilePath;
-			outEmitter << YAML::Key << "AnimationPath" << YAML::Value << comp->skeleton.myAnimationFilePath;
+			outEmitter << YAML::Key << "SkeletonPath" << YAML::Value << comp.skeleton.mySkeletonFilePath;
+			outEmitter << YAML::Key << "AnimationPath" << YAML::Value << comp.skeleton.myAnimationFilePath;
 			outEmitter << YAML::EndMap;
 
 			outEmitter << YAML::EndMap;
@@ -144,12 +144,12 @@ namespace Snow
 		{
 			outEmitter << YAML::Key << "CameraComponent";
 			outEmitter << YAML::BeginMap;
-			auto comp = aEntity.GetComponent<CameraComponent>();
+			auto& comp = aEntity.GetComponent<CameraComponent>();
 
-			outEmitter << YAML::Key << "Primary" << YAML::Value << comp->camera.myIsPrimary;
-			outEmitter << YAML::Key << "FOV" << YAML::Value << comp->camera.myFov;
-			outEmitter << YAML::Key << "Near" << YAML::Value << comp->camera.myNearPlane;
-			outEmitter << YAML::Key << "Far" << YAML::Value << comp->camera.myFarPlane;
+			outEmitter << YAML::Key << "Primary" << YAML::Value << comp.camera.myIsPrimary;
+			outEmitter << YAML::Key << "FOV" << YAML::Value << comp.camera.myFov;
+			outEmitter << YAML::Key << "Near" << YAML::Value << comp.camera.myNearPlane;
+			outEmitter << YAML::Key << "Far" << YAML::Value << comp.camera.myFarPlane;
 
 			outEmitter << YAML::EndMap;
 		}
@@ -158,9 +158,9 @@ namespace Snow
 		{
 			outEmitter << YAML::Key << "NativeScriptComponent";
 			outEmitter << YAML::BeginMap;
-			auto comp = aEntity.GetComponent<NativeScriptComponent>();
+			auto& comp = aEntity.GetComponent<NativeScriptComponent>();
 
-			outEmitter << YAML::Key << "ScriptID" << YAML::Value << comp->scriptID;
+			outEmitter << YAML::Key << "ScriptID" << YAML::Value << comp.scriptID;
 
 			outEmitter << YAML::EndMap;
 		}
@@ -229,19 +229,19 @@ namespace Snow
 					auto position = ent["TransformComponent"]["Position"];
 					auto rotation = ent["TransformComponent"]["Rotation"];
 					auto scale = ent["TransformComponent"]["Scale"];
-					auto comp = DeserializedEntity.AddComponent<TransformComponent>();
-					comp->position = position.as<glm::vec3>();
-					comp->rotation = rotation.as<glm::vec3>(); 
-					comp->scale = scale.as<glm::vec3>();
+					auto& comp = DeserializedEntity.AddComponent<TransformComponent>();
+					comp.position = position.as<glm::vec3>();
+					comp.rotation = rotation.as<glm::vec3>(); 
+					comp.scale = scale.as<glm::vec3>();
 				}
 
 				if (ent["StaticMeshComponent"])
 				{
 					auto model = ent["StaticMeshComponent"]["Model"];
 					auto material = ent["StaticMeshComponent"]["Material"];
-					auto comp = DeserializedEntity.AddComponent<StaticMeshComponent>();
-					comp->model.LoadModel(model["MeshPath"].as<std::string>().c_str());
-					comp->material.SetAlbedo(material["AlbedoPath"].as<std::string>().c_str());
+					auto& comp = DeserializedEntity.AddComponent<StaticMeshComponent>();
+					comp.model.LoadModel(model["MeshPath"].as<std::string>().c_str());
+					comp.material.SetAlbedo(material["AlbedoPath"].as<std::string>().c_str());
 				}
 
 				if (ent["SkeletalMeshComponent"])
@@ -249,11 +249,11 @@ namespace Snow
 					auto model = ent["SkeletalMeshComponent"]["Model"];
 					auto material = ent["SkeletalMeshComponent"]["Material"];
 					auto animation = ent["SkeletalMeshComponent"]["Animation"];
-					auto comp = DeserializedEntity.AddComponent<SkeletalMeshComponent>();
-					comp->animatedModel.LoadModel(model["MeshPath"].as<std::string>().c_str());
-					comp->material.SetAlbedo(material["AlbedoPath"].as<std::string>().c_str());
-					comp->skeleton.LoadSkeleton(animation["SkeletonPath"].as<std::string>().c_str());
-					comp->skeleton.LoadAnimation(animation["AnimationPath"].as<std::string>().c_str());
+					auto& comp = DeserializedEntity.AddComponent<SkeletalMeshComponent>();
+					comp.animatedModel.LoadModel(model["MeshPath"].as<std::string>().c_str());
+					comp.material.SetAlbedo(material["AlbedoPath"].as<std::string>().c_str());
+					comp.skeleton.LoadSkeleton(animation["SkeletonPath"].as<std::string>().c_str());
+					comp.skeleton.LoadAnimation(animation["AnimationPath"].as<std::string>().c_str());
 				}
 
 				if (ent["CameraComponent"])
@@ -262,18 +262,18 @@ namespace Snow
 					auto fov = ent["CameraComponent"]["FOV"];
 					auto nearPlane = ent["CameraComponent"]["Near"];
 					auto farPlane = ent["CameraComponent"]["Far"];
-					auto comp = DeserializedEntity.AddComponent<CameraComponent>();
-					comp->camera.myIsPrimary = primary.as<bool>();
-					comp->camera.myFov = fov.as<float>();
-					comp->camera.myNearPlane = nearPlane.as<float>();
-					comp->camera.myFarPlane = farPlane.as<float>();
+					auto& comp = DeserializedEntity.AddComponent<CameraComponent>();
+					comp.camera.myIsPrimary = primary.as<bool>();
+					comp.camera.myFov = fov.as<float>();
+					comp.camera.myNearPlane = nearPlane.as<float>();
+					comp.camera.myFarPlane = farPlane.as<float>();
 				}
 
 				if (ent["NativeScriptComponent"])
 				{
 					auto scriptID = ent["NativeScriptComponent"]["ScriptID"];
-					auto comp = DeserializedEntity.AddComponent<NativeScriptComponent>();
-					comp->scriptID = scriptID.as<int>();
+					auto& comp = DeserializedEntity.AddComponent<NativeScriptComponent>();
+					comp.scriptID = scriptID.as<int>();
 					SceneHierarchyPanel::BindNativeScript(DeserializedEntity, scriptID.as<int>());
 				}
 			}

@@ -49,13 +49,13 @@ namespace Snow
 			auto camEntity = Engine::GetEditorScene()->GetPrimaryCameraEntity();
 			if (camEntity.IsValid())
 			{
-				auto& camera = camEntity.GetComponent<CameraComponent>()->camera;
+				auto& camera = camEntity.GetComponent<CameraComponent>().camera;
 				const auto& tranform = camEntity.GetComponent<TransformComponent>();
 				glm::mat4 projectionMat = camera.GetProjectionMatrix();
-				glm::mat4 viewMat = camera.GetViewMatrix(tranform->position, tranform->rotation);
+				glm::mat4 viewMat = camera.GetViewMatrix(tranform.position, tranform.rotation);
 
-				auto comp = aSelectedEntity.GetComponent<TransformComponent>();
-				auto oldRot = comp->rotation;
+				auto& comp = aSelectedEntity.GetComponent<TransformComponent>();
+				auto oldRot = comp.rotation;
 				glm::mat4 entityTransform = aSelectedEntity.GetWorldTransform();
 
 				ImGuizmo::Manipulate(glm::value_ptr(viewMat), glm::value_ptr(projectionMat), myGizmoOperation, myGizmoMode, glm::value_ptr(entityTransform));
@@ -77,9 +77,9 @@ namespace Snow
 
 					glm::vec3 deltaRot = newRot - oldRot;
 
-					comp->position = newPos;
-					comp->rotation += deltaRot;
-					comp->scale = newScale;
+					comp.position = newPos;
+					comp.rotation += deltaRot;
+					comp.scale = newScale;
 				}
 			}
 		}

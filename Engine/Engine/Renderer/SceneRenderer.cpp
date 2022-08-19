@@ -124,7 +124,7 @@ namespace Snow
 			glm::vec3 camScale;
 			Math::DecomposeTransform(cameraTransform, camPos, camRot, camScale);
 			
-			auto& camera = aCamera.GetComponent<CameraComponent>()->camera;
+			auto& camera = aCamera.GetComponent<CameraComponent>().camera;
 
 			auto objMatrix = object.GetWorldTransform();
 
@@ -136,8 +136,8 @@ namespace Snow
 			myObjectBuffer.myData.BoneTransforms.fill(glm::mat4(1.f));
 			myObjectBuffer.ApplyChanges();
 
-			DX11::Context->PSSetShaderResources(0, 1, meshComp->material.myAlbedo.myTextureView.GetAddressOf());
-			for (auto mesh : meshComp->model.myMeshes)
+			DX11::Context->PSSetShaderResources(0, 1, meshComp.material.myAlbedo.myTextureView.GetAddressOf());
+			for (auto mesh : meshComp.model.myMeshes)
 			{
 				DX11::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 				DX11::Context->IASetInputLayout(myVertexShader.GetInputLayout());
@@ -164,7 +164,7 @@ namespace Snow
 		for (auto& entity : skeletalMeshEntities)
 		{
 			Entity object(entity, Engine::GetActiveScene().get());
-			const auto& meshComp = object.GetComponent<SkeletalMeshComponent>();
+			auto& meshComp = object.GetComponent<SkeletalMeshComponent>();
 			
 			auto cameraTransform = aCamera.GetWorldTransform();
 			glm::vec3 camPos;
@@ -172,7 +172,7 @@ namespace Snow
 			glm::vec3 camScale;
 			Math::DecomposeTransform(cameraTransform, camPos, camRot, camScale);
 			
-			auto& camera = aCamera.GetComponent<CameraComponent>()->camera;
+			auto& camera = aCamera.GetComponent<CameraComponent>().camera;
 			auto objMatrix = object.GetWorldTransform();
 
 			myFrameBuffer.myData.ViewMatrix = camera.GetViewMatrix(camPos, camRot);
@@ -183,17 +183,17 @@ namespace Snow
 			myObjectBuffer.myData.BoneTransforms.fill(glm::mat4(1.f));
 			if (aAnimateActivated)
 			{
-				meshComp->skeleton.OnUpdate();
-				for (uint32_t i = 0; i < meshComp->skeleton.myModelTransforms.size(); i++)
+				meshComp.skeleton.OnUpdate();
+				for (uint32_t i = 0; i < meshComp.skeleton.myModelTransforms.size(); i++)
 				{
-					auto mat = Math::ConvertOzzMat4ToGlmMat4(meshComp->skeleton.myModelTransforms[i]) * meshComp->animatedModel.myBindPoseInverses[i];
+					auto mat = Math::ConvertOzzMat4ToGlmMat4(meshComp.skeleton.myModelTransforms[i]) * meshComp.animatedModel.myBindPoseInverses[i];
 					myObjectBuffer.myData.BoneTransforms[i] = glm::transpose(mat);
 				}
 			}
 			myObjectBuffer.ApplyChanges();
 
-			DX11::Context->PSSetShaderResources(0, 1, meshComp->material.myAlbedo.myTextureView.GetAddressOf());
-			for (auto mesh : meshComp->animatedModel.myMeshes)
+			DX11::Context->PSSetShaderResources(0, 1, meshComp.material.myAlbedo.myTextureView.GetAddressOf());
+			for (auto mesh : meshComp.animatedModel.myMeshes)
 			{
 				DX11::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 				DX11::Context->IASetInputLayout(myVertexShader.GetInputLayout());
@@ -264,7 +264,7 @@ namespace Snow
 		for (auto& entity : skeletalMeshEntities)
 		{
 			Entity object(entity, Engine::GetActiveScene().get());
-			const auto& meshComp = object.GetComponent<SkeletalMeshComponent>();
+			auto& meshComp = object.GetComponent<SkeletalMeshComponent>();
 
 			auto cameraTransform = aCamera.GetWorldTransform();
 			glm::vec3 camPos;
@@ -272,7 +272,7 @@ namespace Snow
 			glm::vec3 camScale;
 			Math::DecomposeTransform(cameraTransform, camPos, camRot, camScale);
 
-			auto& camera = aCamera.GetComponent<CameraComponent>()->camera;
+			auto& camera = aCamera.GetComponent<CameraComponent>().camera;
 			auto objTransform = glm::scale(object.GetWorldTransform(), glm::vec3(100.f));
 
 			myFrameBuffer.myData.ViewMatrix = camera.GetViewMatrix(camPos, camRot);
@@ -280,11 +280,11 @@ namespace Snow
 			myFrameBuffer.ApplyChanges();
 
 			myObjectBuffer.myData.BoneTransforms.fill(glm::mat4(1.f));
-			DX11::Context->PSSetShaderResources(0, 1, meshComp->material.myAlbedo.myTextureView.GetAddressOf());
-			meshComp->skeleton.OnUpdate();
-			for (uint32_t i = 0; i < meshComp->skeleton.myModelTransforms.size(); i++)
+			DX11::Context->PSSetShaderResources(0, 1, meshComp.material.myAlbedo.myTextureView.GetAddressOf());
+			meshComp.skeleton.OnUpdate();
+			for (uint32_t i = 0; i < meshComp.skeleton.myModelTransforms.size(); i++)
 			{
-				auto transform = Math::ConvertOzzMat4ToGlmMat4(meshComp->skeleton.myModelTransforms[i]);
+				auto transform = Math::ConvertOzzMat4ToGlmMat4(meshComp.skeleton.myModelTransforms[i]);
 				transform = glm::scale(transform, glm::vec3(0.015f, 0.015f, 0.015f));
 				transform = objTransform * transform;
 

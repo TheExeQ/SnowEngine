@@ -27,17 +27,16 @@ namespace Snow
 		bool IsValid();
 
 		template<typename T, typename... Args>
-		T* AddComponent(Args&&... args)
+		T& AddComponent(Args&&... args)
 		{
-			if (auto comp = GetComponent<T>()) { return comp; }
-			return &myScene->myRegistry.emplace<T>(myEntityHandle, std::forward<Args>(args)...);
+			if (HasComponent<T>()) { return GetComponent<T>(); }
+			return myScene->myRegistry.emplace<T>(myEntityHandle, std::forward<Args>(args)...);
 		}
 
 		template<typename T>
-		T* GetComponent()
+		T& GetComponent()
 		{
-			if (!HasComponent<T>()) { return nullptr; }
-			return &myScene->myRegistry.get<T>(myEntityHandle);
+			return myScene->myRegistry.get<T>(myEntityHandle);
 		}
 
 		template<typename T>

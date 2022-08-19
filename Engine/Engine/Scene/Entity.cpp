@@ -47,17 +47,17 @@ namespace Snow
 
 	UUID Entity::GetUUID()
 	{
-		return GetComponent<IDComponent>()->uuid;
+		return GetComponent<IDComponent>().uuid;
 	}
 
 	std::vector<UUID> Entity::ChildrenUUIDs()
 	{
-		return GetComponent<RelationshipComponent>()->Children;
+		return GetComponent<RelationshipComponent>().Children;
 	}
 
 	UUID Entity::ParentUUID()
 	{
-		return GetComponent<RelationshipComponent>()->Parent;
+		return GetComponent<RelationshipComponent>().Parent;
 	}
 
 	bool Entity::HasParent()
@@ -67,7 +67,7 @@ namespace Snow
 
 	glm::mat4 Entity::GetTransform()
 	{
-		return GetComponent<TransformComponent>()->GetTransform();
+		return GetComponent<TransformComponent>().GetTransform();
 	}
 
 	glm::mat4 Entity::GetWorldTransform()

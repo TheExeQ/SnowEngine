@@ -39,9 +39,9 @@ namespace Snow
 	void EditorLayer::OnUpdate()
 	{
 		//LOG_INFO(std::string("FPS: " + std::to_string(Time::GetFPS())));
-		auto* transformComp = myEditorCameraEntity.GetComponent<TransformComponent>();
-		myEditorCamera->UpdateMovement(transformComp->position, transformComp->rotation);
-		myEditorCameraEntity.GetComponent<CameraComponent>()->camera = *myEditorCamera.get();
+		auto& transformComp = myEditorCameraEntity.GetComponent<TransformComponent>();
+		myEditorCamera->UpdateMovement(transformComp.position, transformComp.rotation);
+		myEditorCameraEntity.GetComponent<CameraComponent>().camera = *myEditorCamera.get();
 	}
 
 	void EditorLayer::RenderDockspace()

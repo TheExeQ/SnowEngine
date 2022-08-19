@@ -1,18 +1,5 @@
 Scene: Untitled
 Entities:
-  - Entity: 8954289203850583273
-    Parent: 0
-    TagComponent:
-      Tag: Camera
-    TransformComponent:
-      Position: [0, 0, -2]
-      Rotation: [0, -0, 0]
-      Scale: [0.999986947, 1, 0.999986947]
-    CameraComponent:
-      Primary: true
-      FOV: 90
-      Near: 0.100000001
-      Far: 1000
   - Entity: 15210294068699734251
     Parent: 0
     TagComponent:
@@ -29,3 +16,16 @@ Entities:
       Animation:
         SkeletonPath: ../assets/models/sk/Gremlin.skeleton
         AnimationPath: ../assets/models/animations/gremlin@walk.animation
+  - Entity: 8954289203850583273
+    Parent: 0
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Position: [0, 0, -2]
+      Rotation: [0, -0, 0]
+      Scale: [0.999986947, 1, 0.999986947]
+    CameraComponent:
+      Primary: true
+      FOV: 90
+      Near: 0.100000001
+      Far: 1000

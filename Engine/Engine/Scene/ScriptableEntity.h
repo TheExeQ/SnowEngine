@@ -11,7 +11,7 @@ namespace Snow
 		template<typename T>
 		T& GetComponent()
 		{
-			return *myEntity.GetComponent<T>();
+			return myEntity.GetComponent<T>();
 		}
 		
 	protected:

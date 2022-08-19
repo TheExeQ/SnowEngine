@@ -95,11 +95,11 @@ namespace Snow
 
 		UnparentEntity(aChild);
 
-		const auto& childRelationShip = aChild.GetComponent<RelationshipComponent>();
-		const auto& parentRelationShip = aParent.GetComponent<RelationshipComponent>();
+		auto& childRelationShip = aChild.GetComponent<RelationshipComponent>();
+		auto& parentRelationShip = aParent.GetComponent<RelationshipComponent>();
 
-		childRelationShip->Parent = aParent.GetUUID();
-		parentRelationShip->Children.push_back(aChild.GetUUID());
+		childRelationShip.Parent = aParent.GetUUID();
+		parentRelationShip.Children.push_back(aChild.GetUUID());
 
 		ConvertToLocalSpace(aChild);
 	}
@@ -108,7 +108,7 @@ namespace Snow
 	{
 		if (!aEntity.IsValid()) { return; }
 
-		const auto& entityRelationShip = aEntity.GetComponent<RelationshipComponent>();
+		auto& entityRelationShip = aEntity.GetComponent<RelationshipComponent>();
 		if (aEntity.HasParent())
 		{
 			auto& parentChildren = myRegistry.get<RelationshipComponent>((entt::entity)Entity(aEntity.ParentUUID())).Children;
@@ -117,14 +117,14 @@ namespace Snow
 
 		ConvertToWorldSpace(aEntity);
 
-		entityRelationShip->Parent = 0;
+		entityRelationShip.Parent = 0;
 	}
 
 	Entity Scene::CreateEntity(const char* aName, Ref<Scene> aScene)
 	{
 		Entity entity(myRegistry.create(), (aScene) ? aScene.get() : Engine::GetActiveScene().get());
-		entity.AddComponent<TagComponent>()->name = aName;
-		auto uuid = entity.AddComponent<IDComponent>()->uuid;
+		entity.AddComponent<TagComponent>().name = aName;
+		auto uuid = entity.AddComponent<IDComponent>().uuid;
 		entity.AddComponent<RelationshipComponent>();
 		entity.AddComponent<TransformComponent>();
 		myEnttMap[uuid] = (entt::entity)entity;
@@ -134,8 +134,8 @@ namespace Snow
 	Snow::Entity Scene::CreateEntityWithID(UUID aID, const char* aName, Ref<Scene> aScene /*= nullptr*/)
 	{
 		Entity entity(myRegistry.create(), (aScene) ? aScene.get() : Engine::GetActiveScene().get());
-		entity.AddComponent<TagComponent>()->name = aName;
-		entity.AddComponent<IDComponent>()->uuid = aID;
+		entity.AddComponent<TagComponent>().name = aName;
+		entity.AddComponent<IDComponent>().uuid = aID;
 		entity.AddComponent<RelationshipComponent>();
 		entity.AddComponent<TransformComponent>();
 		myEnttMap[aID] = (entt::entity)entity;
@@ -174,8 +174,8 @@ namespace Snow
 			return;
 
 		glm::mat4 transform = GetWorldSpaceTransformMatrix(aEntity);
-		const auto& entityTransformComp = aEntity.GetComponent<TransformComponent>();
-		Math::DecomposeTransform(transform, entityTransformComp->position, entityTransformComp->rotation, entityTransformComp->scale);
+		auto& entityTransformComp = aEntity.GetComponent<TransformComponent>();
+		Math::DecomposeTransform(transform, entityTransformComp.position, entityTransformComp.rotation, entityTransformComp.scale);
 	}
 
 	void Scene::ConvertToLocalSpace(Entity aEntity)
@@ -190,8 +190,8 @@ namespace Snow
 
 		glm::mat4 localTransform = glm::inverse(parentTransform) * transform;
 
-		const auto& entityTransformComp = aEntity.GetComponent<TransformComponent>();
-		Math::DecomposeTransform(localTransform, entityTransformComp->position, entityTransformComp->rotation, entityTransformComp->scale);
+		auto& entityTransformComp = aEntity.GetComponent<TransformComponent>();
+		Math::DecomposeTransform(localTransform, entityTransformComp.position, entityTransformComp.rotation, entityTransformComp.scale);
 	}
 
 	glm::mat4 Scene::GetWorldSpaceTransformMatrix(Entity aEntity)
@@ -239,7 +239,7 @@ namespace Snow
 				if (!nsc.Instance && nsc.scriptID >= 0)
 				{
 					nsc.Instance = nsc.InstantiateScript();
-					nsc.Instance->myEntity = Entity{ entity, this };
+					nsc.Instance->myEntity = Entity(entity, this);
 					nsc.Instance->OnCreate();
 				}
 			});

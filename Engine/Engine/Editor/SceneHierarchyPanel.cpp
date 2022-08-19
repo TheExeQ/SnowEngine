@@ -66,7 +66,7 @@ namespace Snow
 
 	void SceneHierarchyPanel::DrawEntityNode(Entity aEntity)
 	{
-		auto tag = aEntity.GetComponent<TagComponent>()->name;
+		auto tag = aEntity.GetComponent<TagComponent>().name;
 
 		ImGuiTreeNodeFlags flags = ((mySelectionContext == aEntity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
 		flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
@@ -90,7 +90,7 @@ namespace Snow
 
 		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 		{
-			ImGui::Text(aEntity.GetComponent<TagComponent>()->name.c_str());
+			ImGui::Text(aEntity.GetComponent<TagComponent>().name.c_str());
 			ImGui::SetDragDropPayload("scene_entity_hierarchy", &aEntity, sizeof(Entity));
 			ImGui::EndDragDropSource();
 		}
@@ -255,7 +255,7 @@ namespace Snow
 	{
 		if (aEntity.HasComponent<TagComponent>())
 		{
-			auto& tag = aEntity.GetComponent<TagComponent>()->name;
+			auto& tag = aEntity.GetComponent<TagComponent>().name;
 
 			char buffer[256];
 			memset(buffer, 0, sizeof(buffer));
@@ -284,21 +284,21 @@ namespace Snow
 
 		ImGui::PopItemWidth();
 
-		DrawComponent<TransformComponent>("Transform", aEntity, [](auto component)
+		DrawComponent<TransformComponent>("Transform", aEntity, [](auto& component)
 			{
-				DrawVec3Control("Position", component->position);
-				glm::vec3 rotation = glm::degrees(component->rotation);
+				DrawVec3Control("Position", component.position);
+				glm::vec3 rotation = glm::degrees(component.rotation);
 				DrawVec3Control("Rotation", rotation);
-				component->rotation = glm::radians(rotation);
-				DrawVec3Control("Scale", component->scale, 1.0f);
+				component.rotation = glm::radians(rotation);
+				DrawVec3Control("Scale", component.scale, 1.0f);
 			});
 
-		DrawComponent<StaticMeshComponent>("Static Mesh", aEntity, [](auto component)
+		DrawComponent<StaticMeshComponent>("Static Mesh", aEntity, [](auto& component)
 			{
 
 				// #TODO: Change so this doesn't take ref to filepath, instead a copy and update component filepath on button reload click.
 
-				auto& meshFilepath = component->model.myFilePath;
+				auto& meshFilepath = component.model.myFilePath;
 
 				char buffer[256];
 				memset(buffer, 0, sizeof(buffer));
@@ -308,7 +308,7 @@ namespace Snow
 					meshFilepath = std::string(buffer);
 				}
 
-				auto& albedoFilepath = component->material.myAlbedo.myFilePath;
+				auto& albedoFilepath = component.material.myAlbedo.myFilePath;
 
 				memset(buffer, 0, sizeof(buffer));
 				std::strncpy(buffer, albedoFilepath.c_str(), sizeof(buffer));
@@ -323,17 +323,17 @@ namespace Snow
 
 				if (ImGui::Button("Reload", buttonSize))
 				{
-					component->model.LoadModel(meshFilepath.c_str());
-					component->material.myAlbedo.LoadTexture(albedoFilepath.c_str());
+					component.model.LoadModel(meshFilepath.c_str());
+					component.material.myAlbedo.LoadTexture(albedoFilepath.c_str());
 				}
 			});
 
-		DrawComponent<SkeletalMeshComponent>("Skeletal Mesh", aEntity, [](auto component)
+		DrawComponent<SkeletalMeshComponent>("Skeletal Mesh", aEntity, [](auto& component)
 			{
 
 				// #TODO: Change so this doesn't take ref to filepath, instead a copy and update component filepath on button reload click.
 
-				auto& meshFilepath = component->animatedModel.myFilePath;
+				auto& meshFilepath = component.animatedModel.myFilePath;
 
 				char buffer[256];
 				memset(buffer, 0, sizeof(buffer));
@@ -343,7 +343,7 @@ namespace Snow
 					meshFilepath = std::string(buffer);
 				}
 
-				auto& skeletonFilepath = component->skeleton.mySkeletonFilePath;
+				auto& skeletonFilepath = component.skeleton.mySkeletonFilePath;
 
 				memset(buffer, 0, sizeof(buffer));
 				std::strncpy(buffer, skeletonFilepath.c_str(), sizeof(buffer));
@@ -352,7 +352,7 @@ namespace Snow
 					skeletonFilepath = std::string(buffer);
 				}
 
-				auto& animationFilepath = component->skeleton.myAnimationFilePath;
+				auto& animationFilepath = component.skeleton.myAnimationFilePath;
 
 				memset(buffer, 0, sizeof(buffer));
 				std::strncpy(buffer, animationFilepath.c_str(), sizeof(buffer));
@@ -361,7 +361,7 @@ namespace Snow
 					animationFilepath = std::string(buffer);
 				}
 
-				auto& albedoFilepath = component->material.myAlbedo.myFilePath;
+				auto& albedoFilepath = component.material.myAlbedo.myFilePath;
 
 				memset(buffer, 0, sizeof(buffer));
 				std::strncpy(buffer, albedoFilepath.c_str(), sizeof(buffer));
@@ -376,20 +376,20 @@ namespace Snow
 
 				if (ImGui::Button("Reload", buttonSize))
 				{
-					component->animatedModel.LoadModel(meshFilepath.c_str());
-					component->material.myAlbedo.LoadTexture(albedoFilepath.c_str());
-					component->skeleton.LoadAnimation(animationFilepath.c_str());
-					component->skeleton.LoadSkeleton(skeletonFilepath.c_str());
+					component.animatedModel.LoadModel(meshFilepath.c_str());
+					component.material.myAlbedo.LoadTexture(albedoFilepath.c_str());
+					component.skeleton.LoadAnimation(animationFilepath.c_str());
+					component.skeleton.LoadSkeleton(skeletonFilepath.c_str());
 				}
 			});
 
-		DrawComponent<CameraComponent>("Camera Component", aEntity, [](auto component)
+		DrawComponent<CameraComponent>("Camera Component", aEntity, [](auto& component)
 			{
 				bool changesMade = false;
-				bool primary = component->camera.GetIsPrimary();
-				float fov = component->camera.GetFOV();
-				float nearPlane = component->camera.GetNear();
-				float farPlane = component->camera.GetFar();
+				bool primary = component.camera.GetIsPrimary();
+				float fov = component.camera.GetFOV();
+				float nearPlane = component.camera.GetNear();
+				float farPlane = component.camera.GetFar();
 				
 				if (ImGui::Checkbox("Primary", &primary))
 				{
@@ -413,17 +413,17 @@ namespace Snow
 
 				if (changesMade)
 				{
-					component->camera.SetProjectionValues(fov, 16.f/9.f, nearPlane, farPlane);
-					component->camera.SetIsPrimary(primary);
+					component.camera.SetProjectionValues(fov, 16.f/9.f, nearPlane, farPlane);
+					component.camera.SetIsPrimary(primary);
 				}
 			});
 
-		DrawComponent<NativeScriptComponent>("Native Script Component", aEntity, [&](auto component)
+		DrawComponent<NativeScriptComponent>("Native Script Component", aEntity, [&](auto& component)
 			{
 				static const char* items[] = { "Example", "Character"};
-				static int selectedItem = component->scriptID;
+				static int selectedItem = component.scriptID;
 
-				std::string loadedScriptText = std::string("Loaded: ") + ((component->scriptID >= 0) ? items[component->scriptID] : std::string("None"));
+				std::string loadedScriptText = std::string("Loaded: ") + ((component.scriptID >= 0) ? items[component.scriptID] : std::string("None"));
 
 				ImGui::Text(loadedScriptText.c_str());
 				ImGui::Combo("Scripts", &selectedItem, items, IM_ARRAYSIZE(items));
@@ -441,24 +441,24 @@ namespace Snow
 		case 0:
 		{
 			auto nsc = aEntity.GetComponent<NativeScriptComponent>();
-			if (nsc->Instance)
+			if (nsc.Instance)
 			{
-				nsc->DestroyScript(nsc);
+				nsc.DestroyScript(&nsc);
 			}
-			nsc->Bind<Game::ExampleScript>();
-			nsc->scriptID = aTypeIndex;
+			nsc.Bind<Game::ExampleScript>();
+			nsc.scriptID = aTypeIndex;
 			break;
 		}
 
 		case 1:
 		{
 			auto nsc = aEntity.GetComponent<NativeScriptComponent>();
-			if (nsc->Instance)
+			if (nsc.Instance)
 			{
-				nsc->DestroyScript(nsc);
+				nsc.DestroyScript(&nsc);
 			}
-			nsc->Bind<Game::CharacterScript>();
-			nsc->scriptID = aTypeIndex;
+			nsc.Bind<Game::CharacterScript>();
+			nsc.scriptID = aTypeIndex;
 			break;
 		}
 
