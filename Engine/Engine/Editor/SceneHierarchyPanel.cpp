@@ -440,7 +440,7 @@ namespace Snow
 		{
 		case 0:
 		{
-			auto nsc = aEntity.GetComponent<NativeScriptComponent>();
+			auto& nsc = aEntity.GetComponent<NativeScriptComponent>();
 			if (nsc.Instance)
 			{
 				nsc.DestroyScript(&nsc);
@@ -452,7 +452,7 @@ namespace Snow
 
 		case 1:
 		{
-			auto nsc = aEntity.GetComponent<NativeScriptComponent>();
+			auto& nsc = aEntity.GetComponent<NativeScriptComponent>();
 			if (nsc.Instance)
 			{
 				nsc.DestroyScript(&nsc);
