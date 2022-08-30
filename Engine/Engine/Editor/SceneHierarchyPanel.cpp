@@ -202,7 +202,7 @@ namespace Snow
 		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
 		if (aEntity.HasComponent<T>())
 		{
-			auto component = aEntity.GetComponent<T>();
+			auto& component = aEntity.GetComponent<T>();
 			ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
 
 			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 4 });
